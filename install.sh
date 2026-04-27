@@ -1,14 +1,27 @@
-#!/bin/bash
+# --- Pergunta sobre o Hardware ---
+echo -e "${YELLOW}Qual o perfil de hardware desta máquina?${NC}"
+echo "1) AMD (Frieren Desktop)"
+echo "2) NVIDIA (Notebook)"
+read -p "Escolha uma opção [1-2]: " hw_choice
 
-# Cores para o terminal (estilo Rice!)
-GREEN='\033[0;32m'
-BLUE='\033[0;34m'
-NC='\033[0m' 
+# Criar a pasta de hardware no .config
+mkdir -p "$HOME/.config/hypr/hardware"
 
-DOTFILES_DIR="$HOME/dotfiles"
+case $hw_choice in
+    1)
+        echo -e "${GREEN}Configurando perfil AMD...${NC}"
+        ln -sfn "$DOTFILES_DIR/hypr/hardware/amd.conf" "$HOME/.config/hypr/hardware_profile.conf"
+        ;;
+    2)
+        echo -e "${GREEN}Configurando perfil NVIDIA...${NC}"
+        ln -sfn "$DOTFILES_DIR/hypr/hardware/nvidia.conf" "$HOME/.config/hypr/hardware_profile.conf"
+        ;;
+    *)
+        echo -e "${YELLOW}Opção inválida. Pulando configuração de hardware.${NC}"
+        ;;
+esac
 
-# Lista de mapeamentos: "pasta_no_dotfiles" "caminho_no_config"
-# Isso facilita adicionar novos configs no futuro
+# --- Restante da instalação (Links comuns) ---
 declare -A CONFIG_MAP=(
     ["hypr/hyprland.conf"]="$HOME/.config/hypr/hyprland.conf"
     ["swappy/config"]="$HOME/.config/swappy/config"
@@ -18,22 +31,15 @@ declare -A CONFIG_MAP=(
     ["swaync"]="$HOME/.config/swaync"
 )
 
-echo -e "${BLUE}--- Iniciando instalação dos Dotfiles na Frieren ---${NC}"
-
 for src in "${!CONFIG_MAP[@]}"; do
     DEST="${CONFIG_MAP[$src]}"
     SOURCE="$DOTFILES_DIR/$src"
-    
-    # Cria o diretório pai caso não exista
     mkdir -p "$(dirname "$DEST")"
     
-    # Se já existir algo no destino que não seja um link, faz backup
     if [ -e "$DEST" ] && [ ! -L "$DEST" ]; then
-        echo -e "${BLUE}Fazendo backup de $DEST para $DEST.bak${NC}"
         mv "$DEST" "$DEST.bak"
     fi
     
-    # Cria/Sobrescreve o link simbólico
     ln -sfn "$SOURCE" "$DEST"
     echo -e "${GREEN}Linkado:${NC} $src -> $DEST"
 done
