@@ -9,3 +9,5 @@
 [_] Adicionar atalho de print nas **binds**
 
 [_] Arrumar conexão com o Wi-Fi
+
+[_] Adicionar no **install.sh** o comando de reiniciar o hyprland e aplicar as atualizações
