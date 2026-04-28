@@ -11,3 +11,6 @@
 [_] Arrumar conexão com o Wi-Fi
 
 [_] Adicionar no **install.sh** o comando de reiniciar o hyprland e aplicar as atualizações
+
+[_] Modificar o terminal para mostrar tambem a branch que eu estou em uma pasta .git
+
