@@ -2,7 +2,7 @@
 
 [_] Atomatizar a instalacao das bibliotecas, (a unica que tive problema ateh agora foi a swww)
 
-[_] Mover varios arquivos para o themes, para que eles sejam todos adicionados no **"Tema Atual"** assim podendo trocar modularmente os themes
+[/] ~Mover varios arquivos para o themes, para que eles sejam todos adicionados no **"Tema Atual"** assim podendo trocar modularmente os themes~
 
 [_] Corrigir problema do Idioma do Teclado
 
