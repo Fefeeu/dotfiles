@@ -45,6 +45,8 @@ declare -A STATIC_MAP=(
     ["hypr/hyprland.conf"]="$HOME/.config/hypr/hyprland.conf"
     ["hypr/configs"]="$HOME/.config/hypr/configs"
     ["hypr/rules"]="$HOME/.config/hypr/rules"
+    ["swappy/config"]="$HOME/.config/swappy/config"
+
 )
 
 echo -e "\n${YELLOW}>> Links fixos:${NC}"
