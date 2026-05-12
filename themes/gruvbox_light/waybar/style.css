@@ -74,6 +74,7 @@ tooltip label {
 
 #battery,
 #pulseaudio,
+#backlight,
 #network,
 #clock,
 #custom-notification,
@@ -112,4 +113,8 @@ tooltip label {
 
 #bluetooth.connected {
     color: @blue;
+}
+
+#backlight {
+  color: #fdf8d8
 }

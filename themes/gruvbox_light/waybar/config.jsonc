@@ -13,6 +13,7 @@
     "modules-right": [
         "bluetooth",
         "pulseaudio",
+        "backlight",
         "network",
         "battery",
         "custom/notification"
@@ -102,6 +103,11 @@
         "ignored-sinks": [
             "Easy Effects Sink"
         ]
+    },
+    "backlight": {
+      "device": "intel_backlight",
+      "format": "{percent}% {icon}",
+      "format-icons": ["", ""]
     },
     "network": {
         "interface": "wlp2s0",
