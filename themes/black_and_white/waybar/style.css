@@ -1,0 +1,122 @@
+@import 'colors/black_and_white.css';
+
+* {
+    border: none;
+    border-radius: 0px;
+
+    font-family: "Adwaita Sans", "JetBrainsMono Nerd Font Propo", sans-serif;
+    font-weight: bold;
+    font-size: 14px;  
+
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+
+}
+
+window#waybar {
+    background: transparent;
+}
+
+tooltip {
+    background: @preto_absoluto;
+    border: 3px solid @branco_puro;
+    border-radius: 12px;
+}
+
+tooltip label {
+    color: @branco_puro;
+    padding: 12px;
+}
+
+#workspaces {
+    background-color: @preto_absoluto;
+    padding: 5px 3px;
+    margin: 0 0 0 12px;
+    border-radius: 18px;
+    border: 3px solid @branco_puro;
+    color: @black_absoluto;
+}
+
+#workspaces button {
+    padding: 0px 6px;
+    margin: 0px 3px;
+    border-radius: 16px;
+    color: @branco_puro;
+    background-color: @preto_absoluto;
+    transition: all 0.3s ease-in-out;
+}
+
+#workspaces button.active {
+    background-color: @branco_puro;
+    color: @preto_absoluto;
+    min-width: 24px;
+    transition: all 0.3s ease-in-out;
+    font-size: 16px;
+}
+
+
+#workspaces button:hover {
+    background-color: @purple;
+    color: @bg0;
+    border-radius: 16px;
+    min-width: 16px;
+    background-size: 400% 400%;
+}
+
+#workspaces button.urgent {
+    background-color: @red;
+    color: @bg0;
+    border-radius: 16px;
+    min-width: 16px;
+    transition: all 0.3s ease-in-out;
+}
+
+#battery,
+#pulseaudio,
+#backlight,
+#network,
+#clock,
+#custom-notification,
+#bluetooth {
+    background-color: @preto_absoluto;
+    padding: 0 15px 0 15px;
+    margin: 0 0 0 12px;
+    border-radius: 50px;
+    border: 3px solid @branco_puro;
+}
+
+#clock {
+    color: @branco_puro;
+    font-weight: bold;
+}
+
+#custom-notification {
+    color: @branco_puro;
+    font-weight: bold;
+    margin: 0 12px 0 12px;
+}
+
+#pulseaudio {
+    color: @branco_puro;
+}
+
+#network {
+    color: @branco_puro;
+}
+
+#battery {
+    color: @branco_puro;
+}
+
+#bluetooth {
+    color: @branco_puro;
+}
+
+#bluetooth.connected {
+    color: @blue;
+}
+
+#backlight {
+  color: @branco_puro;
+}

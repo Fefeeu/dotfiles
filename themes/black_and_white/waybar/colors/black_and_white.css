@@ -1,0 +1,16 @@
+/* ----- PRETOS --------------------------------------- */
+@define-color preto_absoluto        #0a0a0a;  /* fundo externo da bar — quase preto puro */
+@define-color preto_modulo          #111111;  /* fundo dos módulos individuais */
+@define-color preto_hover           #1c1c1c;  /* fundo ao passar o mouse */
+@define-color preto_borda           #2e2e2e;  /* bordas e separadores — traço de mangá */
+ 
+/* ----- CINZAS --------------------------------------- */
+@define-color cinza_sombra          #3a3a3a;  /* sombras e divisórias internas */
+@define-color cinza_escuro          #555555;  /* texto mudo / elementos inativos */
+@define-color cinza_medio           #888888;  /* ícones e texto secundário */
+@define-color cinza_claro           #aaaaaa;  /* avisos intermediários / bateria baixa */
+@define-color cinza_quase_branco    #cccccc;  /* alertas suaves / halftone claro */
+ 
+/* ----- BRANCOS -------------------------------------- */
+@define-color branco_papel          #e8e8e8;  /* texto padrão — branco papel de mangá */
+@define-color branco_puro           #ffffff;  /* texto em foco / workspace ativo — branco absoluto */
