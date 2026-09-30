@@ -7,24 +7,21 @@ Configuração do meu ambiente **[Hyprland](https://hyprland.org/)** (compositor
 - **Waybar** como barra, **Rofi** como launcher e clipboard, **swaync** para notificações e **swww** para o wallpaper.
 - **Kitty** como terminal e **Dolphin** como gerenciador de arquivos.
 - **Hyprlock** como tela de bloqueio, com aviso de bateria baixa em `hypr/scripts/`.
-- **Dois perfis de hardware**: `amd` (desktop Frieren) e `nvidia` (notebook FERN).
+- **Uma pasta por máquina** em `hypr/maquinas/` (GPU, teclados e monitores): `Frieren` (desktop AMD) e `FERN` (notebook NVIDIA), escolhida pelo hostname.
 - **Temas**: cada tema pode mudar só as cores ou substituir componentes inteiros. Veja [docs/temas.md](docs/temas.md).
 
 ## ⚙️ Como usar
 ```bash
 git clone https://github.com/Fefeeu/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-./install.sh                         # escolhe hardware e tema
+./install.sh                         # escolhe o tema e detecta a máquina
 scripts/switch-theme.sh <tema>       # troca só o tema depois (ou SUPER+T)
 ```
 
-O `install.sh` é **idempotente**: pode ser rodado várias vezes sem quebrar nada. Ele separa duas decisões independentes:
-1. **Perfil de hardware** (`amd` ou `nvidia`): as duas máquinas têm drivers e configurações de GPU diferentes. O perfil escolhido vira o link `~/.config/hypr/hardware_profile.conf`.
-2. **Tema visual**: uma das pastas dentro de `themes/`.
-
-Depois das escolhas, ele cria os **links fixos** (hypr, hyprlock, swappy) e chama o `scripts/switch-theme.sh`. O `switch-theme.sh`:
+O `install.sh` é **idempotente**: pode ser rodado várias vezes sem quebrar nada. Ele pergunta o **tema visual** (uma das pastas dentro de `themes/`), cria os **links fixos** (hypr, hyprlock, swappy) e chama o `scripts/switch-theme.sh`. O `switch-theme.sh`:
 - valida se o tema tem os arquivos obrigatórios;
 - liga `~/.config/theme` ao tema;
+- liga `~/.config/hypr/maquina` à pasta de `hypr/maquinas/` com o nome do hostname (sem diferenciar maiúsculas); se não houver, pergunta qual usar (no terminal ou pelo rofi, no SUPER+T). Para definir o nome: `hostnamectl set-hostname <Nome>`;
 - para cada componente (waybar, rofi, kitty, swaync), usa a versão do tema, se existir, ou a da `base/`;
 - aplica o **esquema de cores do KDE** (Dolphin e apps Qt) com `plasma-apply-colorscheme`, além do qt6ct e do Kvantum, quando o tema tem esses arquivos;
 - recarrega Hyprland, Waybar e kitty e aplica o **wallpaper** com `swww`.
@@ -34,15 +31,15 @@ Se já existir uma configuração real no destino, ela é movida para `.bak` ant
 ## 📁 Estrutura
 ```
 dotfiles/
-├── install.sh              # provisionamento: hardware + links fixos + tema
+├── install.sh              # provisionamento: links fixos + tema
 ├── scripts/
 │   ├── lib.sh              # funções e listas de links compartilhadas
 │   └── switch-theme.sh     # troca o tema ativo
 ├── hypr/                   # núcleo do Hyprland (igual para todos os temas)
 │   ├── hyprland.conf       # só faz source dos demais
-│   ├── configs/            # settings, animations, execs, monitors
+│   ├── configs/            # settings, animations, execs
 │   ├── rules/              # binds e windowrules
-│   ├── hardware/           # amd.conf, nvidia.conf
+│   ├── maquinas/           # Frieren/, FERN/: hardware.conf e monitors.conf
 │   ├── scripts/            # battery-notify.sh, seletor-tema.sh
 │   └── hyprlock.conf
 ├── swappy/config           # editor de anotações pós-screenshot

@@ -24,7 +24,14 @@ titulo "Tema: $TEMA"
 link_com_backup "$TEMA_DIR" "$THEME_LINK"
 
 # Links da estrutura antiga, que não são mais usados
-[[ -L "$CONFIG_DIR/hypr/theme_profile.conf" ]] && rm "$CONFIG_DIR/hypr/theme_profile.conf"
+for antigo in theme_profile.conf hardware_profile.conf; do
+    [[ -L "$CONFIG_DIR/hypr/$antigo" ]] && rm "$CONFIG_DIR/hypr/$antigo"
+done
+
+# --- MÁQUINA ---
+# Confere se ~/.config/hypr/maquina aponta para a pasta do hostname
+titulo "Máquina:"
+aplicar_maquina
 
 # --- COMPONENTES (tema sobrescreve a base) ---
 # Usa a pasta do tema se existir, senão a da base

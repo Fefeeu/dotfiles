@@ -83,6 +83,72 @@ remover_link_do_tema() {
     fi
 }
 
+# --- MÁQUINA ---
+# Link para a pasta da máquina em hypr/maquinas/ (GPU, teclados e monitores)
+MAQUINA_LINK="$CONFIG_DIR/hypr/maquina"
+
+# listar_maquinas
+# Imprime as pastas de hypr/maquinas/, uma por linha
+listar_maquinas() {
+    local dir
+    for dir in "$DOTFILES_DIR"/hypr/maquinas/*/; do
+        basename "$dir"
+    done
+}
+
+# detectar_maquina
+# Imprime a pasta com o mesmo nome do hostname (sem diferenciar
+# maiúsculas); não imprime nada se nenhuma bater
+detectar_maquina() {
+    local host maq
+    host="$(< /proc/sys/kernel/hostname)"
+    while read -r maq; do
+        if [[ "${maq,,}" == "${host,,}" ]]; then
+            echo "$maq"
+            break
+        fi
+    done < <(listar_maquinas)
+    return 0
+}
+
+# perguntar_maquina
+# Pergunta qual pasta usar: no terminal com select, fora dele (SUPER+T)
+# com o rofi. Imprime a escolha, ou nada se o usuário cancelar
+perguntar_maquina() {
+    local maq="" maquinas
+    mapfile -t maquinas < <(listar_maquinas)
+    if [[ -t 0 ]]; then
+        # o menu do select sai no stderr, então só a escolha vai para o stdout
+        echo "Máquina (hostname '$(< /proc/sys/kernel/hostname)' sem pasta em hypr/maquinas/):" >&2
+        select maq in "${maquinas[@]}"; do
+            [[ -n "$maq" ]] && break || echo "Opção inválida" >&2
+        done
+    elif command -v rofi &> /dev/null; then
+        maq="$(printf '%s\n' "${maquinas[@]}" | rofi -dmenu -i -p "Máquina" \
+            -mesg "O hostname '$(< /proc/sys/kernel/hostname)' não tem pasta em hypr/maquinas/")" || true
+    fi
+    echo "$maq"
+}
+
+# aplicar_maquina
+# Liga MAQUINA_LINK à pasta da máquina: pelo hostname, se houver pasta com
+# esse nome; senão pergunta. Se o link já estiver certo, não mexe
+aplicar_maquina() {
+    local maq alvo
+    maq="$(detectar_maquina)"
+    [[ -n "$maq" ]] || maq="$(perguntar_maquina)"
+    if [[ -z "$maq" ]]; then
+        aviso "nenhuma máquina escolhida, link mantido: ${MAQUINA_LINK/#"$HOME"/\~}"
+        return 0
+    fi
+    alvo="$DOTFILES_DIR/hypr/maquinas/$maq"
+    if [[ "$(readlink "$MAQUINA_LINK" 2> /dev/null)" == "$alvo" ]]; then
+        info "Máquina: $maq (link já correto)"
+    else
+        link_com_backup "$alvo" "$MAQUINA_LINK"
+    fi
+}
+
 # listar_temas
 # Imprime os temas disponíveis, um por linha (pastas que começam com _
 # são modelos/testes e ficam de fora)

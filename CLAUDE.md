@@ -18,17 +18,17 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
   - Contrato completo em `docs/temas.md`.
 - Estado da máquina (fora do git):
   - `~/.config/theme` → tema ativo;
-  - `~/.config/hypr/hardware_profile.conf` → `hypr/hardware/{amd,nvidia}.conf`.
+  - `~/.config/hypr/maquina` → `hypr/maquinas/<Nome>/` (`hardware.conf` + `monitors.conf`), escolhida pelo hostname (Frieren, FERN).
 - O layout acha as cores sempre por `~/.config/theme/palette/...`:
   - waybar: `@import url("../theme/palette/waybar.css")`, relativo a `~/.config/waybar`;
   - rofi: `@import "~/.config/theme/palette/rofi.rasi"`;
   - kitty: `include ~/.config/theme/palette/kitty.conf`.
 - Scripts:
-  - `scripts/lib.sh`: `STATIC_MAP`, `OVERRIDABLE`, `THEME_ONLY`, `link_com_backup` e `listar_temas`;
-  - `install.sh`: pergunta o hardware e o tema, cria os links fixos e chama o switch;
-  - `scripts/switch-theme.sh <tema>`: refaz os links do tema e recarrega a sessão;
+  - `scripts/lib.sh`: `STATIC_MAP`, `OVERRIDABLE`, `THEME_ONLY`, `link_com_backup`, `listar_temas` e `aplicar_maquina` (detecta ou pergunta a máquina);
+  - `install.sh`: pergunta o tema, cria os links fixos e chama o switch;
+  - `scripts/switch-theme.sh <tema>`: confere o link da máquina (pergunta se o hostname não tem pasta), refaz os links do tema e recarrega a sessão;
   - `hypr/scripts/seletor-tema.sh` (SUPER+T): lista de temas no rofi com miniatura e nome, layout em `base/rofi/temas/seletor.rasi`.
-- `hypr/hyprland.conf` só faz `source`, nesta ordem: hardware → settings → animations → execs → `~/.config/theme/hypr.conf` → windowrules → binds. Bordas, gaps e cores ficam só no tema.
+- `hypr/hyprland.conf` só faz `source`, nesta ordem: máquina (hardware, monitors) → settings → animations → execs → `~/.config/theme/hypr.conf` → windowrules → binds. Bordas, gaps e cores ficam só no tema.
 - Tema ativo: `Black_and_White`. `Teste_Colorido` é um tema neon só para testar os scripts.
   - A paleta usa nomes em português (`preto_absoluto`, `branco_puro`, `cinza_*`) mapeados para nomes semânticos (`fundo`, `texto`, `borda`...).
   - Os temas de rofi vêm do adi1090x/rofi (launcher `type-3/style-1`).
@@ -43,7 +43,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
   - só de tema: entra no `THEME_ONLY`.
 - O layout base só usa nomes semânticos de cor, nunca cores cruas.
 - Scripts referenciam `~/.config/<comp>/...` ou `~/.config/theme/...`, nunca `~/dotfiles/themes/...`.
-- Valores específicos de uma máquina (monitor, variáveis de GPU) ficam em `hypr/hardware/*.conf`, não em `settings.conf` nem nos temas.
+- Valores específicos de uma máquina (monitor, variáveis de GPU, teclados) ficam em `hypr/maquinas/<Nome>/`, não em `settings.conf` nem nos temas.
 - Temas baixados de terceiros: remova a pasta `.git` interna antes do commit, porque ela vira submodule ("modified content").
 - Pacotes necessários ficam em `docs/pacotes.md` (formato `pacote # motivo`). Ideias futuras ficam em `docs/ideias.md`.
 - Depois de editar: `hyprctl reload && hyprctl configerrors` e `~/.config/waybar/scripts/launch.sh`.
@@ -89,10 +89,9 @@ Como trabalhar neste roteiro:
    - arquivos: `scripts/switch-theme.sh`, `scripts/lib.sh`.
 10. [x] **qt6ct**: `color_scheme_path` tem `/home/felipe` e o nome antigo do tema. Gerar o caminho com `$HOME` a partir de um template.
     - arquivos: `themes/*/qt6ct.conf`, `scripts/switch-theme.sh`.
-11. [ ] **Portabilidade**:
-    - `monitor=` sai do `settings.conf` e vai para o `monitors.conf`, carregado pelo `hyprland.conf`;
-    - tirar `device: intel_backlight`, `interface: wlp2s0` e `HDMI-A-1` do waybar;
-    - avaliar o bloco `device { compx-kysona-m600 }`.
+11. **Portabilidade** (dividido em dois):
+    - [x] **11a** Hyprland por máquina: `hypr/maquinas/{Frieren,FERN}/` com `hardware.conf` (GPU; teclado compx-kysona-m600 só na Frieren) e `monitors.conf` (Frieren 72 Hz, FERN 120 Hz); link escolhido pelo hostname, com pergunta sempre que não houver pasta com o nome;
+    - [ ] **11b** Waybar: tirar `device: intel_backlight`, `interface: wlp2s0` e `HDMI-A-1`.
 12. [ ] **Estrutura do rofi**:
     - `config.rasi` enxuto para rofi 2.0 (sem `wmctrl`, terminal kitty);
     - um só `shared/` (cores + fontes + ícone Papirus) para launcher, clipboard e seletor.
