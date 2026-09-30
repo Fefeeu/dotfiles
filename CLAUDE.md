@@ -112,11 +112,12 @@ Como trabalhar neste roteiro:
     - histórico limitado a 30 itens (`cliphist -max-items 30 store` no `execs.conf`);
     - `clipboard.sh`: mostra só a prévia (o id fica no índice `-format i`), fecha com SUPER+V de novo, Shift+Delete apaga o item (`cliphist delete`, atalho custom-1 = saída 10);
     - apagados `launcher.sh`, `style_teste.rasi`, `AINDA NÃO FUNCIONA` e o bind antigo comentado.
-14. [ ] **windowrules**: unificar tudo em `windowrulev2`.
+14. [x] **windowrules**: unificado em `windowrule` (no Hyprland 0.51 ele já usa a sintaxe com campos e `windowrulev2` é só alias), uma regra por linha, comentadas.
 15. [ ] **Ambiente**: `env = QT_QPA_PLATFORMTHEME` sai do `hyprland.conf` e vai para `hypr/configs/env.conf`.
 16. [ ] **`scripts/check.sh`**: `bash -n` nos scripts, `hyprctl configerrors` e validação do contrato de cada tema.
 17. [x] **Teste_Colorido**: entrou no git como tema de teste dos scripts.
 
 Fora do roteiro por enquanto:
+- Depois do roteiro: migrar a configuração do Hyprland para Lua (formato das versões novas), conferindo a documentação da versão instalada.
 - `docs/pacotes.md` será reestruturado no futuro. Faltam nele `cliphist`, `libnotify`, `psmisc`, `nim`, `ImageMagick`, `polkit-kde` (agente de senha) e as fontes.
 - Resíduos locais fora do repositório: `~/.config/hypr/{colors.conf,battery-notify.sh,*.bak}`.
