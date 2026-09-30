@@ -2,6 +2,9 @@
 
 BATTERY=/sys/class/power_supply/BAT0
 
+# sem bateria (desktop), não há o que monitorar
+[ -d "$BATTERY" ] || exit 0
+
 while true; do
     LEVEL=$(cat $BATTERY/capacity)
     STATUS=$(cat $BATTERY/status)

@@ -74,7 +74,7 @@ Como trabalhar neste roteiro:
    - arquivo: `hypr/rules/binds.conf`.
 4. [x] **Chaves duplicadas**: `on-scroll-up/down` aparecem duas vezes em `clock.actions`.
    - arquivo: `base/waybar/config.jsonc`.
-5. [ ] **battery-notify.sh**: sair se `BAT0` não existir (no desktop dá erro a cada 150 s).
+5. [x] **battery-notify.sh**: sair se `BAT0` não existir (no desktop dá erro a cada 150 s).
    - arquivo: `hypr/scripts/battery-notify.sh`.
 6. [ ] **Seletor de temas**: `pkill -x rofi` fecha qualquer rofi; deve fechar só o seletor.
    - arquivo: `hypr/scripts/seletor-tema.sh`.
