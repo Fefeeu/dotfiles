@@ -15,6 +15,9 @@
 @define-color branco_papel          #e8e8e8;  /* texto padrão — branco papel de mangá */
 @define-color branco_puro           #ffffff;  /* texto em foco / workspace ativo — branco absoluto */
 
+/* ----- ALERTA -------------------------------------- */
+@define-color vermelho_alerta       #ff3333;  /* workspace urgente — provisório, para avaliar */
+
 /* ----- NOMES SEMÂNTICOS (usados pelo layout base) ---- */
 @define-color fundo                 @preto_absoluto;
 @define-color fundo_modulo          @preto_modulo;
@@ -23,3 +26,5 @@
 @define-color texto                 @branco_puro;
 @define-color texto_ativo           @preto_absoluto;
 @define-color texto_mudo            @cinza_escuro;
+@define-color destaque              @cinza_medio;
+@define-color alerta                @vermelho_alerta;

@@ -78,7 +78,7 @@ Como trabalhar neste roteiro:
    - arquivo: `hypr/scripts/battery-notify.sh`.
 6. [x] **Seletor de temas**: `pkill -x rofi` fecha qualquer rofi; deve fechar só o seletor.
    - arquivo: `hypr/scripts/seletor-tema.sh`.
-7. [ ] **Cores indefinidas no waybar**:
+7. [x] **Cores indefinidas no waybar**:
    - `@purple`, `@red`, `@bg0`, `@blue` e `@black_absoluto` viram nomes semânticos novos (`destaque`, `alerta`);
    - arquivos: `base/waybar/style.css`, `palette/waybar.css` dos temas, `_modelo`, `docs/temas.md`.
 8. [ ] **Rofi Black_and_White**: definir `foreground`, `background-alt` e `selected`.

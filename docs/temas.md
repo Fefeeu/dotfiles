@@ -38,7 +38,7 @@ Cada paleta pode ter as cores cruas com os nomes que quiser, mas precisa definir
 
 | Componente | Nomes |
 |---|---|
-| waybar (`@define-color`) | `fundo`, `fundo_modulo`, `fundo_hover`, `borda`, `texto`, `texto_ativo`, `texto_mudo` |
+| waybar (`@define-color`) | `fundo`, `fundo_modulo`, `fundo_hover`, `borda`, `texto`, `texto_ativo`, `texto_mudo`, `destaque`, `alerta` |
 | rofi | `background`, `background-alt`, `foreground`, `selected`, `border-color` |
 | kitty | `background`, `foreground`, `color0` … `color15` |
 

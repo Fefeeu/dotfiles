@@ -35,7 +35,7 @@ tooltip label {
     margin: 0 0 0 12px;
     border-radius: 18px;
     border: 3px solid @borda;
-    color: @black_absoluto;
+    color: @texto;
 }
 
 #workspaces button {
@@ -57,16 +57,16 @@ tooltip label {
 
 
 #workspaces button:hover {
-    background-color: @purple;
-    color: @bg0;
+    background-color: @destaque;
+    color: @texto_ativo;
     border-radius: 16px;
     min-width: 16px;
     background-size: 400% 400%;
 }
 
 #workspaces button.urgent {
-    background-color: @red;
-    color: @bg0;
+    background-color: @alerta;
+    color: @texto_ativo;
     border-radius: 16px;
     min-width: 16px;
     transition: all 0.3s ease-in-out;
@@ -114,7 +114,7 @@ tooltip label {
 }
 
 #bluetooth.connected {
-    color: @blue;
+    color: @destaque;
 }
 
 #backlight {

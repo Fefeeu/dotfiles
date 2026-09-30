@@ -14,3 +14,5 @@
 @define-color texto                 @verde_neon;
 @define-color texto_ativo           @roxo_neon;
 @define-color texto_mudo            @ciano_neon;
+@define-color destaque              @rosa_neon;
+@define-color alerta                @amarelo_neon;

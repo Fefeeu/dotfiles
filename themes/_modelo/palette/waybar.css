@@ -14,3 +14,5 @@
 @define-color texto                 @cor_clara;
 @define-color texto_ativo           @cor_escura;
 @define-color texto_mudo            @cor_media;
+@define-color destaque              @cor_media;
+@define-color alerta                @cor_clara;
