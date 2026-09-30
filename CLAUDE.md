@@ -72,7 +72,7 @@ Como trabalhar neste roteiro:
    - arquivos: `hypr/configs/execs.conf`, `base/waybar/scripts/launch.sh`.
 3. [x] **SUPER+D não fecha o rofi**: `$menu || pkill rofi` → `pkill rofi || $menu`.
    - arquivo: `hypr/rules/binds.conf`.
-4. [ ] **Chaves duplicadas**: `on-scroll-up/down` aparecem duas vezes em `clock.actions`.
+4. [x] **Chaves duplicadas**: `on-scroll-up/down` aparecem duas vezes em `clock.actions`.
    - arquivo: `base/waybar/config.jsonc`.
 5. [ ] **battery-notify.sh**: sair se `BAT0` não existir (no desktop dá erro a cada 150 s).
    - arquivo: `hypr/scripts/battery-notify.sh`.
