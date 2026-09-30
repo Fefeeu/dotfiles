@@ -16,7 +16,7 @@
 @define-color branco_puro           #ffffff;  /* texto em foco / workspace ativo — branco absoluto */
 
 /* ----- ALERTA -------------------------------------- */
-@define-color vermelho_alerta       #ff3333;  /* workspace urgente — provisório, para avaliar */
+@define-color vermelho_alerta       #c27c7c;  /* workspace urgente — vermelho pastel */
 
 /* ----- NOMES SEMÂNTICOS (usados pelo layout base) ---- */
 @define-color fundo                 @preto_absoluto;
