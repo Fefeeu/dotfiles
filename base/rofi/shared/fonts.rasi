@@ -1,0 +1,4 @@
+/* Fonte padrão de todos os layouts do rofi */
+* {
+    font: "JetBrainsMono Nerd Font 10";
+}

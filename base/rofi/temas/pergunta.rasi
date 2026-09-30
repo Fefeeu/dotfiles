@@ -1,0 +1,36 @@
+/* Perguntas dos scripts (máquina, hostname): visual do seletor, só texto,
+ * com a mensagem (-mesg) entre a busca e a lista */
+
+@import "seletor.rasi"
+
+configuration {
+    show-icons:                  false;
+}
+
+window {
+    width:                       520px;
+}
+
+mainbox {
+    children:                    [ "inputbar", "message", "listview" ];
+}
+
+entry {
+    placeholder:                 "";
+}
+
+message {
+    padding:                     10px 15px;
+    border:                      0px;
+    background-color:            transparent;
+}
+textbox {
+    background-color:            transparent;
+    text-color:                  @cor-texto;
+}
+
+listview {
+    lines:                       4;
+    fixed-height:                false;
+    dynamic:                     true;
+}

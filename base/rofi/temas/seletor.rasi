@@ -1,7 +1,7 @@
 /* Seletor de temas (SUPER+T) — uma linha por tema: miniatura + nome */
 
-@import "~/.config/theme/palette/rofi.rasi"
-@import "../launchers/type-3/shared/fonts.rasi"
+@import "../shared/colors.rasi"
+@import "../shared/fonts.rasi"
 
 configuration {
     show-icons:                  true;

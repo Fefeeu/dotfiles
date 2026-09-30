@@ -29,6 +29,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
   - `scripts/switch-theme.sh <tema>`: confere o link da máquina, refaz os links do tema e recarrega a sessão;
   - máquina sem pasta com o nome do hostname: pergunta qual usar e oferece trocar o hostname para o nome da pasta (terminal com `select`/`read`; fora dele, rofi). O Hyprland repassa o TTY do login aos programas, por isso o teste de terminal é `-t 0 && -t 2` e o seletor chama o switch com `< /dev/null`;
   - `hypr/scripts/seletor-tema.sh` (SUPER+T): lista de temas no rofi com miniatura e nome, layout em `base/rofi/temas/seletor.rasi`.
+- Rofi: `base/rofi/config.rasi` (geral), `shared/` (cores e fonte, importados por todo layout), `launchers/type-3/`, `clipboard/`, `temas/` (seletor e pergunta).
 - `hypr/hyprland.conf` só faz `source`, nesta ordem: máquina (hardware, monitors) → settings → animations → execs → `~/.config/theme/hypr.conf` → windowrules → binds. Bordas, gaps e cores ficam só no tema.
 - Tema ativo: `Black_and_White`. `Teste_Colorido` é um tema neon só para testar os scripts.
   - A paleta usa nomes em português (`preto_absoluto`, `branco_puro`, `cinza_*`) mapeados para nomes semânticos (`fundo`, `texto`, `borda`...).
@@ -101,11 +102,12 @@ Como trabalhar neste roteiro:
 11. **Portabilidade** (dividido em dois):
     - [x] **11a** Hyprland por máquina: `hypr/maquinas/{Frieren,FERN}/` com `hardware.conf` (GPU; teclado compx-kysona-m600 só na Frieren) e `monitors.conf` (Frieren 72 Hz, FERN 120 Hz); link escolhido pelo hostname, com pergunta sempre que não houver pasta com o nome;
     - [x] **11b** Waybar: tirados `device: intel_backlight`, `interface: wlp2s0` e `HDMI-A-1` (o waybar escolhe sozinho).
-12. [ ] **Estrutura do rofi**:
-    - `config.rasi` enxuto para rofi 2.0 (sem `wmctrl`, terminal kitty);
-    - um só `shared/` (cores + fontes + ícone Papirus) para launcher, clipboard e seletor.
+12. [x] **Estrutura do rofi**:
+    - `config.rasi` enxuto para rofi 2.0 (sem `wmctrl`, terminal kitty, ícones Papirus, fonte reserva);
+    - um só `base/rofi/shared/` (`colors.rasi` + `fonts.rasi`) para launcher e seletor;
+    - `temas/pergunta.rasi` (herda do seletor, só texto + `-mesg`) usado nas perguntas de máquina/hostname do `lib.sh`.
 13. [ ] **Clipboard SUPER+V**:
-    - refazer `style-1.rasi` com a paleta;
+    - refazer `style-1.rasi` com a paleta, importando `../shared/colors.rasi` e `../shared/fonts.rasi`;
     - apagar `launcher.sh`, `style_teste.rasi` e `AINDA NÃO FUNCIONA`.
 14. [ ] **windowrules**: unificar tudo em `windowrulev2`.
 15. [ ] **Ambiente**: `env = QT_QPA_PLATFORMTHEME` sai do `hyprland.conf` e vai para `hypr/configs/env.conf`.

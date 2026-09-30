@@ -111,6 +111,11 @@ detectar_maquina() {
     return 0
 }
 
+# Layout das perguntas no rofi: o do componente rofi ativo (pode vir do
+# tema) ou o da base
+ROFI_PERGUNTA="$CONFIG_DIR/rofi/temas/pergunta.rasi"
+[[ -f "$ROFI_PERGUNTA" ]] || ROFI_PERGUNTA="$DOTFILES_DIR/base/rofi/temas/pergunta.rasi"
+
 # tem_terminal
 # Verdadeiro só com um terminal de verdade na frente. Programas abertos pelo
 # Hyprland herdam o TTY do login, então testar só a entrada não basta: o
@@ -134,7 +139,7 @@ perguntar_maquina() {
             [[ -n "$maq" ]] && break || echo "Opção inválida" >&2
         done
     elif command -v rofi &> /dev/null; then
-        maq="$(printf '%s\n' "${maquinas[@]}" | rofi -dmenu -i -p "Máquina" \
+        maq="$(printf '%s\n' "${maquinas[@]}" | rofi -dmenu -i -p "Máquina" -theme "$ROFI_PERGUNTA" \
             -mesg "O hostname '$host' não tem pasta em hypr/maquinas/")" || true
     fi
     echo "$maq"
@@ -148,7 +153,7 @@ confirmar() {
         read -rp "$1 [s/N] " resposta
         [[ "${resposta,,}" == s* ]]
     elif command -v rofi &> /dev/null; then
-        resposta="$(printf 'Sim\nNão\n' | rofi -dmenu -i -p "Confirmar" -mesg "$1")" || true
+        resposta="$(printf 'Sim\nNão\n' | rofi -dmenu -i -p "Confirmar" -theme "$ROFI_PERGUNTA" -mesg "$1")" || true
         [[ "$resposta" == "Sim" ]]
     else
         return 1

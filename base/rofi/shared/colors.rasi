@@ -1,0 +1,2 @@
+/* Cores: vêm da paleta do tema ativo (~/.config/theme) */
+@import "~/.config/theme/palette/rofi.rasi"
