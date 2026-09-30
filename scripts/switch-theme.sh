@@ -53,6 +53,19 @@ for parte in "${!THEME_ONLY[@]}"; do
     fi
 done
 
+# --- QT6CT (aparência dos apps Qt6 no Hyprland) ---
+# O qt6ct.conf do tema é um template: @HOME@ e @TEMA@ viram a pasta do
+# usuário e o nome do tema, porque o qt6ct só aceita caminho absoluto em
+# color_scheme_path. A cópia pronta fica em GERADOS_DIR e é ela que é linkada.
+QT6CT_DEST="$CONFIG_DIR/qt6ct/qt6ct.conf"
+if [[ -f "$TEMA_DIR/qt6ct.conf" ]]; then
+    mkdir -p "$GERADOS_DIR"
+    sed -e "s|@HOME@|$HOME|g" -e "s|@TEMA@|$TEMA|g" "$TEMA_DIR/qt6ct.conf" > "$GERADOS_DIR/qt6ct.conf"
+    link_com_backup "$GERADOS_DIR/qt6ct.conf" "$QT6CT_DEST"
+else
+    remover_link_do_tema "$QT6CT_DEST"
+fi
+
 # --- ESQUEMA DE CORES KDE (Dolphin e apps Qt) ---
 ESQUEMAS_DIR="$HOME/.local/share/color-schemes"
 

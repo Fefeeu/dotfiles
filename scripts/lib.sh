@@ -8,6 +8,8 @@ set -euo pipefail
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
 THEME_LINK="$CONFIG_DIR/theme"
+# Arquivos gerados pelo switch-theme.sh a partir de templates do tema
+GERADOS_DIR="$CONFIG_DIR/dotfiles-gerados"
 
 # --- LOG ---
 # Cores do terminal usadas nas mensagens
@@ -45,8 +47,8 @@ declare -A OVERRIDABLE=(
 )
 
 # Partes que só existem no tema (opcionais)
+# (o qt6ct.conf é template e tem tratamento próprio no switch-theme.sh)
 declare -A THEME_ONLY=(
-    ["qt6ct.conf"]="$CONFIG_DIR/qt6ct/qt6ct.conf"
     ["kvantum"]="$CONFIG_DIR/Kvantum"
 )
 
@@ -68,12 +70,14 @@ link_com_backup() {
 }
 
 # remover_link_do_tema <destino>
-# Apaga DEST só se for um link para dentro de themes/ do repositório.
-# Serve para limpar o que sobrou do tema anterior; arquivo real ou link
-# para outro lugar não é tocado.
+# Apaga DEST só se for um link para dentro de themes/ do repositório ou
+# para a pasta de arquivos gerados. Serve para limpar o que sobrou do tema
+# anterior; arquivo real ou link para outro lugar não é tocado.
 remover_link_do_tema() {
-    local dest="$1"
-    if [[ -L "$dest" && "$(readlink "$dest")" == "$DOTFILES_DIR/themes/"* ]]; then
+    local dest="$1" alvo
+    [[ -L "$dest" ]] || return 0
+    alvo="$(readlink "$dest")"
+    if [[ "$alvo" == "$DOTFILES_DIR/themes/"* || "$alvo" == "$GERADOS_DIR/"* ]]; then
         rm "$dest"
         info "Removido link velho: ${dest/#"$HOME"/\~}"
     fi

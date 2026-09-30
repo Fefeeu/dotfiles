@@ -87,7 +87,7 @@ Como trabalhar neste roteiro:
    - se o tema não tem `kvantum/`, `qt6ct.conf`, `kde.colors` ou `swaync`, remover o link que ainda aponta para `themes/`;
    - limpar o link quebrado `black_and_white.colors`;
    - arquivos: `scripts/switch-theme.sh`, `scripts/lib.sh`.
-10. [ ] **qt6ct**: `color_scheme_path` tem `/home/felipe` e o nome antigo do tema. Gerar o caminho com `$HOME` a partir de um template.
+10. [x] **qt6ct**: `color_scheme_path` tem `/home/felipe` e o nome antigo do tema. Gerar o caminho com `$HOME` a partir de um template.
     - arquivos: `themes/*/qt6ct.conf`, `scripts/switch-theme.sh`.
 11. [ ] **Portabilidade**:
     - `monitor=` sai do `settings.conf` e vai para o `monitors.conf`, carregado pelo `hyprland.conf`;
