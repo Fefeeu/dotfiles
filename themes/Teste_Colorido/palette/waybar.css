@@ -1,0 +1,16 @@
+/* Paleta Teste_Colorido — waybar */
+
+@define-color rosa_neon             #ff00aa;
+@define-color amarelo_neon          #ffe600;
+@define-color ciano_neon            #00e5ff;
+@define-color roxo_neon             #7a00ff;
+@define-color verde_neon            #39ff14;
+
+/* ----- NOMES SEMÂNTICOS ----------------------------- */
+@define-color fundo                 @roxo_neon;
+@define-color fundo_modulo          @roxo_neon;
+@define-color fundo_hover           @rosa_neon;
+@define-color borda                 @amarelo_neon;
+@define-color texto                 @verde_neon;
+@define-color texto_ativo           @roxo_neon;
+@define-color texto_mudo            @ciano_neon;

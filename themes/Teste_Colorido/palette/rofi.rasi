@@ -1,0 +1,9 @@
+/* Paleta Teste_Colorido — rofi */
+
+* {
+    background:         #7a00ff;
+    background-alt:     #ff00aa;
+    foreground:         #39ff14;
+    selected:           #ffe600;
+    border-color:       #00e5ff;
+}

@@ -102,7 +102,7 @@ Como trabalhar neste roteiro:
 14. [ ] **windowrules**: unificar tudo em `windowrulev2`.
 15. [ ] **Ambiente**: `env = QT_QPA_PLATFORMTHEME` sai do `hyprland.conf` e vai para `hypr/configs/env.conf`.
 16. [ ] **`scripts/check.sh`**: `bash -n` nos scripts, `hyprctl configerrors` e validação do contrato de cada tema.
-17. [ ] **Teste_Colorido**: decidir se entra no git.
+17. [x] **Teste_Colorido**: entrou no git como tema de teste dos scripts.
 
 Fora do roteiro por enquanto:
 - `docs/pacotes.md` será reestruturado no futuro. Faltam nele `cliphist`, `libnotify`, `psmisc`, `nim`, `ImageMagick` e as fontes.
