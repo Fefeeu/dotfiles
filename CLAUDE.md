@@ -118,6 +118,9 @@ Como trabalhar neste roteiro:
 17. [x] **Teste_Colorido**: entrou no git como tema de teste dos scripts.
 
 Fora do roteiro por enquanto:
-- Depois do roteiro: migrar a configuração do Hyprland para Lua (formato das versões novas), conferindo a documentação da versão instalada.
 - `docs/pacotes.md` será reestruturado no futuro. Faltam nele `cliphist`, `libnotify`, `psmisc`, `nim`, `ImageMagick`, `polkit-kde` (agente de senha) e as fontes.
 - Resíduos locais fora do repositório: `~/.config/hypr/{colors.conf,battery-notify.sh,*.bak}`.
+
+## Migração para LUA
+Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões novas do Hyprland usam configuração em Lua). Mesmo jeito de trabalhar: um item por vez, com aprovação antes.
+- [ ] Atualizar Hyprland
