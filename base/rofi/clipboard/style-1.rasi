@@ -1,190 +1,116 @@
-/**
- *
- * Author : Aditya Shakya (adi1090x)
- * Github : @adi1090x
- * 
- * Rofi Theme File
- * Rofi Version: 1.7.3
- **/
+/* Clipboard (SUPER+V): histórico do cliphist em lista, só texto.
+ * Mesmo visual do seletor de temas; cores da paleta do tema ativo. */
 
-/*****----- Configuration -----*****/
+@import "../shared/colors.rasi"
+@import "../shared/fonts.rasi"
+
 configuration {
-	modi:                       "drun";
-    show-icons:                 false;
-    display-drun:               "Applications";
-	drun-display-format:        ">>      {name} [<span weight='light' size='small'><i>({generic})</i></span>]";
+    show-icons:                  false;
 }
 
-/*****----- Global Properties -----*****/
 * {
-    font:                        "Grape Nuts 14";
+    /* a paleta pode não definir todos os nomes, então há valores reserva */
+    cor-fundo:                   var(background, #000000);
+    cor-fundo-alt:               var(background-alt, #1c1c1c);
+    cor-texto:                   var(foreground, #ffffff);
+    cor-destaque:                var(selected, #ffffff);
+    cor-borda:                   var(border-color, #ffffff);
 }
 
-/*****----- Main Window -----*****/
 window {
-    /* properties for window widget */
-    transparency:                "real";
     location:                    center;
     anchor:                      center;
-    fullscreen:                  false;
-    width:                       860px;
-    x-offset:                    0px;
-    y-offset:                    0px;
-
-    /* properties for all widgets */
-    enabled:                     true;
-    margin:                      0px;
-    padding:                     0px;
-    border:                      0px solid;
-    border-radius:               0px;
-    border-color:                black;
-    cursor:                      "default";
-    background-image:            url("~/.config/rofi/images/paper.png", none);
+    width:                       720px;
+    border:                      3px solid;
+    border-radius:               12px;
+    border-color:                @cor-borda;
+    background-color:            @cor-fundo;
 }
 
-/*****----- Main Box -----*****/
 mainbox {
-    enabled:                     true;
-    spacing:                     8px;
-    margin:                      0px;
-    padding:                     0px;
-    border:                      0px solid;
-    border-radius:               0px 0px 0px 0px;
-    border-color:                black;
+    spacing:                     15px;
+    padding:                     20px;
     background-color:            transparent;
-    children:                    [ "inputbar", "listview" ];
+    children:                    [ "inputbar", "message", "listview" ];
 }
 
-/*****----- Inputbar -----*****/
+/* Busca: prompt, texto digitado e contador (filtrados/total) */
 inputbar {
-    enabled:                     true;
-    spacing:                     0px;
-    margin:                      95px 0px 0px 0px;
-    padding:                     0px 30px;
-    border:                      0px;
-    border-radius:               0px;
-    border-color:                #D79290;
+    spacing:                     10px;
+    padding:                     10px 15px;
+    border:                      2px solid;
+    border-radius:               10px;
+    border-color:                @cor-destaque;
     background-color:            transparent;
-    text-color:                  black;
+    text-color:                  @cor-texto;
     children:                    [ "prompt", "entry", "num-filtered-rows", "textbox-num-sep", "num-rows" ];
 }
-
-prompt {
-    enabled:                     true;
-    font:                        "Grape Nuts Bold 14";
+prompt, entry, num-filtered-rows, textbox-num-sep, num-rows {
     background-color:            transparent;
     text-color:                  inherit;
+}
+prompt {
+    font:                        "JetBrainsMono Nerd Font Bold 10";
 }
 entry {
-    enabled:                     true;
-    expand:                      true;
-    padding:                     0px 10px 0px 40px;
-    background-color:            transparent;
-    text-color:                  inherit;
-    cursor:                      text;
-    placeholder:                 "Search...";
+    placeholder:                 "Buscar no histórico";
     placeholder-color:           inherit;
+    cursor:                      text;
 }
-num-filtered-rows {
-    enabled:                     true;
+num-filtered-rows, textbox-num-sep, num-rows {
     expand:                      false;
-    background-color:            transparent;
-    text-color:                  inherit;
 }
 textbox-num-sep {
-    enabled:                     true;
-    expand:                      false;
     str:                         "/";
-    background-color:            transparent;
-    text-color:                  inherit;
-}
-num-rows {
-    enabled:                     true;
-    expand:                      false;
-    background-color:            transparent;
-    text-color:                  inherit;
 }
 
-/*****----- Listview -----*****/
+/* Dica de atalhos (-mesg do clipboard.sh) */
+message {
+    padding:                     0px 15px;
+    border:                      0px;
+    background-color:            transparent;
+}
+textbox {
+    background-color:            transparent;
+    text-color:                  @cor-texto;
+}
+
 listview {
-    enabled:                     true;
     columns:                     1;
-    lines:                       15;
+    lines:                       10;
+    spacing:                     4px;
     cycle:                       true;
     dynamic:                     true;
-    scrollbar:                   false;
-    layout:                      vertical;
-    reverse:                     false;
     fixed-height:                true;
-    fixed-columns:               true;
-    
-    spacing:                     4px;
-    margin:                      0px;
-    padding:                     0px;
-    border:                      0px solid;
-    border-radius:               0px;
-    border-color:                black;
-    background-color:            transparent;
-    text-color:                  black;
-    cursor:                      "default";
-}
-scrollbar {
-    handle-width:                5px ;
-    handle-color:                black;
-    border-radius:               0px;
+    scrollbar:                   false;
     background-color:            transparent;
 }
 
-/*****----- Elements -----*****/
 element {
-    enabled:                     true;
-    spacing:                     0px;
-    margin:                      0px;
-    padding:                     0px 0px 0px 100px;
-    border:                      0px solid;
-    border-radius:               0px;
-    border-color:                black;
+    padding:                     8px 12px;
+    border:                      2px solid;
+    border-radius:               8px;
+    border-color:                transparent;
     background-color:            transparent;
-    text-color:                  black;
+    text-color:                  @cor-texto;
     cursor:                      pointer;
 }
-element normal.normal {
-    background-color:            transparent;
-    text-color:                  black;
+element alternate.normal {
+    background-color:            @cor-fundo-alt;
 }
 element selected.normal {
-    background-color:            transparent;
-    text-color:                  #D76A67;
-}
-element alternate.normal {
-    background-color:            transparent;
-    text-color:                  black;
-}
-element-icon {
-    background-color:            transparent;
-    text-color:                  inherit;
-    size:                        24px;
-    cursor:                      inherit;
+    border-color:                @cor-destaque;
 }
 element-text {
     background-color:            transparent;
     text-color:                  inherit;
-    highlight:                   inherit;
+    highlight:                   bold;
     cursor:                      inherit;
     vertical-align:              0.5;
-    horizontal-align:            0.0;
 }
 
-/*****----- Message -----*****/
 error-message {
     padding:                     20px;
-    border:                      0px solid;
-    border-radius:               0px;
-    border-color:                black;
-    background-color:            white;
-    text-color:                  black;
-}
-textbox {
-    vertical-align:              0.5;
-    horizontal-align:            0.0;
+    background-color:            @cor-fundo;
+    text-color:                  @cor-texto;
 }

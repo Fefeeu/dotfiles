@@ -107,9 +107,10 @@ Como trabalhar neste roteiro:
     - `config.rasi` enxuto para rofi 2.0 (sem `wmctrl`, terminal kitty, ícones Papirus, fonte reserva);
     - um só `base/rofi/shared/` (`colors.rasi` + `fonts.rasi`) para launcher e seletor;
     - `temas/pergunta.rasi` (herda do seletor, só texto + `-mesg`) usado nas perguntas de máquina/hostname do `lib.sh`.
-13. [ ] **Clipboard SUPER+V**:
-    - refazer `style-1.rasi` com a paleta, importando `../shared/colors.rasi` e `../shared/fonts.rasi`;
-    - apagar `launcher.sh`, `style_teste.rasi` e `AINDA NÃO FUNCIONA`.
+13. [x] **Clipboard SUPER+V**:
+    - `style-1.rasi` refeito com a paleta e o `shared/`, no visual do seletor;
+    - `clipboard.sh`: esconde o id do cliphist (`-display-columns 2`), fecha com SUPER+V de novo, Shift+Delete apaga o item (`cliphist delete`, atalho custom-1 = saída 10);
+    - apagados `launcher.sh`, `style_teste.rasi`, `AINDA NÃO FUNCIONA` e o bind antigo comentado.
 14. [ ] **windowrules**: unificar tudo em `windowrulev2`.
 15. [ ] **Ambiente**: `env = QT_QPA_PLATFORMTHEME` sai do `hyprland.conf` e vai para `hypr/configs/env.conf`.
 16. [ ] **`scripts/check.sh`**: `bash -n` nos scripts, `hyprctl configerrors` e validação do contrato de cada tema.
