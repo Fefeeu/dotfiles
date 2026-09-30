@@ -28,7 +28,7 @@ dotfiles/
 ├── base/                   # layout padrão: waybar, rofi, kitty
 ├── themes/
 │   ├── _modelo/            # ponto de partida para um tema novo
-│   └── black_and_white/    # hypr.conf, palette/, wallpapers/, KDE/Qt
+│   └── Black_and_White/    # hypr.conf, palette/, imagens/, KDE/Qt
 ├── extras/nitch/           # personalização do nitch (patch)
 └── docs/
     ├── temas.md            # como os temas funcionam
@@ -41,7 +41,7 @@ dotfiles/
 git clone https://github.com/Fefeeu/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ./install.sh                         # escolhe hardware e tema
-scripts/switch-theme.sh <tema>       # troca só o tema depois
+scripts/switch-theme.sh <tema>       # troca só o tema depois (ou SUPER+T)
 ```
 
 O `install.sh`:

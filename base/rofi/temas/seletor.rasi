@@ -1,0 +1,94 @@
+/* Seletor de temas (SUPER+T) — uma linha por tema: miniatura + nome */
+
+@import "~/.config/theme/palette/rofi.rasi"
+@import "../launchers/type-3/shared/fonts.rasi"
+
+configuration {
+    show-icons:                  true;
+}
+
+* {
+    /* a paleta pode não definir todos os nomes, então há valores reserva */
+    cor-fundo:                   var(background, #000000);
+    cor-texto:                   var(foreground, #ffffff);
+    cor-destaque:                var(selected, #ffffff);
+    cor-borda:                   var(border-color, #ffffff);
+}
+
+window {
+    location:                    center;
+    anchor:                      center;
+    width:                       640px;
+    border:                      3px solid;
+    border-radius:               12px;
+    border-color:                @cor-borda;
+    background-color:            @cor-fundo;
+}
+
+mainbox {
+    spacing:                     15px;
+    padding:                     20px;
+    background-color:            transparent;
+    children:                    [ "inputbar", "listview" ];
+}
+
+inputbar {
+    padding:                     10px 15px;
+    border:                      2px solid;
+    border-radius:               10px;
+    border-color:                @cor-destaque;
+    background-color:            transparent;
+    text-color:                  @cor-texto;
+    children:                    [ "prompt", "entry" ];
+}
+prompt, entry {
+    background-color:            transparent;
+    text-color:                  inherit;
+}
+prompt {
+    margin:                      0px 10px 0px 0px;
+}
+entry {
+    placeholder:                 "Buscar tema";
+    placeholder-color:           inherit;
+}
+
+listview {
+    columns:                     1;
+    lines:                       4;
+    spacing:                     10px;
+    fixed-height:                true;
+    scrollbar:                   false;
+    background-color:            transparent;
+}
+
+element {
+    orientation:                 horizontal;
+    spacing:                     20px;
+    padding:                     10px;
+    border:                      2px solid;
+    border-radius:               10px;
+    border-color:                transparent;
+    background-color:            transparent;
+    text-color:                  @cor-texto;
+    cursor:                      pointer;
+}
+element normal.active, element alternate.active {
+    border-color:                @cor-texto;
+}
+element selected.normal, element selected.active {
+    border-color:                @cor-destaque;
+}
+element-icon {
+    size:                        160px;
+    border-radius:               8px;
+    background-color:            transparent;
+    cursor:                      inherit;
+}
+element-text {
+    font:                        "JetBrains Mono Bold 14";
+    vertical-align:              0.5;
+    background-color:            transparent;
+    text-color:                  inherit;
+    cursor:                      inherit;
+}

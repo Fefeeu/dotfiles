@@ -11,7 +11,7 @@ TEMA_DIR="$DOTFILES_DIR/themes/$TEMA"
 [[ -d "$TEMA_DIR" ]] || erro "tema '$TEMA' não existe em themes/"
 
 # --- VALIDAÇÃO (contrato em docs/temas.md) ---
-for obrigatorio in hypr.conf palette wallpapers/wall.png; do
+for obrigatorio in hypr.conf palette imagens/wallpapers/wall.png imagens/thumb.png; do
     [[ -e "$TEMA_DIR/$obrigatorio" ]] || erro "$TEMA/$obrigatorio não encontrado. O tema está incompleto."
 done
 
@@ -59,7 +59,7 @@ if [[ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]]; then
     "$CONFIG_DIR/waybar/scripts/launch.sh" > /dev/null 2>&1 && info "waybar"
     pkill -USR1 -x kitty && info "kitty" || true
     if pgrep -x swww-daemon > /dev/null; then
-        swww img "$TEMA_DIR/wallpapers/wall.png" --transition-type grow && info "wallpaper"
+        swww img "$TEMA_DIR/imagens/wallpapers/wall.png" --transition-type grow && info "wallpaper"
     fi
 fi
 

@@ -13,7 +13,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 - `~/dotfiles` é a fonte da verdade. Os links são criados com `ln -sfn` e caminhos absolutos. Se já existe uma config real no destino, ela vira `.bak`.
 - Modelo **base + override**:
   - `base/` tem o layout padrão (`waybar`, `rofi`, `kitty/kitty.conf`);
-  - `themes/<tema>/` tem `hypr.conf`, `palette/` e `wallpapers/wall.png`;
+  - `themes/<tema>/` tem `hypr.conf`, `palette/`, `imagens/wallpapers/wall.png` e `imagens/thumb.png` (miniatura do seletor); outras imagens, como `me.png`, ficam soltas em `imagens/`;
   - o tema pode trazer a própria pasta de um componente, que substitui a da base inteira.
   - Contrato completo em `docs/temas.md`.
 - Estado da máquina (fora do git):
@@ -26,9 +26,10 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 - Scripts:
   - `scripts/lib.sh`: `STATIC_MAP`, `OVERRIDABLE`, `THEME_ONLY`, `link_com_backup` e `listar_temas`;
   - `install.sh`: pergunta o hardware e o tema, cria os links fixos e chama o switch;
-  - `scripts/switch-theme.sh <tema>`: refaz os links do tema e recarrega a sessão.
+  - `scripts/switch-theme.sh <tema>`: refaz os links do tema e recarrega a sessão;
+  - `hypr/scripts/seletor-tema.sh` (SUPER+T): lista de temas no rofi com miniatura e nome, layout em `base/rofi/temas/seletor.rasi`.
 - `hypr/hyprland.conf` só faz `source`, nesta ordem: hardware → settings → animations → execs → `~/.config/theme/hypr.conf` → windowrules → binds. Bordas, gaps e cores ficam só no tema.
-- Tema ativo: `black_and_white`, o único por enquanto.
+- Tema ativo: `Black_and_White`. `Teste_Colorido` é um tema neon só para testar os scripts.
   - A paleta usa nomes em português (`preto_absoluto`, `branco_puro`, `cinza_*`) mapeados para nomes semânticos (`fundo`, `texto`, `borda`...).
   - Os temas de rofi vêm do adi1090x/rofi (launcher `type-3/style-1`).
   - `themes/_modelo` é o esqueleto de tema novo (pastas com `_` não aparecem no install).

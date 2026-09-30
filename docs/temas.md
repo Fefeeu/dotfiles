@@ -9,6 +9,8 @@ Um tema fica em `themes/<nome>/`. O layout padrão fica em `base/`, e cada tema 
 3. linka as partes opcionais do tema (`qt6ct.conf`, `kvantum/`, `kde.colors`);
 4. recarrega Hyprland, Waybar e kitty, e troca o wallpaper.
 
+Também dá para trocar pelo seletor (**SUPER+T**, `hypr/scripts/seletor-tema.sh`): ele lista os temas com a miniatura `imagens/thumb.png` e o nome. O layout do seletor é `base/rofi/temas/seletor.rasi`, e um tema que sobrescreve o `rofi/` pode ter o próprio `temas/seletor.rasi`.
+
 O layout, seja da base ou de um override, sempre encontra as cores pelo mesmo caminho: `~/.config/theme/palette/...`.
 
 ## Estrutura
@@ -19,7 +21,10 @@ themes/<nome>/
 │   ├── waybar.css
 │   ├── rofi.rasi
 │   └── kitty.conf
-├── wallpapers/wall.png  # obrigatório (hyprlock também usa me.png, se existir)
+├── imagens/
+│   ├── wallpapers/wall.png  # obrigatório: wallpaper padrão (outros wallpapers ficam aqui)
+│   ├── thumb.png            # obrigatório: miniatura no seletor de temas
+│   └── me.png ...           # opcionais: outras imagens (o hyprlock usa me.png)
 ├── kde.colors           # opcional: esquema de cores do KDE (Dolphin, apps Qt)
 ├── qt6ct.conf           # opcional
 ├── kvantum/             # opcional
@@ -40,7 +45,7 @@ Cada paleta pode ter as cores cruas com os nomes que quiser, mas precisa definir
 ## Criar um tema
 ```bash
 cp -r themes/_modelo themes/<nome>
-# edite hypr.conf e palette/*, e coloque wallpapers/wall.png
+# edite hypr.conf e palette/*, e coloque imagens/wallpapers/wall.png e imagens/thumb.png
 scripts/switch-theme.sh <nome>
 ```
 

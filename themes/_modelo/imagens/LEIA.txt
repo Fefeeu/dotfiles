@@ -1,0 +1,4 @@
+imagens/
+├── wallpapers/wall.png   # obrigatório: wallpaper padrão (outros wallpapers também ficam aqui)
+├── thumb.png             # obrigatório: miniatura no seletor de temas (SUPER+T)
+└── outras imagens         # opcionais, ex.: me.png usado pelo hyprlock
