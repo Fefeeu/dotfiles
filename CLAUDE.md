@@ -30,7 +30,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
   - máquina sem pasta com o nome do hostname: pergunta qual usar e oferece trocar o hostname para o nome da pasta (terminal com `select`/`read`; fora dele, rofi). O Hyprland repassa o TTY do login aos programas, por isso o teste de terminal é `-t 0 && -t 2` e o seletor chama o switch com `< /dev/null`;
   - `hypr/scripts/seletor-tema.sh` (SUPER+T): lista de temas no rofi com miniatura e nome, layout em `base/rofi/temas/seletor.rasi`.
 - Rofi: `base/rofi/config.rasi` (geral), `shared/` (cores e fonte, importados por todo layout), `launchers/type-3/`, `clipboard/`, `temas/` (seletor e pergunta).
-- `hypr/hyprland.conf` só faz `source`, nesta ordem: máquina (hardware, monitors) → settings → animations → execs → `~/.config/theme/hypr.conf` → windowrules → binds. Bordas, gaps e cores ficam só no tema.
+- `hypr/hyprland.conf` só faz `source`, nesta ordem: env → máquina (hardware, monitors) → settings → animations → execs → `~/.config/theme/hypr.conf` → windowrules → binds. Bordas, gaps e cores ficam só no tema.
 - Tema ativo: `Black_and_White`. `Teste_Colorido` é um tema neon só para testar os scripts.
   - A paleta usa nomes em português (`preto_absoluto`, `branco_puro`, `cinza_*`) mapeados para nomes semânticos (`fundo`, `texto`, `borda`...).
   - Os temas de rofi vêm do adi1090x/rofi (launcher `type-3/style-1`).
@@ -45,7 +45,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
   - só de tema: entra no `THEME_ONLY`.
 - O layout base só usa nomes semânticos de cor, nunca cores cruas.
 - Scripts referenciam `~/.config/<comp>/...` ou `~/.config/theme/...`, nunca `~/dotfiles/themes/...`.
-- Valores específicos de uma máquina (monitor, variáveis de GPU, teclados) ficam em `hypr/maquinas/<Nome>/`, não em `settings.conf` nem nos temas.
+- Valores específicos de uma máquina (monitor, variáveis de GPU, teclados) ficam em `hypr/maquinas/<Nome>/`, não em `settings.conf` nem nos temas. Variáveis de ambiente comuns ficam em `hypr/configs/env.conf`.
 - Temas baixados de terceiros: remova a pasta `.git` interna antes do commit, porque ela vira submodule ("modified content").
 - Pacotes necessários ficam em `docs/pacotes.md` (formato `pacote # motivo`). Ideias futuras ficam em `docs/ideias.md`.
 - Depois de editar: `hyprctl reload && hyprctl configerrors` e `~/.config/waybar/scripts/launch.sh`.
@@ -113,7 +113,7 @@ Como trabalhar neste roteiro:
     - `clipboard.sh`: mostra só a prévia (o id fica no índice `-format i`), fecha com SUPER+V de novo, Shift+Delete apaga o item (`cliphist delete`, atalho custom-1 = saída 10);
     - apagados `launcher.sh`, `style_teste.rasi`, `AINDA NÃO FUNCIONA` e o bind antigo comentado.
 14. [x] **windowrules**: unificado em `windowrule` (no Hyprland 0.51 ele já usa a sintaxe com campos e `windowrulev2` é só alias), uma regra por linha, comentadas.
-15. [ ] **Ambiente**: `env = QT_QPA_PLATFORMTHEME` sai do `hyprland.conf` e vai para `hypr/configs/env.conf`.
+15. [x] **Ambiente**: `hypr/configs/env.conf` com as variáveis comuns (`QT_QPA_PLATFORMTHEME`, saído do `hyprland.conf`, e `XDG_SESSION_TYPE`, antes repetido nos `hardware.conf`).
 16. [ ] **`scripts/check.sh`**: `bash -n` nos scripts, `hyprctl configerrors` e validação do contrato de cada tema.
 17. [x] **Teste_Colorido**: entrou no git como tema de teste dos scripts.
 
