@@ -48,7 +48,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 - Scripts referenciam `~/.config/<comp>/...` ou `~/.config/theme/...`, nunca `~/dotfiles/themes/...`.
 - Valores específicos de uma máquina (monitor, variáveis de GPU, teclados) ficam em `hypr/maquinas/<Nome>/`, não em `settings.conf` nem nos temas. Variáveis de ambiente comuns ficam em `hypr/configs/env.conf`.
 - Temas baixados de terceiros: remova a pasta `.git` interna antes do commit, porque ela vira submodule ("modified content").
-- Pacotes necessários ficam em `docs/pacotes.md` (formato `pacote # motivo`). Ideias futuras ficam em `docs/ideias.md`.
+- Pacotes necessários ficam em `docs/pacotes-dotfiles.md` (seções `[todas]`/`[FERN]`/`[Frieren]`/`[extras]`, `repo:`, `nerdfont:` e `pacote # motivo`; feito para um instalador ler). Programa novo usado pelo dotfiles entra lá. Ideias futuras ficam em `docs/ideias.md`.
 - Depois de editar: `scripts/check.sh` (inclui `hyprctl reload` + `configerrors`) e `~/.config/waybar/scripts/launch.sh`.
 
 ## Pendências na Frieren
@@ -119,7 +119,6 @@ Como trabalhar neste roteiro:
 17. [x] **Teste_Colorido**: entrou no git como tema de teste dos scripts.
 
 Fora do roteiro por enquanto:
-- `docs/pacotes.md` será reestruturado no futuro. Faltam nele `cliphist`, `libnotify`, `psmisc`, `nim`, `ImageMagick`, `polkit-kde` (agente de senha) e as fontes.
 - Resíduos locais fora do repositório: `~/.config/hypr/{colors.conf,battery-notify.sh,*.bak}`.
 
 ## Migração para LUA

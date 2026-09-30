@@ -53,7 +53,7 @@ dotfiles/
 ├── extras/nitch/           # personalização do nitch (patch)
 └── docs/
     ├── temas.md            # como os temas funcionam
-    ├── pacotes.md          # pacotes necessários
+    ├── pacotes-dotfiles.md # pacotes necessários (por seção/máquina)
     └── ideias.md           # ideias futuras
 ```
 
