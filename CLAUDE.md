@@ -83,7 +83,7 @@ Como trabalhar neste roteiro:
    - arquivos: `base/waybar/style.css`, `palette/waybar.css` dos temas, `_modelo`, `docs/temas.md`.
 8. [x] **Rofi Black_and_White**: definir `foreground`, `background-alt` e `selected`.
    - arquivo: `themes/Black_and_White/palette/rofi.rasi`.
-9. [ ] **Links velhos ao trocar de tema**:
+9. [x] **Links velhos ao trocar de tema**:
    - se o tema não tem `kvantum/`, `qt6ct.conf`, `kde.colors` ou `swaync`, remover o link que ainda aponta para `themes/`;
    - limpar o link quebrado `black_and_white.colors`;
    - arquivos: `scripts/switch-theme.sh`, `scripts/lib.sh`.

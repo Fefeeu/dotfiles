@@ -1,19 +1,24 @@
 #!/usr/bin/env bash
 # Funções e listas compartilhadas pelo install.sh e pelo switch-theme.sh
 
+# Para no primeiro erro, em variável não definida ou em falha no meio de um pipe
 set -euo pipefail
 
+# Raiz do repositório (pasta acima de scripts/), pasta de configs e link do tema ativo
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
 THEME_LINK="$CONFIG_DIR/theme"
 
 # --- LOG ---
+# Cores do terminal usadas nas mensagens
 AZUL='\033[0;34m'
 VERDE='\033[0;32m'
 AMARELO='\033[1;33m'
 VERMELHO='\033[0;31m'
 NC='\033[0m'
 
+# Mensagens padronizadas: título de seção, informação, link criado, aviso
+# e erro (o erro vai para o stderr e encerra o script)
 titulo() { echo -e "\n${AMARELO}>> $*${NC}"; }
 info()   { echo -e "${AZUL}$*${NC}"; }
 ok()     { echo -e "${VERDE}Linkado:${NC} $*"; }
@@ -46,19 +51,37 @@ declare -A THEME_ONLY=(
 )
 
 # --- FUNÇÕES ---
+# link_com_backup <origem> <destino>
 # Cria o link DEST -> SRC; se DEST for um arquivo real, guarda em DEST.bak
 link_com_backup() {
     local src="$1" dest="$2"
+    # garante que a pasta do destino existe
     mkdir -p "$(dirname "$dest")"
+    # config real (não é link) no destino: guarda antes de substituir
     if [[ -e "$dest" && ! -L "$dest" ]]; then
         mv "$dest" "$dest.bak"
         aviso "backup criado: $dest.bak"
     fi
+    # -n evita criar o link dentro de uma pasta que já é link
     ln -sfn "$src" "$dest"
     ok "${src#"$DOTFILES_DIR"/} -> ${dest/#"$HOME"/\~}"
 }
 
-# Temas disponíveis (pastas que começam com _ são modelos/testes)
+# remover_link_do_tema <destino>
+# Apaga DEST só se for um link para dentro de themes/ do repositório.
+# Serve para limpar o que sobrou do tema anterior; arquivo real ou link
+# para outro lugar não é tocado.
+remover_link_do_tema() {
+    local dest="$1"
+    if [[ -L "$dest" && "$(readlink "$dest")" == "$DOTFILES_DIR/themes/"* ]]; then
+        rm "$dest"
+        info "Removido link velho: ${dest/#"$HOME"/\~}"
+    fi
+}
+
+# listar_temas
+# Imprime os temas disponíveis, um por linha (pastas que começam com _
+# são modelos/testes e ficam de fora)
 listar_temas() {
     local dir
     for dir in "$DOTFILES_DIR"/themes/*/; do
