@@ -81,7 +81,7 @@ Como trabalhar neste roteiro:
 7. [x] **Cores indefinidas no waybar**:
    - `@purple`, `@red`, `@bg0`, `@blue` e `@black_absoluto` viram nomes semânticos novos (`destaque`, `alerta`);
    - arquivos: `base/waybar/style.css`, `palette/waybar.css` dos temas, `_modelo`, `docs/temas.md`.
-8. [ ] **Rofi Black_and_White**: definir `foreground`, `background-alt` e `selected`.
+8. [x] **Rofi Black_and_White**: definir `foreground`, `background-alt` e `selected`.
    - arquivo: `themes/Black_and_White/palette/rofi.rasi`.
 9. [ ] **Links velhos ao trocar de tema**:
    - se o tema não tem `kvantum/`, `qt6ct.conf`, `kde.colors` ou `swaync`, remover o link que ainda aponta para `themes/`;

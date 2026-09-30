@@ -2,8 +2,6 @@
  *
  * Nomes usados pelo layout base (adi1090x):
  *   background, background-alt, foreground, selected, border-color
- * foreground, background-alt e selected ainda não estão definidos
- * (o rofi usa o padrão dele). Definir aqui muda o visual.
  */
 
 * {
@@ -11,6 +9,9 @@
     scrollbar:          true;
 
     background:         #000000;
+    background-alt:     #1c1c1c;
+    foreground:         #ffffff;
+    selected:           #ffffff;
     border-color:       #ffffff;
 
     background-color:   @background;
