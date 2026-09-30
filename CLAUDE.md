@@ -70,7 +70,7 @@ Como trabalhar neste roteiro:
    - em outra máquina, instalar a fonte do mesmo jeito.
 2. [x] **Waybar inicia duas vezes**: `execs.conf` só roda o `launch.sh`, que usa `pkill -x` e espera o waybar antigo sair antes de abrir outro.
    - arquivos: `hypr/configs/execs.conf`, `base/waybar/scripts/launch.sh`.
-3. [ ] **SUPER+D não fecha o rofi**: `$menu || pkill rofi` → `pkill rofi || $menu`.
+3. [x] **SUPER+D não fecha o rofi**: `$menu || pkill rofi` → `pkill rofi || $menu`.
    - arquivo: `hypr/rules/binds.conf`.
 4. [ ] **Chaves duplicadas**: `on-scroll-up/down` aparecem duas vezes em `clock.actions`.
    - arquivo: `base/waybar/config.jsonc`.
