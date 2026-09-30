@@ -53,6 +53,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 Coisas para rodar no desktop quando voltar a ele (apagar cada uma depois de feita):
 - `git pull` e logo em seguida `./install.sh` (ou `scripts/switch-theme.sh <tema>`): o `hyprland.conf` agora lê `~/.config/hypr/maquina/`, que só existe depois disso. Na pergunta, escolher `Frieren` e aceitar trocar o hostname.
 - Conferir depois: `hyprctl configerrors`, monitor a 72 Hz e teclado compx-kysona-m600 em `us`.
+- Conferir no waybar: módulo de brilho some (desktop não tem backlight) e rede mostra a interface ativa (cabo).
 - Instalar a JetBrainsMono Nerd Font em `~/.local/share/fonts/JetBrainsMonoNerd` (nerd-fonts do GitHub), como no notebook.
 
 ## Problemas já resolvidos
@@ -98,7 +99,7 @@ Como trabalhar neste roteiro:
     - arquivos: `themes/*/qt6ct.conf`, `scripts/switch-theme.sh`.
 11. **Portabilidade** (dividido em dois):
     - [x] **11a** Hyprland por máquina: `hypr/maquinas/{Frieren,FERN}/` com `hardware.conf` (GPU; teclado compx-kysona-m600 só na Frieren) e `monitors.conf` (Frieren 72 Hz, FERN 120 Hz); link escolhido pelo hostname, com pergunta sempre que não houver pasta com o nome;
-    - [ ] **11b** Waybar: tirar `device: intel_backlight`, `interface: wlp2s0` e `HDMI-A-1`.
+    - [x] **11b** Waybar: tirados `device: intel_backlight`, `interface: wlp2s0` e `HDMI-A-1` (o waybar escolhe sozinho).
 12. [ ] **Estrutura do rofi**:
     - `config.rasi` enxuto para rofi 2.0 (sem `wmctrl`, terminal kitty);
     - um só `shared/` (cores + fontes + ícone Papirus) para launcher, clipboard e seletor.

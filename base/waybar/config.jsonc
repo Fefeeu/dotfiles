@@ -54,8 +54,7 @@
             "default": ""
         },
         "persistent-workspaces": {
-            "*": 0, // 5 workspaces by default on every monitor
-            "HDMI-A-1": 3 // but only three on HDMI-A-1
+            "*": 0 // 5 workspaces by default on every monitor
         }
     },
     // "tray": {
@@ -101,12 +100,10 @@
         ]
     },
     "backlight": {
-      "device": "intel_backlight",
       "format": "{percent}% {icon}",
       "format-icons": ["", ""]
     },
     "network": {
-        "interface": "wlp2s0",
         "format": "{ifname}",
         // "format-wifi": "{essid} ({signalStrength}%) ",
         "format-wifi": "{essid}  ",
