@@ -1,4 +1,4 @@
-@import 'colors/black_and_white.css';
+@import url("../theme/palette/waybar.css");
 
 * {
     border: none;

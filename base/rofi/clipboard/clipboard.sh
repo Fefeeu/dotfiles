@@ -5,7 +5,7 @@
 #
 ## Rofi   : Clipboard Manager Corrigido
 
-dir="$HOME/dotfiles/themes/current_theme/rofi/clipboard"
+dir="$HOME/.config/rofi/clipboard"
 theme='style-1'
 
 # Injeta os blocos visuais que o dmenu ignora por padrão

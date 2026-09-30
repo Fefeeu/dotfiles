@@ -15,4 +15,4 @@
 
 /* Import color-scheme from `colors` directory */
 
-@import "~/.config/rofi/colors/black_and_white.rasi"
+@import "~/.config/theme/palette/rofi.rasi"

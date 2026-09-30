@@ -1,0 +1,25 @@
+/* Paleta black_and_white — cores do rofi
+ *
+ * Nomes usados pelo layout base (adi1090x):
+ *   background, background-alt, foreground, selected, border-color
+ * foreground, background-alt e selected ainda não estão definidos
+ * (o rofi usa o padrão dele). Definir aqui muda o visual.
+ */
+
+* {
+    highlight:          bold italic;
+    scrollbar:          true;
+
+    background:         #000000;
+    border-color:       #ffffff;
+
+    background-color:   @background;
+    separatorcolor:     @border-color;
+    scrollbar-handle:   @border-color;
+
+    /* estados usados pelo tema padrão do rofi */
+    normal-background:  @background;
+    normal-foreground:  @foreground;
+    active-foreground:  @background;
+    urgent-foreground:  @background;
+}
