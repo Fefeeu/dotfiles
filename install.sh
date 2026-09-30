@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
-# Provisionamento: links fixos e tema inicial.
-# A pasta da máquina (hypr/maquinas/) é escolhida pelo switch-theme.sh.
+# Provisionamento: máquina, links fixos e tema inicial.
 # Para só trocar de tema depois, use scripts/switch-theme.sh <tema>.
 
 source "$(dirname "${BASH_SOURCE[0]}")/scripts/lib.sh"
 
 info "--- Hyprland Setup (Provisionamento) ---"
+
+# --- MÁQUINA ---
+# Pasta de hypr/maquinas/ pelo hostname; sem pasta com esse nome, pergunta
+titulo "Máquina:"
+aplicar_maquina
 
 # --- TEMA ---
 titulo "Tema Inicial:"

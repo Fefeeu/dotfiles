@@ -30,7 +30,8 @@ escolha="$(
 
 [[ -z "$escolha" || "$escolha" == "$TEMA_ATUAL" ]] && exit 0
 
-if "$DOTFILES_DIR/scripts/switch-theme.sh" "$escolha" > /dev/null 2>&1; then
+# sem terminal: se o switch precisar perguntar algo, pergunta pelo rofi
+if "$DOTFILES_DIR/scripts/switch-theme.sh" "$escolha" < /dev/null > /dev/null 2>&1; then
     notify-send -i "$DOTFILES_DIR/themes/$escolha/imagens/thumb.png" "Tema aplicado" "$escolha"
 else
     notify-send -u critical "Erro ao trocar de tema" "Rode: scripts/switch-theme.sh $escolha"

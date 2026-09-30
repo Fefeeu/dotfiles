@@ -111,35 +111,78 @@ detectar_maquina() {
     return 0
 }
 
+# tem_terminal
+# Verdadeiro só com um terminal de verdade na frente. Programas abertos pelo
+# Hyprland herdam o TTY do login, então testar só a entrada não basta: o
+# seletor (SUPER+T) também manda a saída para /dev/null e a entrada vem de
+# /dev/null
+tem_terminal() {
+    [[ -t 0 && -t 2 ]]
+}
+
 # perguntar_maquina
 # Pergunta qual pasta usar: no terminal com select, fora dele (SUPER+T)
 # com o rofi. Imprime a escolha, ou nada se o usuário cancelar
 perguntar_maquina() {
-    local maq="" maquinas
+    local maq="" maquinas host
+    host="$(< /proc/sys/kernel/hostname)"
     mapfile -t maquinas < <(listar_maquinas)
-    if [[ -t 0 ]]; then
+    if tem_terminal; then
         # o menu do select sai no stderr, então só a escolha vai para o stdout
-        echo "Máquina (hostname '$(< /proc/sys/kernel/hostname)' sem pasta em hypr/maquinas/):" >&2
+        echo "Máquina (hostname '$host' sem pasta em hypr/maquinas/):" >&2
         select maq in "${maquinas[@]}"; do
             [[ -n "$maq" ]] && break || echo "Opção inválida" >&2
         done
     elif command -v rofi &> /dev/null; then
         maq="$(printf '%s\n' "${maquinas[@]}" | rofi -dmenu -i -p "Máquina" \
-            -mesg "O hostname '$(< /proc/sys/kernel/hostname)' não tem pasta em hypr/maquinas/")" || true
+            -mesg "O hostname '$host' não tem pasta em hypr/maquinas/")" || true
     fi
     echo "$maq"
 }
 
+# confirmar <pergunta>
+# Pergunta sim/não (terminal ou rofi); verdadeiro se a resposta for sim
+confirmar() {
+    local resposta=""
+    if tem_terminal; then
+        read -rp "$1 [s/N] " resposta
+        [[ "${resposta,,}" == s* ]]
+    elif command -v rofi &> /dev/null; then
+        resposta="$(printf 'Sim\nNão\n' | rofi -dmenu -i -p "Confirmar" -mesg "$1")" || true
+        [[ "$resposta" == "Sim" ]]
+    else
+        return 1
+    fi
+}
+
+# renomear_host <nome>
+# Troca o hostname com o hostnamectl (o polkit pede a senha)
+renomear_host() {
+    if hostnamectl set-hostname "$1"; then
+        info "Hostname agora é $1"
+    else
+        aviso "não consegui trocar o hostname; rode num terminal: sudo hostnamectl set-hostname $1"
+    fi
+}
+
 # aplicar_maquina
 # Liga MAQUINA_LINK à pasta da máquina: pelo hostname, se houver pasta com
-# esse nome; senão pergunta. Se o link já estiver certo, não mexe
+# esse nome; senão pergunta, e oferece trocar o hostname para o nome da
+# pasta escolhida. Se o link já estiver certo, não mexe
 aplicar_maquina() {
-    local maq alvo
+    local maq alvo host
+    host="$(< /proc/sys/kernel/hostname)"
     maq="$(detectar_maquina)"
-    [[ -n "$maq" ]] || maq="$(perguntar_maquina)"
     if [[ -z "$maq" ]]; then
-        aviso "nenhuma máquina escolhida, link mantido: ${MAQUINA_LINK/#"$HOME"/\~}"
-        return 0
+        maq="$(perguntar_maquina)"
+        if [[ -z "$maq" ]]; then
+            aviso "nenhuma máquina escolhida, link mantido: ${MAQUINA_LINK/#"$HOME"/\~}"
+            return 0
+        fi
+        # com o hostname igual à pasta, as próximas vezes não perguntam mais
+        if confirmar "Trocar o hostname de '$host' para '$maq'?"; then
+            renomear_host "$maq"
+        fi
     fi
     alvo="$DOTFILES_DIR/hypr/maquinas/$maq"
     if [[ "$(readlink "$MAQUINA_LINK" 2> /dev/null)" == "$alvo" ]]; then

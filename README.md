@@ -21,7 +21,7 @@ scripts/switch-theme.sh <tema>       # troca só o tema depois (ou SUPER+T)
 O `install.sh` é **idempotente**: pode ser rodado várias vezes sem quebrar nada. Ele pergunta o **tema visual** (uma das pastas dentro de `themes/`), cria os **links fixos** (hypr, hyprlock, swappy) e chama o `scripts/switch-theme.sh`. O `switch-theme.sh`:
 - valida se o tema tem os arquivos obrigatórios;
 - liga `~/.config/theme` ao tema;
-- liga `~/.config/hypr/maquina` à pasta de `hypr/maquinas/` com o nome do hostname (sem diferenciar maiúsculas); se não houver, pergunta qual usar (no terminal ou pelo rofi, no SUPER+T). Para definir o nome: `hostnamectl set-hostname <Nome>`;
+- liga `~/.config/hypr/maquina` à pasta de `hypr/maquinas/` com o nome do hostname (sem diferenciar maiúsculas); se não houver, pergunta qual usar (no terminal ou pelo rofi, no SUPER+T) e oferece trocar o hostname para o nome da pasta, para não perguntar de novo. O `install.sh` faz essa mesma conferência antes de pedir o tema;
 - para cada componente (waybar, rofi, kitty, swaync), usa a versão do tema, se existir, ou a da `base/`;
 - aplica o **esquema de cores do KDE** (Dolphin e apps Qt) com `plasma-apply-colorscheme`, além do qt6ct e do Kvantum, quando o tema tem esses arquivos;
 - recarrega Hyprland, Waybar e kitty e aplica o **wallpaper** com `swww`.

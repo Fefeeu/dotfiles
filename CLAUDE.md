@@ -25,8 +25,9 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
   - kitty: `include ~/.config/theme/palette/kitty.conf`.
 - Scripts:
   - `scripts/lib.sh`: `STATIC_MAP`, `OVERRIDABLE`, `THEME_ONLY`, `link_com_backup`, `listar_temas` e `aplicar_maquina` (detecta ou pergunta a máquina);
-  - `install.sh`: pergunta o tema, cria os links fixos e chama o switch;
-  - `scripts/switch-theme.sh <tema>`: confere o link da máquina (pergunta se o hostname não tem pasta), refaz os links do tema e recarrega a sessão;
+  - `install.sh`: confere a máquina, pergunta o tema, cria os links fixos e chama o switch;
+  - `scripts/switch-theme.sh <tema>`: confere o link da máquina, refaz os links do tema e recarrega a sessão;
+  - máquina sem pasta com o nome do hostname: pergunta qual usar e oferece trocar o hostname para o nome da pasta (terminal com `select`/`read`; fora dele, rofi). O Hyprland repassa o TTY do login aos programas, por isso o teste de terminal é `-t 0 && -t 2` e o seletor chama o switch com `< /dev/null`;
   - `hypr/scripts/seletor-tema.sh` (SUPER+T): lista de temas no rofi com miniatura e nome, layout em `base/rofi/temas/seletor.rasi`.
 - `hypr/hyprland.conf` só faz `source`, nesta ordem: máquina (hardware, monitors) → settings → animations → execs → `~/.config/theme/hypr.conf` → windowrules → binds. Bordas, gaps e cores ficam só no tema.
 - Tema ativo: `Black_and_White`. `Teste_Colorido` é um tema neon só para testar os scripts.
@@ -47,6 +48,12 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 - Temas baixados de terceiros: remova a pasta `.git` interna antes do commit, porque ela vira submodule ("modified content").
 - Pacotes necessários ficam em `docs/pacotes.md` (formato `pacote # motivo`). Ideias futuras ficam em `docs/ideias.md`.
 - Depois de editar: `hyprctl reload && hyprctl configerrors` e `~/.config/waybar/scripts/launch.sh`.
+
+## Pendências na Frieren
+Coisas para rodar no desktop quando voltar a ele (apagar cada uma depois de feita):
+- `git pull` e logo em seguida `./install.sh` (ou `scripts/switch-theme.sh <tema>`): o `hyprland.conf` agora lê `~/.config/hypr/maquina/`, que só existe depois disso. Na pergunta, escolher `Frieren` e aceitar trocar o hostname.
+- Conferir depois: `hyprctl configerrors`, monitor a 72 Hz e teclado compx-kysona-m600 em `us`.
+- Instalar a JetBrainsMono Nerd Font em `~/.local/share/fonts/JetBrainsMonoNerd` (nerd-fonts do GitHub), como no notebook.
 
 ## Problemas já resolvidos
 - "Too many levels of symbolic links" no kitty: eram links apontando para si mesmos. Foram recriados com caminho absoluto.
