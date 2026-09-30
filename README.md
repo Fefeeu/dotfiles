@@ -16,6 +16,7 @@ git clone https://github.com/Fefeeu/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ./install.sh                         # escolhe o tema e detecta a máquina
 scripts/switch-theme.sh <tema>       # troca só o tema depois (ou SUPER+T)
+scripts/check.sh                     # confere scripts, temas, links e config do Hyprland
 ```
 
 O `install.sh` é **idempotente**: pode ser rodado várias vezes sem quebrar nada. Ele pergunta o **tema visual** (uma das pastas dentro de `themes/`), cria os **links fixos** (hypr, hyprlock, swappy) e chama o `scripts/switch-theme.sh`. O `switch-theme.sh`:
@@ -34,7 +35,8 @@ dotfiles/
 ├── install.sh              # provisionamento: links fixos + tema
 ├── scripts/
 │   ├── lib.sh              # funções e listas de links compartilhadas
-│   └── switch-theme.sh     # troca o tema ativo
+│   ├── switch-theme.sh     # troca o tema ativo
+│   └── check.sh            # conferência geral, sem alterar nada
 ├── hypr/                   # núcleo do Hyprland (igual para todos os temas)
 │   ├── hyprland.conf       # só faz source dos demais
 │   ├── configs/            # settings, animations, execs

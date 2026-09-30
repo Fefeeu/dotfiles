@@ -28,6 +28,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
   - `install.sh`: confere a máquina, pergunta o tema, cria os links fixos e chama o switch;
   - `scripts/switch-theme.sh <tema>`: confere o link da máquina, refaz os links do tema e recarrega a sessão;
   - máquina sem pasta com o nome do hostname: pergunta qual usar e oferece trocar o hostname para o nome da pasta (terminal com `select`/`read`; fora dele, rofi). O Hyprland repassa o TTY do login aos programas, por isso o teste de terminal é `-t 0 && -t 2` e o seletor chama o switch com `< /dev/null`;
+  - `scripts/check.sh`: confere scripts, temas, máquinas, links, rofi e Hyprland;
   - `hypr/scripts/seletor-tema.sh` (SUPER+T): lista de temas no rofi com miniatura e nome, layout em `base/rofi/temas/seletor.rasi`.
 - Rofi: `base/rofi/config.rasi` (geral), `shared/` (cores e fonte, importados por todo layout), `launchers/type-3/`, `clipboard/`, `temas/` (seletor e pergunta).
 - `hypr/hyprland.conf` só faz `source`, nesta ordem: env → máquina (hardware, monitors) → settings → animations → execs → `~/.config/theme/hypr.conf` → windowrules → binds. Bordas, gaps e cores ficam só no tema.
@@ -48,7 +49,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 - Valores específicos de uma máquina (monitor, variáveis de GPU, teclados) ficam em `hypr/maquinas/<Nome>/`, não em `settings.conf` nem nos temas. Variáveis de ambiente comuns ficam em `hypr/configs/env.conf`.
 - Temas baixados de terceiros: remova a pasta `.git` interna antes do commit, porque ela vira submodule ("modified content").
 - Pacotes necessários ficam em `docs/pacotes.md` (formato `pacote # motivo`). Ideias futuras ficam em `docs/ideias.md`.
-- Depois de editar: `hyprctl reload && hyprctl configerrors` e `~/.config/waybar/scripts/launch.sh`.
+- Depois de editar: `scripts/check.sh` (inclui `hyprctl reload` + `configerrors`) e `~/.config/waybar/scripts/launch.sh`.
 
 ## Pendências na Frieren
 Coisas para rodar no desktop quando voltar a ele (apagar cada uma depois de feita):
@@ -114,7 +115,7 @@ Como trabalhar neste roteiro:
     - apagados `launcher.sh`, `style_teste.rasi`, `AINDA NÃO FUNCIONA` e o bind antigo comentado.
 14. [x] **windowrules**: unificado em `windowrule` (no Hyprland 0.51 ele já usa a sintaxe com campos e `windowrulev2` é só alias), uma regra por linha, comentadas.
 15. [x] **Ambiente**: `hypr/configs/env.conf` com as variáveis comuns (`QT_QPA_PLATFORMTHEME`, saído do `hyprland.conf`, e `XDG_SESSION_TYPE`, antes repetido nos `hardware.conf`).
-16. [ ] **`scripts/check.sh`**: `bash -n` nos scripts, `hyprctl configerrors` e validação do contrato de cada tema.
+16. [x] **`scripts/check.sh`**: confere sem alterar nada — `bash -n` e permissão dos scripts (shellcheck se instalado), contrato dos temas (arquivos e nomes de cor), pastas de máquina e link, links do `STATIC_MAP`/`OVERRIDABLE`, `.rasi` de layout (`rofi -dump-theme`) e `hyprctl reload` + `configerrors`. Sai com 1 se houver problema. O `config.jsonc` do waybar fica de fora (comentários).
 17. [x] **Teste_Colorido**: entrou no git como tema de teste dos scripts.
 
 Fora do roteiro por enquanto:
