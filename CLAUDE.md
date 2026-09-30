@@ -63,11 +63,11 @@ Como trabalhar neste roteiro:
 - Depois de aplicar: verificar, fazer commit curto em português e marcar `[x]` aqui.
 - Não juntar itens sem pedido.
 
-1. [ ] **Fontes**:
-   - padronizar JetBrainsMono Nerd Font em waybar, hyprlock e rofi, e JetBrains Mono no kitty;
-   - hoje nenhuma JetBrains/Iosevka está instalada, então tudo usa fonte substituta;
+1. [x] **Fontes**:
+   - tudo usa JetBrainsMono Nerd Font (rofi, kitty, qt6ct fixed; waybar e hyprlock já usavam);
+   - fonte instalada em `~/.local/share/fonts/JetBrainsMonoNerd` (nerd-fonts do GitHub, sem sudo);
    - arquivos: `base/kitty/kitty.conf`, `base/waybar/style.css`, `hypr/hyprlock.conf`, `base/rofi/**/*.rasi`;
-   - instalar as fontes fica com o usuário.
+   - em outra máquina, instalar a fonte do mesmo jeito.
 2. [ ] **Waybar inicia duas vezes**: tirar `exec-once = waybar` e deixar só o `launch.sh`. No `launch.sh`, trocar `killall -9` por `pkill -x`.
    - arquivos: `hypr/configs/execs.conf`, `base/waybar/scripts/launch.sh`.
 3. [ ] **SUPER+D não fecha o rofi**: `$menu || pkill rofi` → `pkill rofi || $menu`.
