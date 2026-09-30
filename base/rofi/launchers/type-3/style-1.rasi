@@ -71,6 +71,7 @@ prompt {
     enabled:                     true;
     background-color:            transparent;
     text-color:                  @selected;
+    font:                        "JetBrainsMono Nerd Font Propo Bold 12";
 }
 textbox-prompt-colon {
     enabled:                     true;
