@@ -56,15 +56,54 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
   - `hyprlock.conf` e `battery-notify.sh` foram trazidos para o repositório;
   - o README foi reescrito.
 
-## Pendências conhecidas (análise de 2026-09-25)
-Detalhes em `~/.claude/plans/voc-lida-bem-com-zippy-russell.md`.
-- **Clipboard (SUPER+V)**: o `base/rofi/clipboard/style-1.rasi` usa imagem de fundo `paper.png` (não existe), texto preto e a fonte "Grape Nuts" (não instalada). Precisa ser refeito com a paleta.
-- **Waybar `style.css`**: usa `@purple`, `@red`, `@bg0`, `@blue` e `@black_absoluto`, que não estão definidas na paleta.
-- **Rofi**: `foreground`, `background-alt` e `selected` não estão definidos em `palette/rofi.rasi`.
-- **Waybar inicia duas vezes**: `execs.conf` roda `waybar` e também `launch.sh`.
-- **SUPER+D**: `$menu || pkill rofi` deveria ser `pkill rofi || $menu`.
-- **`qt6ct.conf`**: tem o caminho fixo `/home/felipe/...`.
-- **Valores fixos de uma máquina**:
-  - `monitor=` no `settings.conf` (o `monitors.conf` existe, será usado no futuro, mas ainda não é carregado);
-  - no Waybar, `intel_backlight`, `wlp2s0` e `HDMI-A-1`.
-- **battery-notify.sh**: no desktop, que não tem `BAT0`, gera erro a cada 150 s.
+## Roteiro de mudanças (levantamento de 2026-09-30)
+Como trabalhar neste roteiro:
+- Uma mudança por vez, na ordem.
+- Antes de cada uma, explicar ao usuário o que muda, por quê e em quais arquivos, e **esperar aprovação**.
+- Depois de aplicar: verificar, fazer commit curto em português e marcar `[x]` aqui.
+- Não juntar itens sem pedido.
+
+1. [ ] **Fontes**:
+   - padronizar JetBrainsMono Nerd Font em waybar, hyprlock e rofi, e JetBrains Mono no kitty;
+   - hoje nenhuma JetBrains/Iosevka está instalada, então tudo usa fonte substituta;
+   - arquivos: `base/kitty/kitty.conf`, `base/waybar/style.css`, `hypr/hyprlock.conf`, `base/rofi/**/*.rasi`;
+   - instalar as fontes fica com o usuário.
+2. [ ] **Waybar inicia duas vezes**: tirar `exec-once = waybar` e deixar só o `launch.sh`. No `launch.sh`, trocar `killall -9` por `pkill -x`.
+   - arquivos: `hypr/configs/execs.conf`, `base/waybar/scripts/launch.sh`.
+3. [ ] **SUPER+D não fecha o rofi**: `$menu || pkill rofi` → `pkill rofi || $menu`.
+   - arquivo: `hypr/rules/binds.conf`.
+4. [ ] **Chaves duplicadas**: `on-scroll-up/down` aparecem duas vezes em `clock.actions`.
+   - arquivo: `base/waybar/config.jsonc`.
+5. [ ] **battery-notify.sh**: sair se `BAT0` não existir (no desktop dá erro a cada 150 s).
+   - arquivo: `hypr/scripts/battery-notify.sh`.
+6. [ ] **Seletor de temas**: `pkill -x rofi` fecha qualquer rofi; deve fechar só o seletor.
+   - arquivo: `hypr/scripts/seletor-tema.sh`.
+7. [ ] **Cores indefinidas no waybar**:
+   - `@purple`, `@red`, `@bg0`, `@blue` e `@black_absoluto` viram nomes semânticos novos (`destaque`, `alerta`);
+   - arquivos: `base/waybar/style.css`, `palette/waybar.css` dos temas, `_modelo`, `docs/temas.md`.
+8. [ ] **Rofi Black_and_White**: definir `foreground`, `background-alt` e `selected`.
+   - arquivo: `themes/Black_and_White/palette/rofi.rasi`.
+9. [ ] **Links velhos ao trocar de tema**:
+   - se o tema não tem `kvantum/`, `qt6ct.conf`, `kde.colors` ou `swaync`, remover o link que ainda aponta para `themes/`;
+   - limpar o link quebrado `black_and_white.colors`;
+   - arquivos: `scripts/switch-theme.sh`, `scripts/lib.sh`.
+10. [ ] **qt6ct**: `color_scheme_path` tem `/home/felipe` e o nome antigo do tema. Gerar o caminho com `$HOME` a partir de um template.
+    - arquivos: `themes/*/qt6ct.conf`, `scripts/switch-theme.sh`.
+11. [ ] **Portabilidade**:
+    - `monitor=` sai do `settings.conf` e vai para o `monitors.conf`, carregado pelo `hyprland.conf`;
+    - tirar `device: intel_backlight`, `interface: wlp2s0` e `HDMI-A-1` do waybar;
+    - avaliar o bloco `device { compx-kysona-m600 }`.
+12. [ ] **Estrutura do rofi**:
+    - `config.rasi` enxuto para rofi 2.0 (sem `wmctrl`, terminal kitty);
+    - um só `shared/` (cores + fontes + ícone Papirus) para launcher, clipboard e seletor.
+13. [ ] **Clipboard SUPER+V**:
+    - refazer `style-1.rasi` com a paleta;
+    - apagar `launcher.sh`, `style_teste.rasi` e `AINDA NÃO FUNCIONA`.
+14. [ ] **windowrules**: unificar tudo em `windowrulev2`.
+15. [ ] **Ambiente**: `env = QT_QPA_PLATFORMTHEME` sai do `hyprland.conf` e vai para `hypr/configs/env.conf`.
+16. [ ] **`scripts/check.sh`**: `bash -n` nos scripts, `hyprctl configerrors` e validação do contrato de cada tema.
+17. [ ] **Teste_Colorido**: decidir se entra no git.
+
+Fora do roteiro por enquanto:
+- `docs/pacotes.md` será reestruturado no futuro. Faltam nele `cliphist`, `libnotify`, `psmisc`, `nim`, `ImageMagick` e as fontes.
+- Resíduos locais fora do repositório: `~/.config/hypr/{colors.conf,battery-notify.sh,*.bak}`.
