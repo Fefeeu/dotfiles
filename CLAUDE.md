@@ -108,8 +108,9 @@ Como trabalhar neste roteiro:
     - um só `base/rofi/shared/` (`colors.rasi` + `fonts.rasi`) para launcher e seletor;
     - `temas/pergunta.rasi` (herda do seletor, só texto + `-mesg`) usado nas perguntas de máquina/hostname do `lib.sh`.
 13. [x] **Clipboard SUPER+V**:
-    - `style-1.rasi` refeito com a paleta e o `shared/`, no visual do seletor;
-    - `clipboard.sh`: esconde o id do cliphist (`-display-columns 2`), fecha com SUPER+V de novo, Shift+Delete apaga o item (`cliphist delete`, atalho custom-1 = saída 10);
+    - `style-1.rasi` refeito com a paleta e o `shared/`: grade 4x3, imagem em miniatura (cache em `~/.cache/cliphist-miniaturas`, limpo a cada abertura) e texto em até 3 linhas (`-sep $'\x1e' -eh 3`);
+    - histórico limitado a 30 itens (`cliphist -max-items 30 store` no `execs.conf`);
+    - `clipboard.sh`: mostra só a prévia (o id fica no índice `-format i`), fecha com SUPER+V de novo, Shift+Delete apaga o item (`cliphist delete`, atalho custom-1 = saída 10);
     - apagados `launcher.sh`, `style_teste.rasi`, `AINDA NÃO FUNCIONA` e o bind antigo comentado.
 14. [ ] **windowrules**: unificar tudo em `windowrulev2`.
 15. [ ] **Ambiente**: `env = QT_QPA_PLATFORMTHEME` sai do `hyprland.conf` e vai para `hypr/configs/env.conf`.
