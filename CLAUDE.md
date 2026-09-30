@@ -52,6 +52,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 ## Pendências na Frieren
 Coisas para rodar no desktop quando voltar a ele (apagar cada uma depois de feita):
 - `git pull` e logo em seguida `./install.sh` (ou `scripts/switch-theme.sh <tema>`): o `hyprland.conf` agora lê `~/.config/hypr/maquina/`, que só existe depois disso. Na pergunta, escolher `Frieren` e aceitar trocar o hostname.
+- `hypr/maquinas/Frieren/monitors.conf` está com a resolução de teste `980x720@72` (usada para testar a troca de máquina no notebook): trocar pela resolução real do monitor (era `1920x1080@72`).
 - Conferir depois: `hyprctl configerrors`, monitor a 72 Hz e teclado compx-kysona-m600 em `us`.
 - Conferir no waybar: módulo de brilho some (desktop não tem backlight) e rede mostra a interface ativa (cabo).
 - Instalar a JetBrainsMono Nerd Font em `~/.local/share/fonts/JetBrainsMonoNerd` (nerd-fonts do GitHub), como no notebook.
