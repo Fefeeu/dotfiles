@@ -68,7 +68,7 @@ Como trabalhar neste roteiro:
    - fonte instalada em `~/.local/share/fonts/JetBrainsMonoNerd` (nerd-fonts do GitHub, sem sudo);
    - arquivos: `base/kitty/kitty.conf`, `base/waybar/style.css`, `hypr/hyprlock.conf`, `base/rofi/**/*.rasi`;
    - em outra máquina, instalar a fonte do mesmo jeito.
-2. [ ] **Waybar inicia duas vezes**: tirar `exec-once = waybar` e deixar só o `launch.sh`. No `launch.sh`, trocar `killall -9` por `pkill -x`.
+2. [x] **Waybar inicia duas vezes**: `execs.conf` só roda o `launch.sh`, que usa `pkill -x` e espera o waybar antigo sair antes de abrir outro.
    - arquivos: `hypr/configs/execs.conf`, `base/waybar/scripts/launch.sh`.
 3. [ ] **SUPER+D não fecha o rofi**: `$menu || pkill rofi` → `pkill rofi || $menu`.
    - arquivo: `hypr/rules/binds.conf`.
