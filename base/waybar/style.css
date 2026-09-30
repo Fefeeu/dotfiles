@@ -19,22 +19,22 @@ window#waybar {
 }
 
 tooltip {
-    background: @preto_absoluto;
-    border: 3px solid @branco_puro;
+    background: @fundo;
+    border: 3px solid @borda;
     border-radius: 12px;
 }
 
 tooltip label {
-    color: @branco_puro;
+    color: @texto;
     padding: 12px;
 }
 
 #workspaces {
-    background-color: @preto_absoluto;
+    background-color: @fundo;
     padding: 5px 3px;
     margin: 0 0 0 12px;
     border-radius: 18px;
-    border: 3px solid @branco_puro;
+    border: 3px solid @borda;
     color: @black_absoluto;
 }
 
@@ -42,14 +42,14 @@ tooltip label {
     padding: 0px 6px;
     margin: 0px 3px;
     border-radius: 16px;
-    color: @branco_puro;
-    background-color: @preto_absoluto;
+    color: @texto;
+    background-color: @fundo;
     transition: all 0.3s ease-in-out;
 }
 
 #workspaces button.active {
-    background-color: @branco_puro;
-    color: @preto_absoluto;
+    background-color: @texto;
+    color: @texto_ativo;
     min-width: 24px;
     transition: all 0.3s ease-in-out;
     font-size: 16px;
@@ -79,38 +79,38 @@ tooltip label {
 #clock,
 #custom-notification,
 #bluetooth {
-    background-color: @preto_absoluto;
+    background-color: @fundo;
     padding: 0 15px 0 15px;
     margin: 0 0 0 12px;
     border-radius: 50px;
-    border: 3px solid @branco_puro;
+    border: 3px solid @borda;
 }
 
 #clock {
-    color: @branco_puro;
+    color: @texto;
     font-weight: bold;
 }
 
 #custom-notification {
-    color: @branco_puro;
+    color: @texto;
     font-weight: bold;
     margin: 0 12px 0 12px;
 }
 
 #pulseaudio {
-    color: @branco_puro;
+    color: @texto;
 }
 
 #network {
-    color: @branco_puro;
+    color: @texto;
 }
 
 #battery {
-    color: @branco_puro;
+    color: @texto;
 }
 
 #bluetooth {
-    color: @branco_puro;
+    color: @texto;
 }
 
 #bluetooth.connected {
@@ -118,5 +118,5 @@ tooltip label {
 }
 
 #backlight {
-  color: @branco_puro;
+  color: @texto;
 }
