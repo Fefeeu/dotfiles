@@ -1,0 +1,16 @@
+/* Paleta <nome> — waybar
+ * Defina as cores cruas com os nomes que quiser e mapeie
+ * para os nomes semânticos que o base/waybar/style.css usa. */
+
+@define-color cor_escura            #000000;
+@define-color cor_clara             #ffffff;
+@define-color cor_media             #555555;
+
+/* ----- NOMES SEMÂNTICOS (obrigatórios) -------------- */
+@define-color fundo                 @cor_escura;
+@define-color fundo_modulo          @cor_escura;
+@define-color fundo_hover           @cor_media;
+@define-color borda                 @cor_clara;
+@define-color texto                 @cor_clara;
+@define-color texto_ativo           @cor_escura;
+@define-color texto_mudo            @cor_media;

@@ -229,3 +229,10 @@ ffmpeg-libs           # bibliotecas FFmpeg
 
 # ----- GAMING (relevante para o setup) ------------
 gamemode              # otimizações de performance para jogos
+
+# ----- TERMINAL: NITCH (fora do dnf) --------------
+# fetch de sistema que roda ao abrir o terminal (~/.bashrc)
+# instalação com a personalização guardada em extras/nitch:
+#   git clone https://github.com/unxsh/nitch.git ~/.config/nitch
+#   git -C ~/.config/nitch apply ~/dotfiles/extras/nitch/drawing.patch
+#   cd ~/.config/nitch && nimble build   # precisa do pacote nim

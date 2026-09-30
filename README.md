@@ -1,49 +1,55 @@
 # dotfiles
 
-Configuração do meu ambiente **[Hyprland](https://hyprland.org/)** (compositor Wayland), incluindo terminal, launcher de aplicativos e temas visuais. Este repositório centraliza esses arquivos de configuração e os conecta ao sistema por meio de links simbólicos, via `install.sh`.
+Configuração do meu ambiente **[Hyprland](https://hyprland.org/)** no Fedora 43, sobre o KDE Plasma 6. O repositório é a fonte da verdade: o `install.sh` liga tudo em `~/.config` com links simbólicos.
 
 ## 🖥️ O ambiente
+- **Hyprland**: layout `dwindle`, blur e animações em `hypr/configs/`.
+- **Waybar** como barra, **Rofi** como launcher e clipboard, **swaync** para notificações e **swww** para o wallpaper.
+- **Kitty** como terminal e **Dolphin** como gerenciador de arquivos.
+- **Hyprlock** como tela de bloqueio, com aviso de bateria baixa em `hypr/scripts/`.
+- **Dois perfis de hardware**: `amd` (desktop Frieren) e `nvidia` (notebook FERN).
+- **Temas**: cada tema pode mudar só as cores ou substituir componentes inteiros. Veja [docs/temas.md](docs/temas.md).
 
-- **Hyprland** como compositor de janelas, com layout `dwindle`, bordas arredondadas, blur e animações configuradas em `hypr/configs/`.
-- **Kitty** como terminal e **Dolphin** como gerenciador de arquivos padrão.
-- **Rofi** como launcher de aplicativos, com applets prontos para bateria, brilho, volume, power menu e screenshot.
-- **Waybar** como barra de status, **swaync** para notificações, **swww** para gerenciar o wallpaper e **nm-applet** para a conexão de rede — todos iniciados automaticamente em `hypr/configs/execs.conf`.
-- Suporte a dois perfis de hardware (`amd` e `nvidia`), escolhidos na instalação e carregados como `hardware_profile.conf`.
-- **Temas** (`themes/gruvbox`, `themes/tokyo_night`) que agrupam wallpaper e configuração de terminal, incluindo um utilitário de fetch de sistema (estilo `neofetch`) para o Tokyo Night.
-
-## 📁 Estrutura do repositório
-
+## 📁 Estrutura
 ```
 dotfiles/
-├── hypr/
-│   ├── hyprland.conf       # arquivo principal, importa os demais via `source`
-│   ├── configs/            # settings, animations e execs (autostart)
+├── install.sh              # provisionamento: hardware + links fixos + tema
+├── scripts/
+│   ├── lib.sh              # funções e listas de links compartilhadas
+│   └── switch-theme.sh     # troca o tema ativo
+├── hypr/                   # núcleo do Hyprland (igual para todos os temas)
+│   ├── hyprland.conf       # só faz source dos demais
+│   ├── configs/            # settings, animations, execs, monitors
+│   ├── rules/              # binds e windowrules
 │   ├── hardware/           # amd.conf, nvidia.conf
-│   └── rules/               # binds.conf e windowrules.conf
-├── rofi/                    # temas, cores, launchers e applets do Rofi
-├── kitty/
-│   └── kitty.conf
+│   ├── scripts/            # battery-notify.sh
+│   └── hyprlock.conf
+├── swappy/config
+├── base/                   # layout padrão: waybar, rofi, kitty
 ├── themes/
-│   ├── gruvbox/
-│   └── tokyo_night/         # inclui utilitário de fetch de sistema para terminal
-└── install.sh                # script de instalação/provisionamento
+│   ├── _modelo/            # ponto de partida para um tema novo
+│   └── black_and_white/    # hypr.conf, palette/, wallpapers/, KDE/Qt
+├── extras/nitch/           # personalização do nitch (patch)
+└── docs/
+    ├── temas.md            # como os temas funcionam
+    ├── pacotes.md          # pacotes necessários
+    └── ideias.md           # ideias futuras
 ```
 
-## ⚙️ O que o `install.sh` faz
-
-1. Pergunta qual **perfil de hardware** usar (`amd` ou `nvidia`) e cria o link `~/.config/hypr/hardware_profile.conf` apontando para o perfil escolhido.
-2. Pergunta qual **tema inicial** aplicar, listando as pastas dentro de `themes/`, e cria o link `themes/current_theme`.
-3. Cria **links simbólicos** de `hypr/hyprland.conf`, `hypr/configs`, `hypr/rules`, `rofi`, `kitty/kitty.conf`, `waybar` e `swaync` para os respectivos locais em `~/.config`, fazendo backup (`.bak`) de qualquer configuração real já existente antes de sobrescrever.
-
-### Como usar
-
+## ⚙️ Como usar
 ```bash
 git clone https://github.com/Fefeeu/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-chmod +x install.sh
-./install.sh
+./install.sh                         # escolhe hardware e tema
+scripts/switch-theme.sh <tema>       # troca só o tema depois
 ```
 
-## ⚠️ Aviso
+O `install.sh`:
+1. liga `~/.config/hypr/hardware_profile.conf` ao perfil escolhido;
+2. cria os links fixos (hypr, swappy);
+3. chama o `switch-theme.sh`, que liga `~/.config/theme` ao tema e escolhe, para cada componente, a versão do tema ou a da base.
 
+Se já existir uma configuração real no destino, ela é movida para `.bak` antes de criar o link.
+
+## ⚠️ Aviso
 Este repositório reflete configurações pessoais, ajustadas para hardware e preferências específicas. Use como referência, mas revise antes de aplicar em outra máquina.

@@ -1,0 +1,10 @@
+/* Paleta <nome> — rofi
+ * Nomes usados pelo layout base (adi1090x). */
+
+* {
+    background:         #000000;
+    background-alt:     #1c1c1c;
+    foreground:         #ffffff;
+    selected:           #ffffff;
+    border-color:       #ffffff;
+}
