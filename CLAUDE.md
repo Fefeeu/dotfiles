@@ -56,6 +56,7 @@ Coisas para rodar no desktop quando voltar a ele (apagar cada uma depois de feit
 - `hypr/maquinas/Frieren/monitors.conf` está com a resolução de teste `980x720@72` (usada para testar a troca de máquina no notebook): trocar pela resolução real do monitor (era `1920x1080@72`).
 - Conferir depois: `hyprctl configerrors`, monitor a 72 Hz e teclado compx-kysona-m600 em `us`.
 - Conferir no waybar: módulo de brilho some (desktop não tem backlight) e rede mostra a interface ativa (cabo).
+- Conferir se o tema de ícones Papirus está instalado (`ls /usr/share/icons | grep Papirus`), agora usado pelo launcher.
 - Instalar a JetBrainsMono Nerd Font em `~/.local/share/fonts/JetBrainsMonoNerd` (nerd-fonts do GitHub), como no notebook.
 
 ## Problemas já resolvidos
