@@ -156,9 +156,16 @@ confirmar() {
 }
 
 # renomear_host <nome>
-# Troca o hostname com o hostnamectl (o polkit pede a senha)
+# Troca o hostname: no terminal com sudo (senha pedida ali mesmo); fora
+# dele pelo hostnamectl, com a senha pedida pelo agente do polkit do KDE
 renomear_host() {
-    if hostnamectl set-hostname "$1"; then
+    local ok
+    if tem_terminal; then
+        sudo hostnamectl set-hostname "$1" && ok=1
+    else
+        hostnamectl set-hostname "$1" && ok=1
+    fi
+    if [[ -n "${ok:-}" ]]; then
         info "Hostname agora é $1"
     else
         aviso "não consegui trocar o hostname; rode num terminal: sudo hostnamectl set-hostname $1"

@@ -111,5 +111,5 @@ Como trabalhar neste roteiro:
 17. [x] **Teste_Colorido**: entrou no git como tema de teste dos scripts.
 
 Fora do roteiro por enquanto:
-- `docs/pacotes.md` será reestruturado no futuro. Faltam nele `cliphist`, `libnotify`, `psmisc`, `nim`, `ImageMagick` e as fontes.
+- `docs/pacotes.md` será reestruturado no futuro. Faltam nele `cliphist`, `libnotify`, `psmisc`, `nim`, `ImageMagick`, `polkit-kde` (agente de senha) e as fontes.
 - Resíduos locais fora do repositório: `~/.config/hypr/{colors.conf,battery-notify.sh,*.bak}`.
