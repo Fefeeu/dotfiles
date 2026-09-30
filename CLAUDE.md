@@ -48,7 +48,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 - Scripts referenciam `~/.config/<comp>/...` ou `~/.config/theme/...`, nunca `~/dotfiles/themes/...`.
 - Valores específicos de uma máquina (monitor, variáveis de GPU, teclados) ficam em `hypr/maquinas/<Nome>/`, não em `settings.conf` nem nos temas. Variáveis de ambiente comuns ficam em `hypr/configs/env.conf`.
 - Temas baixados de terceiros: remova a pasta `.git` interna antes do commit, porque ela vira submodule ("modified content").
-- Pacotes necessários ficam em `docs/pacotes-dotfiles.md` (seções `[todas]`/`[FERN]`/`[Frieren]`/`[extras]`, `repo:`, `nerdfont:` e `pacote # motivo`; feito para um instalador ler). Programa novo usado pelo dotfiles entra lá. Ideias futuras ficam em `docs/ideias.md`.
+- Pacotes necessários ficam em `docs/pacotes-dotfiles.md` (seções `[todas]`/`[FERN]`/`[Frieren]`/`[extras]`, `repo:`, `nerdfont:` e `pacote # motivo`; feito para um instalador ler). Programa novo usado pelo dotfiles entra lá. Apps de uso pessoal (Steam, Discord...) ficam em `docs/apps.md`, ainda só com a explicação. Ideias futuras ficam em `docs/ideias.md`.
 - Depois de editar: `scripts/check.sh` (inclui `hyprctl reload` + `configerrors`) e `~/.config/waybar/scripts/launch.sh`.
 
 ## Pendências na Frieren
@@ -124,3 +124,6 @@ Fora do roteiro por enquanto:
 ## Migração para LUA
 Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões novas do Hyprland usam configuração em Lua). Mesmo jeito de trabalhar: um item por vez, com aprovação antes.
 - [ ] Atualizar Hyprland
+- [ ] Atualizar `docs/pacotes-dotfiles.md` para a versão nova do Hyprland (nomes de pacotes, repositórios e dependências que mudarem)
+- [ ] Criar o script de instalação de todos os pacotes de `docs/pacotes-dotfiles.md` (seções, `repo:`, `nerdfont:` e pacotes)
+- [ ] Criação do script do `docs/apps.md`: definir o formato, preencher a lista de apps pessoais (Steam, Discord, VS Code...) e criar o script que instala tudo

@@ -54,6 +54,7 @@ dotfiles/
 └── docs/
     ├── temas.md            # como os temas funcionam
     ├── pacotes-dotfiles.md # pacotes necessários (por seção/máquina)
+    ├── apps.md             # apps pessoais para instalar (a preencher)
     └── ideias.md           # ideias futuras
 ```
 
