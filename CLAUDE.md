@@ -76,7 +76,7 @@ Como trabalhar neste roteiro:
    - arquivo: `base/waybar/config.jsonc`.
 5. [x] **battery-notify.sh**: sair se `BAT0` não existir (no desktop dá erro a cada 150 s).
    - arquivo: `hypr/scripts/battery-notify.sh`.
-6. [ ] **Seletor de temas**: `pkill -x rofi` fecha qualquer rofi; deve fechar só o seletor.
+6. [x] **Seletor de temas**: `pkill -x rofi` fecha qualquer rofi; deve fechar só o seletor.
    - arquivo: `hypr/scripts/seletor-tema.sh`.
 7. [ ] **Cores indefinidas no waybar**:
    - `@purple`, `@red`, `@bg0`, `@blue` e `@black_absoluto` viram nomes semânticos novos (`destaque`, `alerta`);

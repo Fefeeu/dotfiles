@@ -11,7 +11,7 @@ ESTILO="$HOME/.config/rofi/temas/seletor.rasi"
 [[ -f "$ESTILO" ]] || ESTILO="$DOTFILES_DIR/base/rofi/temas/seletor.rasi"
 
 # Fecha o seletor se já estiver aberto
-pkill -x rofi && exit 0
+pkill -f 'rofi .*-theme .*seletor\.rasi' && exit 0
 
 temas=()
 linha_atual=0
