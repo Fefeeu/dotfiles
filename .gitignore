@@ -1,1 +1,4 @@
 .vscode
+themes/current_theme
+*.bak
+.claude/

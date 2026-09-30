@@ -1,0 +1,37 @@
+diff --git a/src/funcs/drawing.nim b/src/funcs/drawing.nim
+index d4c89c2..0171e31 100644
+--- a/src/funcs/drawing.nim
++++ b/src/funcs/drawing.nim
+@@ -1,3 +1,5 @@
++import strutils
++
+ import
+   std/terminal,     # import standard terminal lib
+   std/strutils,
+@@ -47,7 +49,7 @@ proc drawInfo*(asciiArt: bool) =
+   let  # all info about system
+     userInfo     = getUser()          # get user through $USER env variable
+     hostnameInfo = getHostname()      # get Hostname hostname through /etc/hostname
+-    distroInfo   = getDistro()        # get distro through /etc/os-release
++    distroInfo   = getDistro().replace("(KDE Plasma Desktop Edition)", "").strip() # get distro through /etc/os-release
+     kernelInfo   = getKernel()        # get kernel through /proc/version
+     uptimeInfo   = getUptime()        # get Uptime through /proc/uptime file
+     shellInfo    = getShell()         # get shell through $SHELL env variable
+@@ -55,7 +57,7 @@ proc drawInfo*(asciiArt: bool) =
+     ramInfo      = getRam()           # get ram through /proc/meminfo
+ 
+   const  # aliases for colors
+-    color1 = fgRed
++    color1 = fgGreen
+     color2 = fgYellow
+     color3 = fgGreen
+     color4 = fgCyan
+@@ -80,7 +82,7 @@ proc drawInfo*(asciiArt: bool) =
+     stdout.styledWrite("  │ ", color4, kernelIcon, color0, kernelCat, color4, kernelInfo, color0, "\n")
+     stdout.styledWrite("  │ ", color5, uptimeIcon, color0, uptimeCat, color5, uptimeInfo, color0, "\n")
+     stdout.styledWrite("  │ ", color6, shellIcon, color0, shellCat, color6, shellInfo, color0, "\n")
+-    stdout.styledWrite("  │ ", color1, pkgsIcon, color0, pkgsCat, color1, pkgsInfo, color0, "\n")
++    stdout.styledWrite("  │ ", color1, pkgsIcon, color0, pkgsCat, color1, pkgsInfo, color0)
+     stdout.styledWrite("  │ ", color2, ramIcon, color0, ramCat, fgYellow, ramInfo, color0, "\n")
+     stdout.styledWrite("  ├───────────┤\n")
+     stdout.styledWrite("  │ ", color7, colorsIcon, color0, colorsCat, color7, dotIcon, " ", color1, dotIcon, " ", color2, dotIcon, " ", color3, dotIcon, " ", color4, dotIcon, " ", color5, dotIcon, " ", color6, dotIcon, " ", color8, dotIcon, color0, "\n")
