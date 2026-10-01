@@ -134,7 +134,7 @@ Aprovado pelo usuário item a item; um commit por item.
 8. [x] **Comentários**: blocos de `battery-notify.sh` e `launcher.sh`.
 9. [x] **Docs**: passo da máquina em `docs/temas.md`, `hostname` no `pacotes-dotfiles.md`, `themes/current_theme` sai do `.gitignore`.
 10. [x] **Temas_Teste**: `Teste_Colorido` renomeado (continua como tema de testes, visível no seletor).
-11. [ ] **Ideias**: hypridle e tema de cursor em `docs/ideias.md`.
+11. [x] **Ideias**: hypridle e tema de cursor em `docs/ideias.md`.
 
 Em aberto (explicados, sem decisão ainda):
 - battery-notify repete o aviso a cada 150 s abaixo de 20% (poderia avisar uma vez por faixa);
