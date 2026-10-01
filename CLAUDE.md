@@ -59,6 +59,10 @@ Coisas para rodar no desktop quando voltar a ele (apagar cada uma depois de feit
 - Conferir no waybar: módulo de brilho some (desktop não tem backlight) e rede mostra a interface ativa (cabo).
 - Conferir se o tema de ícones Papirus está instalado (`ls /usr/share/icons | grep Papirus`), agora usado pelo launcher.
 - Instalar a JetBrainsMono Nerd Font em `~/.local/share/fonts/JetBrainsMonoNerd` (nerd-fonts do GitHub), como no notebook.
+- Pastas do usuário em inglês, como no notebook (feito na FERN em 2026-10-01). Com os apps fechados:
+  - `mv` de `Área de trabalho`→`Desktop`, `Documentos`→`Documents`, `Imagens`→`Pictures`, `Modelos`→`Templates`, `Músicas`→`Music`, `Público`→`Public`, `Vídeos`→`Videos` (se já existir `~/Pictures`, juntar o conteúdo antes);
+  - trocar os caminhos em `~/.config/user-dirs.dirs` e conferir com `xdg-user-dir PICTURES`;
+  - procurar os caminhos antigos com `grep -rIl /home/$USER/Imagens ~/.config ~/.local/share` (e os outros nomes, também na forma de URL, ex.: `V%C3%ADdeos`) e trocar nas configs, sem mexer em logs e listas de recentes.
 
 ## Problemas já resolvidos
 - "Too many levels of symbolic links" no kitty: eram links apontando para si mesmos. Foram recriados com caminho absoluto.
@@ -147,7 +151,6 @@ Em aberto (explicados, sem decisão ainda):
 - binds de mídia (`playerctl`), mute com `bindl`, logo/wallpaper padrão do Hyprland antes do swww;
 - `check.sh` não confere o link do qt6ct;
 - qt6ct usa `Papirus-Light` (ícones escuros) num tema escuro: escolher pelo `docs/design.md`;
-- swappy salva em `~/Pictures/Screenshots`, mas a pasta do sistema é `~/Imagens`;
 - calendário do waybar com cores fixas: mantido assim por enquanto.
 
 ## Migração para LUA
