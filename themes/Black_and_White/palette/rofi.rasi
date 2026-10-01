@@ -1,7 +1,7 @@
 /* Paleta black_and_white — cores do rofi
  *
  * Nomes usados pelo layout base (adi1090x):
- *   background, background-alt, foreground, selected, border-color
+ *   background, background-window, background-alt, foreground, selected, border-color
  */
 
 * {
@@ -9,6 +9,7 @@
     scrollbar:          true;
 
     background:         #000000;
+    background-window:  #000000e6;  /* preto 90% opaco (e6 = 230/255) */
     background-alt:     #1c1c1c;
     foreground:         #ffffff;
     selected:           #ffffff;

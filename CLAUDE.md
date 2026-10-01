@@ -135,6 +135,8 @@ Aprovado pelo usuário item a item; um commit por item.
 9. [x] **Docs**: passo da máquina em `docs/temas.md`, `hostname` no `pacotes-dotfiles.md`, `themes/current_theme` sai do `.gitignore`.
 10. [x] **Temas_Teste**: `Teste_Colorido` renomeado (continua como tema de testes, visível no seletor).
 11. [x] **Ideias**: hypridle e tema de cursor em `docs/ideias.md`.
+12. [x] **Launcher 90% opaco**: nome de cor novo `background-window` (hex com transparência) nas paletas do rofi.
+13. [ ] **Tema_Teste**: `Temas_Teste` volta para o singular.
 
 Em aberto (explicados, sem decisão ainda):
 - battery-notify repete o aviso a cada 150 s abaixo de 20% (poderia avisar uma vez por faixa);

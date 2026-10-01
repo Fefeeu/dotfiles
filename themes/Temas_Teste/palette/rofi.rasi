@@ -2,6 +2,7 @@
 
 * {
     background:         #7a00ff;
+    background-window:  #7a00ffe6;
     background-alt:     #ff00aa;
     foreground:         #39ff14;
     selected:           #ffe600;

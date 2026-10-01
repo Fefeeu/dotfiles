@@ -3,6 +3,7 @@
 
 * {
     background:         #000000;
+    background-window:  #000000e6;  /* fundo da janela: últimos 2 dígitos = opacidade */
     background-alt:     #1c1c1c;
     foreground:         #ffffff;
     selected:           #ffffff;

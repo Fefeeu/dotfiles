@@ -73,7 +73,7 @@ fi
 # --- 2. TEMAS (contrato em docs/temas.md) ---
 titulo "Temas"
 CORES_WAYBAR=(fundo fundo_modulo fundo_hover borda texto texto_ativo texto_mudo destaque alerta)
-CORES_ROFI=(background background-alt foreground selected border-color)
+CORES_ROFI=(background background-window background-alt foreground selected border-color)
 CORES_KITTY=(background foreground color{0..15})
 
 for dir in themes/*/; do
