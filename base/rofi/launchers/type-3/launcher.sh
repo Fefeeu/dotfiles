@@ -1,19 +1,13 @@
 #!/usr/bin/env bash
+# Launcher de apps (SUPER+D): rofi no modo drun com o layout type-3/style-1.
+# Layout original do adi1090x/rofi (Aditya Shakya, github.com/adi1090x);
+# os outros estilos do repositório original (style-2 a style-10) não vieram.
 
-## Author : Aditya Shakya (adi1090x)
-## Github : @adi1090x
-#
-## Rofi   : Launcher (Modi Drun, Run, File Browser, Window)
-#
-## Available Styles
-#
-## style-1     style-2     style-3     style-4     style-5
-## style-6     style-7     style-8     style-9     style-10
-
+# Pasta do layout e estilo usado
 dir="$HOME/.config/rofi/launchers/type-3"
-theme='style-1'
+estilo='style-1'
 
-## Run
+# Abre a lista de apps
 rofi \
     -show drun \
-    -theme ${dir}/${theme}.rasi
+    -theme "${dir}/${estilo}.rasi"
