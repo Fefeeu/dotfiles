@@ -48,7 +48,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 - Scripts referenciam `~/.config/<comp>/...` ou `~/.config/theme/...`, nunca `~/dotfiles/themes/...`.
 - Valores específicos de uma máquina (monitor, variáveis de GPU, teclados) ficam em `hypr/maquinas/<Nome>/`, não em `settings.conf` nem nos temas. Variáveis de ambiente comuns ficam em `hypr/configs/env.conf`.
 - Temas baixados de terceiros: remova a pasta `.git` interna antes do commit, porque ela vira submodule ("modified content").
-- Pacotes necessários ficam em `docs/pacotes-dotfiles.md` (seções `[todas]`/`[FERN]`/`[Frieren]`/`[extras]`, `repo:`, `nerdfont:` e `pacote # motivo`; feito para um instalador ler). Programa novo usado pelo dotfiles entra lá. Apps de uso pessoal (Steam, Discord...) ficam em `docs/apps.md`, ainda só com a explicação. Ideias futuras ficam em `docs/ideias.md`.
+- Pacotes necessários ficam em `docs/pacotes-dotfiles.md` (seções `[todas]`/`[FERN]`/`[Frieren]`/`[extras]`, `repo:`, `nerdfont:` e `pacote # motivo`; feito para um instalador ler). Programa novo usado pelo dotfiles entra lá. Apps de uso pessoal (Steam, Discord...) ficam em `docs/apps.md`, ainda só com a explicação. Ideias futuras ficam em `docs/ideias.md`; decisões de visual em aberto, em `docs/design.md`.
 - Depois de editar: `scripts/check.sh` (inclui `hyprctl reload` + `configerrors`) e `~/.config/waybar/scripts/launch.sh`.
 
 ## Pendências na Frieren
@@ -125,7 +125,7 @@ Fora do roteiro por enquanto:
 ## Roteiro da revisão de 2026-10-01
 Aprovado pelo usuário item a item; um commit por item.
 1. [x] **Kvantum**: removido de vez (pasta do tema, `THEME_ONLY`, pacote e docs).
-2. [ ] **`docs/design.md`**: decisões de design para ir atrás e temas de ícones escuros recomendados.
+2. [x] **`docs/design.md`**: decisões de design para ir atrás e temas de ícones escuros recomendados.
 3. [ ] **Launcher com nomes de cor**: `base/rofi/launchers/type-3/style-1.rasi` sem cores cruas.
 4. [ ] **battery-notify.sh**: acha a bateria sozinho (`BAT0`, `BAT1`...), em vez de `BAT0` fixo.
 5. [ ] **Tela cheia**: F11 em `hypr/rules/binds.conf`.
