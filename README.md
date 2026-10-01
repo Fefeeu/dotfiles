@@ -49,7 +49,7 @@ dotfiles/
 ├── themes/
 │   ├── _modelo/            # ponto de partida para um tema novo
 │   ├── Black_and_White/    # tema principal
-│   └── Teste_Colorido/     # tema neon, só para testar os scripts
+│   └── Temas_Teste/        # tema neon, só para testar os scripts
 ├── extras/nitch/           # personalização do nitch (patch)
 └── docs/
     ├── temas.md            # como os temas funcionam

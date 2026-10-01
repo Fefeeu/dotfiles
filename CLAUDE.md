@@ -32,7 +32,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
   - `hypr/scripts/seletor-tema.sh` (SUPER+T): lista de temas no rofi com miniatura e nome, layout em `base/rofi/temas/seletor.rasi`.
 - Rofi: `base/rofi/config.rasi` (geral), `shared/` (cores e fonte, importados por todo layout), `launchers/type-3/`, `clipboard/`, `temas/` (seletor e pergunta).
 - `hypr/hyprland.conf` só faz `source`, nesta ordem: env → máquina (hardware, monitors) → settings → animations → execs → `~/.config/theme/hypr.conf` → windowrules → binds. Bordas, gaps e cores ficam só no tema.
-- Tema ativo: `Black_and_White`. `Teste_Colorido` é um tema neon só para testar os scripts.
+- Tema ativo: `Black_and_White`. `Temas_Teste` é um tema neon só para testar os scripts.
   - A paleta usa nomes em português (`preto_absoluto`, `branco_puro`, `cinza_*`) mapeados para nomes semânticos (`fundo`, `texto`, `borda`...).
   - Os temas de rofi vêm do adi1090x/rofi (launcher `type-3/style-1`).
   - `themes/_modelo` é o esqueleto de tema novo (pastas com `_` não aparecem no install).
@@ -116,7 +116,7 @@ Como trabalhar neste roteiro:
 14. [x] **windowrules**: unificado em `windowrule` (no Hyprland 0.51 ele já usa a sintaxe com campos e `windowrulev2` é só alias), uma regra por linha, comentadas.
 15. [x] **Ambiente**: `hypr/configs/env.conf` com as variáveis comuns (`QT_QPA_PLATFORMTHEME`, saído do `hyprland.conf`, e `XDG_SESSION_TYPE`, antes repetido nos `hardware.conf`).
 16. [x] **`scripts/check.sh`**: confere sem alterar nada — `bash -n` e permissão dos scripts (shellcheck se instalado), contrato dos temas (arquivos e nomes de cor), pastas de máquina e link, links do `STATIC_MAP`/`OVERRIDABLE`, `.rasi` de layout (`rofi -dump-theme`) e `hyprctl reload` + `configerrors`. Sai com 1 se houver problema. O `config.jsonc` do waybar fica de fora (comentários).
-17. [x] **Teste_Colorido**: entrou no git como tema de teste dos scripts.
+17. [x] **Teste_Colorido** (hoje `Temas_Teste`): entrou no git como tema de teste dos scripts.
 
 Fora do roteiro por enquanto:
 - Resíduos locais fora do repositório: `~/.config/hypr/{colors.conf,battery-notify.sh,*.bak}`.
@@ -133,7 +133,7 @@ Aprovado pelo usuário item a item; um commit por item.
 7. [x] **Tearing**: `allow_tearing` nas duas máquinas (a regra `immediate` dos jogos vale nas duas).
 8. [x] **Comentários**: blocos de `battery-notify.sh` e `launcher.sh`.
 9. [x] **Docs**: passo da máquina em `docs/temas.md`, `hostname` no `pacotes-dotfiles.md`, `themes/current_theme` sai do `.gitignore`.
-10. [ ] **Temas_Teste**: `Teste_Colorido` renomeado (continua como tema de testes, visível no seletor).
+10. [x] **Temas_Teste**: `Teste_Colorido` renomeado (continua como tema de testes, visível no seletor).
 11. [ ] **Ideias**: hypridle e tema de cursor em `docs/ideias.md`.
 
 Em aberto (explicados, sem decisão ainda):
