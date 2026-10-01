@@ -120,6 +120,33 @@ Como trabalhar neste roteiro:
 
 Fora do roteiro por enquanto:
 - Resíduos locais fora do repositório: `~/.config/hypr/{colors.conf,battery-notify.sh,*.bak}`.
+- Planejado (ainda não fazer): passar o sistema todo para nomes em inglês (pastas, arquivos, funções, variáveis e cores).
+
+## Roteiro da revisão de 2026-10-01
+Aprovado pelo usuário item a item; um commit por item.
+1. [ ] **Kvantum**: removido de vez (pasta do tema, `THEME_ONLY`, pacote e docs).
+2. [ ] **`docs/design.md`**: decisões de design para ir atrás e temas de ícones escuros recomendados.
+3. [ ] **Launcher com nomes de cor**: `base/rofi/launchers/type-3/style-1.rasi` sem cores cruas.
+4. [ ] **battery-notify.sh**: acha a bateria sozinho (`BAT0`, `BAT1`...), em vez de `BAT0` fixo.
+5. [ ] **Tela cheia**: F11 em `hypr/rules/binds.conf`.
+6. [ ] **Mouse por máquina**: `sensitivity` e `accel_profile` saem do `settings.conf` para `hypr/maquinas/*/hardware.conf`.
+7. [ ] **Tearing**: `allow_tearing` nas duas máquinas (a regra `immediate` dos jogos vale nas duas).
+8. [ ] **Comentários**: blocos de `battery-notify.sh` e `launcher.sh`.
+9. [ ] **Docs**: passo da máquina em `docs/temas.md`, `hostname` no `pacotes-dotfiles.md`, `themes/current_theme` sai do `.gitignore`.
+10. [ ] **Temas_Teste**: `Teste_Colorido` renomeado (continua como tema de testes, visível no seletor).
+11. [ ] **Ideias**: hypridle e tema de cursor em `docs/ideias.md`.
+
+Em aberto (explicados, sem decisão ainda):
+- battery-notify repete o aviso a cada 150 s abaixo de 20% (poderia avisar uma vez por faixa);
+- Frieren: `GBM_BACKEND,drm` sem efeito útil no AMD (apagar a linha);
+- `link_com_backup` sobrescreve um `.bak` antigo (numerar os backups);
+- `swaync` está no `OVERRIDABLE`, mas nenhum tema nem a base tem a pasta;
+- contrato do waybar exige `fundo_modulo`, `fundo_hover` e `texto_mudo`, que o `style.css` não usa; `#tray` sem estilo; resto de `format-icons` e `background-size`;
+- binds de mídia (`playerctl`), mute com `bindl`, logo/wallpaper padrão do Hyprland antes do swww;
+- `check.sh` não confere o link do qt6ct;
+- qt6ct usa `Papirus-Light` (ícones escuros) num tema escuro: escolher pelo `docs/design.md`;
+- swappy salva em `~/Pictures/Screenshots`, mas a pasta do sistema é `~/Imagens`;
+- calendário do waybar com cores fixas: mantido assim por enquanto.
 
 ## Migração para LUA
 Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões novas do Hyprland usam configuração em Lua). Mesmo jeito de trabalhar: um item por vez, com aprovação antes.
@@ -127,3 +154,4 @@ Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões nov
 - [ ] Atualizar `docs/pacotes-dotfiles.md` para a versão nova do Hyprland (nomes de pacotes, repositórios e dependências que mudarem)
 - [ ] Criar o script de instalação de todos os pacotes de `docs/pacotes-dotfiles.md` (seções, `repo:`, `nerdfont:` e pacotes)
 - [ ] Criação do script do `docs/apps.md`: definir o formato, preencher a lista de apps pessoais (Steam, Discord, VS Code...) e criar o script que instala tudo
+- [ ] Estudar e personalizar mais o hyprlock: cores do tema (hoje são fixas), `me.png` opcional e cartão de bateria que funcione no desktop
