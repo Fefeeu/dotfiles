@@ -35,7 +35,7 @@ window {
     border:                      3px solid;
     border-radius:               12px;
     border-color:                @border-color;
-    background-color:            rgba(0, 0, 0, 0.9);
+    background-color:            @background;
     cursor:                      "default";
 }
 
@@ -61,7 +61,7 @@ inputbar {
     border:                      2px solid;
     border-radius:               10px;
     border-color:                @selected;
-    background-color:            white / 5%;
+    background-color:            @background-alt;
     text-color:                  @selected;
     children:                    [ "prompt", "entry" ];
 }
@@ -82,7 +82,7 @@ textbox-prompt-colon {
 entry {
     enabled:                     true;
     background-color:            transparent;
-    text-color:                  #ffffff;
+    text-color:                  @foreground;
     cursor:                      text;
     placeholder:                 "Search";
     placeholder-color:           inherit;
@@ -166,7 +166,7 @@ element-icon {
 }
 element-text {
     background-color:            transparent;
-    text-color:                  #ffffff;
+    text-color:                  inherit;
     font:                        "JetBrainsMono Nerd Font Bold 9";
     highlight:                   inherit;
     cursor:                      inherit;
@@ -184,7 +184,7 @@ error-message {
     border:                      2px solid;
     border-radius:               10px;
     border-color:                @selected;
-    background-color:            black / 10%;
+    background-color:            @background;
     text-color:                  @foreground;
 }
 
