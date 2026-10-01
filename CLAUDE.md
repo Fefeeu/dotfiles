@@ -96,7 +96,7 @@ Como trabalhar neste roteiro:
 8. [x] **Rofi Black_and_White**: definir `foreground`, `background-alt` e `selected`.
    - arquivo: `themes/Black_and_White/palette/rofi.rasi`.
 9. [x] **Links velhos ao trocar de tema**:
-   - se o tema não tem `kvantum/`, `qt6ct.conf`, `kde.colors` ou `swaync`, remover o link que ainda aponta para `themes/`;
+   - se o tema não tem `qt6ct.conf`, `kde.colors` ou `swaync`, remover o link que ainda aponta para `themes/`;
    - limpar o link quebrado `black_and_white.colors`;
    - arquivos: `scripts/switch-theme.sh`, `scripts/lib.sh`.
 10. [x] **qt6ct**: `color_scheme_path` tem `/home/felipe` e o nome antigo do tema. Gerar o caminho com `$HOME` a partir de um template.
@@ -124,7 +124,7 @@ Fora do roteiro por enquanto:
 
 ## Roteiro da revisão de 2026-10-01
 Aprovado pelo usuário item a item; um commit por item.
-1. [ ] **Kvantum**: removido de vez (pasta do tema, `THEME_ONLY`, pacote e docs).
+1. [x] **Kvantum**: removido de vez (pasta do tema, `THEME_ONLY`, pacote e docs).
 2. [ ] **`docs/design.md`**: decisões de design para ir atrás e temas de ícones escuros recomendados.
 3. [ ] **Launcher com nomes de cor**: `base/rofi/launchers/type-3/style-1.rasi` sem cores cruas.
 4. [ ] **battery-notify.sh**: acha a bateria sozinho (`BAT0`, `BAT1`...), em vez de `BAT0` fixo.

@@ -65,7 +65,6 @@ polkit-kde                    # agente de senha (execs.conf: hostnamectl, apps d
 dolphin                       # gerenciador de arquivos (SUPER+E)
 plasma-workspace              # plasma-apply-colorscheme (kde.colors dos temas)
 qt6ct                         # aparência dos apps Qt no Hyprland (QT_QPA_PLATFORMTHEME)
-kvantum                       # tema Kvantum dos temas (themes/*/kvantum)
 papirus-icon-theme            # ícones Papirus (rofi) e Papirus-Light (qt6ct)
 papirus-icon-theme-light      # variante Papirus-Light usada no qt6ct
 

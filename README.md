@@ -24,7 +24,7 @@ O `install.sh` é **idempotente**: pode ser rodado várias vezes sem quebrar nad
 - liga `~/.config/theme` ao tema;
 - liga `~/.config/hypr/maquina` à pasta de `hypr/maquinas/` com o nome do hostname (sem diferenciar maiúsculas); se não houver, pergunta qual usar (no terminal ou pelo rofi, no SUPER+T) e oferece trocar o hostname para o nome da pasta, para não perguntar de novo. O `install.sh` faz essa mesma conferência antes de pedir o tema;
 - para cada componente (waybar, rofi, kitty, swaync), usa a versão do tema, se existir, ou a da `base/`;
-- aplica o **esquema de cores do KDE** (Dolphin e apps Qt) com `plasma-apply-colorscheme`, além do qt6ct e do Kvantum, quando o tema tem esses arquivos;
+- aplica o **esquema de cores do KDE** (Dolphin e apps Qt) com `plasma-apply-colorscheme`, além do qt6ct, quando o tema tem esses arquivos;
 - recarrega Hyprland, Waybar e kitty e aplica o **wallpaper** com `swww`.
 
 Se já existir uma configuração real no destino, ela é movida para `.bak` antes de criar o link.
@@ -68,7 +68,6 @@ dotfiles/
 | `base/kitty/` | **Kitty** | emulador de terminal |
 | `swaync/` (no tema) | **SwayNotificationCenter** | notificações e painel lateral de notificações |
 | `themes/<tema>/kde.colors` | **KDE Plasma** | esquema de cores do Dolphin e dos outros apps Qt |
-| `themes/<tema>/kvantum/` | **Kvantum** | motor que desenha a aparência (bordas, botões, sombras) dos apps Qt |
 | `themes/<tema>/qt6ct.conf` | **qt6ct** | define qual tema e quais ícones os apps Qt6 usam |
 | `themes/<tema>/imagens/` | **swww** | wallpapers com transições, miniatura do seletor e imagens do hyprlock |
 | `swappy/config` | **Swappy** | editor de anotações depois do screenshot |

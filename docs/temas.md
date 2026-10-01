@@ -6,7 +6,7 @@ Um tema fica em `themes/<nome>/`. O layout padrão fica em `base/`, e cada tema 
 `scripts/switch-theme.sh <nome>`:
 1. cria o link `~/.config/theme` → `themes/<nome>`;
 2. para cada componente (`waybar`, `rofi`, `kitty/kitty.conf`, `swaync`), usa `themes/<nome>/<comp>` se existir, senão `base/<comp>`;
-3. linka as partes opcionais do tema (`kvantum/`, `kde.colors`) e gera o `qt6ct.conf` a partir do template do tema;
+3. linka a parte opcional do tema (`kde.colors`) e gera o `qt6ct.conf` a partir do template do tema;
 4. recarrega Hyprland, Waybar e kitty, e troca o wallpaper.
 
 Também dá para trocar pelo seletor (**SUPER+T**, `hypr/scripts/seletor-tema.sh`): ele lista os temas com a miniatura `imagens/thumb.png` e o nome. O layout do seletor é `base/rofi/temas/seletor.rasi`, e um tema que sobrescreve o `rofi/` pode ter o próprio `temas/seletor.rasi`.
@@ -27,7 +27,6 @@ themes/<nome>/
 │   └── me.png ...           # opcionais: outras imagens (o hyprlock usa me.png)
 ├── kde.colors           # opcional: esquema de cores do KDE (Dolphin, apps Qt)
 ├── qt6ct.conf           # opcional: template, `@HOME@` e `@TEMA@` são trocados ao aplicar
-├── kvantum/             # opcional
 └── waybar/ rofi/ kitty/ swaync/   # opcional: override total do componente
 ```
 

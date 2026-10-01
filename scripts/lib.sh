@@ -46,11 +46,9 @@ declare -A OVERRIDABLE=(
     ["swaync"]="$CONFIG_DIR/swaync"
 )
 
-# Partes que só existem no tema (opcionais)
+# Partes que só existem no tema (opcionais); nenhuma por enquanto
 # (o qt6ct.conf é template e tem tratamento próprio no switch-theme.sh)
-declare -A THEME_ONLY=(
-    ["kvantum"]="$CONFIG_DIR/Kvantum"
-)
+declare -A THEME_ONLY=()
 
 # --- FUNÇÕES ---
 # link_com_backup <origem> <destino>
