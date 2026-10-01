@@ -130,7 +130,7 @@ Aprovado pelo usuário item a item; um commit por item.
 4. [x] **battery-notify.sh**: acha a bateria sozinho (`BAT0`, `BAT1`...), em vez de `BAT0` fixo.
 5. [x] **Tela cheia**: F11 em `hypr/rules/binds.conf`.
 6. [x] **Mouse por máquina**: `sensitivity` e `accel_profile` saem do `settings.conf` para `hypr/maquinas/*/hardware.conf`.
-7. [ ] **Tearing**: `allow_tearing` nas duas máquinas (a regra `immediate` dos jogos vale nas duas).
+7. [x] **Tearing**: `allow_tearing` nas duas máquinas (a regra `immediate` dos jogos vale nas duas).
 8. [ ] **Comentários**: blocos de `battery-notify.sh` e `launcher.sh`.
 9. [ ] **Docs**: passo da máquina em `docs/temas.md`, `hostname` no `pacotes-dotfiles.md`, `themes/current_theme` sai do `.gitignore`.
 10. [ ] **Temas_Teste**: `Teste_Colorido` renomeado (continua como tema de testes, visível no seletor).
