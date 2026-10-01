@@ -132,7 +132,7 @@ Aprovado pelo usuário item a item; um commit por item.
 6. [x] **Mouse por máquina**: `sensitivity` e `accel_profile` saem do `settings.conf` para `hypr/maquinas/*/hardware.conf`.
 7. [x] **Tearing**: `allow_tearing` nas duas máquinas (a regra `immediate` dos jogos vale nas duas).
 8. [x] **Comentários**: blocos de `battery-notify.sh` e `launcher.sh`.
-9. [ ] **Docs**: passo da máquina em `docs/temas.md`, `hostname` no `pacotes-dotfiles.md`, `themes/current_theme` sai do `.gitignore`.
+9. [x] **Docs**: passo da máquina em `docs/temas.md`, `hostname` no `pacotes-dotfiles.md`, `themes/current_theme` sai do `.gitignore`.
 10. [ ] **Temas_Teste**: `Teste_Colorido` renomeado (continua como tema de testes, visível no seletor).
 11. [ ] **Ideias**: hypridle e tema de cursor em `docs/ideias.md`.
 

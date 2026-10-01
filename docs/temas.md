@@ -5,9 +5,10 @@ Um tema fica em `themes/<nome>/`. O layout padrão fica em `base/`, e cada tema 
 ## Como o tema é aplicado
 `scripts/switch-theme.sh <nome>`:
 1. cria o link `~/.config/theme` → `themes/<nome>`;
-2. para cada componente (`waybar`, `rofi`, `kitty/kitty.conf`, `swaync`), usa `themes/<nome>/<comp>` se existir, senão `base/<comp>`;
-3. linka a parte opcional do tema (`kde.colors`) e gera o `qt6ct.conf` a partir do template do tema;
-4. recarrega Hyprland, Waybar e kitty, e troca o wallpaper.
+2. confere o link `~/.config/hypr/maquina` → `hypr/maquinas/<Nome>` (pasta com o nome do hostname; sem ela, pergunta qual usar);
+3. para cada componente (`waybar`, `rofi`, `kitty/kitty.conf`, `swaync`), usa `themes/<nome>/<comp>` se existir, senão `base/<comp>`;
+4. linka a parte opcional do tema (`kde.colors`) e gera o `qt6ct.conf` a partir do template do tema;
+5. recarrega Hyprland, Waybar e kitty, e troca o wallpaper.
 
 Também dá para trocar pelo seletor (**SUPER+T**, `hypr/scripts/seletor-tema.sh`): ele lista os temas com a miniatura `imagens/thumb.png` e o nome. O layout do seletor é `base/rofi/temas/seletor.rasi`, e um tema que sobrescreve o `rofi/` pode ter o próprio `temas/seletor.rasi`.
 

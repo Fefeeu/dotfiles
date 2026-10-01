@@ -58,6 +58,7 @@ wireplumber                   # wpctl: teclas de volume (binds.conf)
 brightnessctl                 # teclas de brilho (binds.conf)
 playerctl                     # música atual no hyprlock
 iw                            # nome do wi-fi no hyprlock
+hostname                      # nome da máquina no hyprlock
 procps-ng                     # pkill/pgrep (scripts)
 polkit-kde                    # agente de senha (execs.conf: hostnamectl, apps de admin)
 
