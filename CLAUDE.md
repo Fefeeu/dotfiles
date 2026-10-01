@@ -127,7 +127,7 @@ Aprovado pelo usuário item a item; um commit por item.
 1. [x] **Kvantum**: removido de vez (pasta do tema, `THEME_ONLY`, pacote e docs).
 2. [x] **`docs/design.md`**: decisões de design para ir atrás e temas de ícones escuros recomendados.
 3. [x] **Launcher com nomes de cor**: `base/rofi/launchers/type-3/style-1.rasi` sem cores cruas.
-4. [ ] **battery-notify.sh**: acha a bateria sozinho (`BAT0`, `BAT1`...), em vez de `BAT0` fixo.
+4. [x] **battery-notify.sh**: acha a bateria sozinho (`BAT0`, `BAT1`...), em vez de `BAT0` fixo.
 5. [ ] **Tela cheia**: F11 em `hypr/rules/binds.conf`.
 6. [ ] **Mouse por máquina**: `sensitivity` e `accel_profile` saem do `settings.conf` para `hypr/maquinas/*/hardware.conf`.
 7. [ ] **Tearing**: `allow_tearing` nas duas máquinas (a regra `immediate` dos jogos vale nas duas).
