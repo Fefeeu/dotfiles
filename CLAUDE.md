@@ -155,7 +155,16 @@ Em aberto (explicados, sem decisão ainda):
 
 ## Migração para LUA
 Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões novas do Hyprland usam configuração em Lua). Mesmo jeito de trabalhar: um item por vez, com aprovação antes.
-- [ ] Atualizar Hyprland
+- [ ] Atualizar Hyprland (plano anotado em 2026-10-03, ainda não aplicado):
+  - o COPR `solopasha/hyprland` foi abandonado e parou na 0.51.1; o fork `sdegler/hyprland` tem a 0.56.2 para Fedora 43 (Lua desde a 0.55);
+  - sem `hyprland.lua`, a versão nova continua lendo o `hyprland.conf` (não precisa de dois Hyprland lado a lado);
+  - passos (sudo, o usuário roda com `!`):
+    - `sudo dnf copr disable solopasha/hyprland && sudo dnf copr enable sdegler/hyprland`;
+    - `sudo dnf upgrade --refresh 'hypr*' aquamarine xdg-desktop-portal-hyprland uwsm`;
+    - sair e entrar de novo na sessão;
+    - `scripts/check.sh`: corrigir o que o `configerrors` apontar no `.conf` (commit separado);
+  - voltar atrás: Plasma na tela de login, reativar o COPR antigo e `sudo dnf downgrade` dos pacotes;
+  - depois: mesma troca de COPR nas pendências da Frieren.
 - [ ] Atualizar `docs/pacotes-dotfiles.md` para a versão nova do Hyprland (nomes de pacotes, repositórios e dependências que mudarem)
 - [ ] Criar o script de instalação de todos os pacotes de `docs/pacotes-dotfiles.md` (seções, `repo:`, `nerdfont:` e pacotes)
 - [ ] Criação do script do `docs/apps.md`: definir o formato, preencher a lista de apps pessoais (Steam, Discord, VS Code...) e criar o script que instala tudo
