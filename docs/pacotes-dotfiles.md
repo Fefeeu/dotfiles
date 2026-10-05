@@ -61,6 +61,8 @@ iw                            # nome do wi-fi no hyprlock
 hostname                      # nome da máquina no hyprlock
 procps-ng                     # pkill/pgrep (scripts)
 polkit-kde                    # agente de senha (execs.conf: hostnamectl, apps de admin)
+polkit                        # regra que deixa ligar o modo estudo sem senha (sistema/modo-estudo)
+util-linux                    # flock e runuser (serviço do modo estudo)
 
 # ----- APARÊNCIA (apps Qt e KDE) -------------------------------------
 dolphin                       # gerenciador de arquivos (SUPER+E)

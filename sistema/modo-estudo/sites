@@ -1,0 +1,15 @@
+# Sites bloqueados no modo estudo: um domínio por linha. Vai para o
+# /etc/hosts (cada subdomínio precisa estar na lista) e para a URLBlocklist
+# dos navegadores Chromium (lá o domínio já cobre os subdomínios).
+# Depois de mudar, rode de novo: sudo ~/dotfiles/scripts/instalar-modo-estudo.sh
+
+# YouTube
+youtube.com
+www.youtube.com
+m.youtube.com
+music.youtube.com
+youtu.be
+# Instagram
+instagram.com
+www.instagram.com
+m.instagram.com

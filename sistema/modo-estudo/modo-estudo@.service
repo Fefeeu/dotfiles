@@ -1,0 +1,15 @@
+# Modo estudo: modo-estudo@<minutos>.service, @retomar ou @parar.
+# O usuário só pode dar start (regra do polkit); parar pede a senha do sudo.
+[Unit]
+Description=Modo estudo (%i)
+# sem limite de reinícios: matar o processo várias vezes não desliga o modo
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+ExecStart=/usr/local/libexec/modo-estudo %i
+# volta sozinho se for morto; 2 e 3 são recusas de propósito
+Restart=on-failure
+RestartSec=1
+RestartPreventExitStatus=2 3
+TimeoutStopSec=10

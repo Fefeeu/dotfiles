@@ -1,0 +1,11 @@
+// Modo estudo: deixa USUARIO iniciar modo-estudo@<arg>.service sem senha.
+// Só "start": parar o serviço continua pedindo a senha de administrador.
+// USUARIO é trocado pelo instalar-modo-estudo.sh.
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.freedesktop.systemd1.manage-units" &&
+        action.lookup("verb") == "start" &&
+        /^modo-estudo@([0-9]+|retomar|parar)\.service$/.test(action.lookup("unit")) &&
+        subject.user == "USUARIO") {
+        return polkit.Result.YES;
+    }
+});

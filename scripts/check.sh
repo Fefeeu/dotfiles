@@ -52,8 +52,8 @@ titulo "Scripts"
 while read -r script; do
     if ! saida="$(bash -n "$script" 2>&1)"; then
         falhou "$script: erro de sintaxe\n$saida"
-    elif [[ "$script" != "scripts/lib.sh" && ! -x "$script" ]]; then
-        # lib.sh é carregado com source, não precisa ser executável
+    elif [[ "$script" != "scripts/lib.sh" && "$script" != bashrc.d/* && ! -x "$script" ]]; then
+        # lib.sh e bashrc.d/ são carregados com source, não precisam ser executáveis
         falhou "$script: sem permissão de execução (chmod +x)"
     else
         passou "$script"
@@ -147,7 +147,29 @@ else
     aviso "rofi não instalado, pulando"
 fi
 
-# --- 6. HYPRLAND (só dentro de uma sessão) ---
+# --- 6. MODO ESTUDO (cópias instaladas pelo instalar-modo-estudo.sh) ---
+titulo "Modo estudo"
+if [[ -e /usr/local/libexec/modo-estudo ]]; then
+    # instalado tem que bater com o repositório (a regra do polkit não dá
+    # para ler sem root, fica de fora)
+    declare -A INSTALADOS=(
+        [sistema/modo-estudo/modo-estudo.sh]=/usr/local/libexec/modo-estudo
+        [sistema/modo-estudo/modo-estudo@.service]=/etc/systemd/system/modo-estudo@.service
+        [sistema/modo-estudo/apps]=/etc/modo-estudo/apps
+        [sistema/modo-estudo/sites]=/etc/modo-estudo/sites
+    )
+    for src in "${!INSTALADOS[@]}"; do
+        if cmp -s "$src" "${INSTALADOS[$src]}"; then
+            passou "${INSTALADOS[$src]}"
+        else
+            falhou "${INSTALADOS[$src]} diferente de $src (rode sudo scripts/instalar-modo-estudo.sh)"
+        fi
+    done
+else
+    aviso "não instalado (sudo scripts/instalar-modo-estudo.sh), pulando"
+fi
+
+# --- 7. HYPRLAND (só dentro de uma sessão) ---
 titulo "Hyprland"
 if [[ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]]; then
     hyprctl reload > /dev/null
