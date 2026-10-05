@@ -78,6 +78,7 @@ tooltip label {
 #network,
 #clock,
 #custom-notification,
+#custom-estudo,
 #bluetooth {
     background-color: @fundo;
     padding: 0 15px 0 15px;
@@ -119,4 +120,13 @@ tooltip label {
 
 #backlight {
   color: @texto;
+}
+
+/* Modo estudo: em destaque rodando, apagado quando pausado */
+#custom-estudo {
+    color: @destaque;
+}
+
+#custom-estudo.pausado {
+    color: @texto;
 }

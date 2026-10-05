@@ -30,6 +30,11 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
   - máquina sem pasta com o nome do hostname: pergunta qual usar e oferece trocar o hostname para o nome da pasta (terminal com `select`/`read`; fora dele, rofi). O Hyprland repassa o TTY do login aos programas, por isso o teste de terminal é `-t 0 && -t 2` e o seletor chama o switch com `< /dev/null`;
   - `scripts/check.sh`: confere scripts, temas, máquinas, links, rofi e Hyprland;
   - `hypr/scripts/seletor-tema.sh` (SUPER+T): lista de temas no rofi com miniatura e nome, layout em `base/rofi/temas/seletor.rasi`.
+- Modo estudo (SUPER+B, `estudar`/`Estudar` no terminal, `estudar 45m`):
+  - parte de sistema em `sistema/modo-estudo/` (serviço root `modo-estudo@<minutos|retomar|parar>.service`, listas `apps` e `sites`, regra do polkit que só libera o *start*); instalada como **cópia** por `sudo scripts/instalar-modo-estudo.sh` (rodar de novo depois de mudar algo; o `check.sh` avisa se a cópia está diferente);
+  - mata os processos da lista a cada segundo, bloqueia os sites no `/etc/hosts` e na `URLBlocklist` dos navegadores Chromium; parar no meio só com `sudo systemctl stop`;
+  - estado: `/var/lib/modo-estudo/restante` (sobrevive ao reinício) e `/run/modo-estudo/restante` (contagem ao vivo); desligar o PC pausa e o login pergunta se continua (desistir pede uma frase);
+  - parte do usuário: `hypr/scripts/modo-estudo.sh` (menu, pergunta do login, módulo `custom/estudo` do waybar) e `bashrc.d/modo-estudo.sh` (link em `~/.bashrc.d/`).
 - Rofi: `base/rofi/config.rasi` (geral), `shared/` (cores e fonte, importados por todo layout), `launchers/type-3/`, `clipboard/`, `temas/` (seletor e pergunta).
 - `hypr/hyprland.conf` só faz `source`, nesta ordem: env → máquina (hardware, monitors) → settings → animations → execs → `~/.config/theme/hypr.conf` → windowrules → binds. Bordas, gaps e cores ficam só no tema.
 - Tema ativo: `Black_and_White`. `Tema_Teste` é um tema neon só para testar os scripts.
@@ -53,6 +58,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 
 ## Pendências na Frieren
 Coisas para rodar no desktop quando voltar a ele (apagar cada uma depois de feita):
+- Modo estudo: `sudo ~/dotfiles/scripts/instalar-modo-estudo.sh` (depois do `./install.sh`, que cria o link do `~/.bashrc.d/`).
 - `git pull` e logo em seguida `./install.sh` (ou `scripts/switch-theme.sh <tema>`): o `hyprland.conf` agora lê `~/.config/hypr/maquina/`, que só existe depois disso. Na pergunta, escolher `Frieren` e aceitar trocar o hostname.
 - `hypr/maquinas/Frieren/monitors.conf` está com a resolução de teste `980x720@72` (usada para testar a troca de máquina no notebook): trocar pela resolução real do monitor (era `1920x1080@72`).
 - Conferir depois: `scripts/check.sh` (tudo ✓), monitor a 72 Hz e teclado compx-kysona-m600 em `us`.
@@ -152,6 +158,10 @@ Em aberto (explicados, sem decisão ainda):
 - `check.sh` não confere o link do qt6ct;
 - qt6ct usa `Papirus-Light` (ícones escuros) num tema escuro: escolher pelo `docs/design.md`;
 - calendário do waybar com cores fixas: mantido assim por enquanto.
+
+## Modo estudo (2026-10-05)
+- [x] Serviço root com bloqueio de apps (Steam, Discord) e sites (YouTube, Instagram), instalador e regra do polkit.
+- [x] SUPER+B, `estudar`/`Estudar` no terminal (tempos 30m, 60m, 1h30, 2h ou digitado), pergunta no login e timer no waybar à direita das áreas de trabalho.
 
 ## Migração para LUA
 Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões novas do Hyprland usam configuração em Lua). Mesmo jeito de trabalhar: um item por vez, com aprovação antes.

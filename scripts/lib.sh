@@ -36,6 +36,7 @@ declare -A STATIC_MAP=(
     ["hypr/scripts"]="$CONFIG_DIR/hypr/scripts"
     ["hypr/hyprlock.conf"]="$CONFIG_DIR/hypr/hyprlock.conf"
     ["swappy/config"]="$CONFIG_DIR/swappy/config"
+    ["bashrc.d/modo-estudo.sh"]="$HOME/.bashrc.d/modo-estudo.sh"
 )
 
 # Componentes com layout em base/ que o tema pode sobrescrever inteiro
