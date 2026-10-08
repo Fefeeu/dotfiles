@@ -54,10 +54,8 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 
 ## Pendências na Frieren
 Coisas para rodar no desktop quando voltar a ele (apagar cada uma depois de feita):
-- Conferir depois: `scripts/check.sh` (tudo ✓), monitor a 72 Hz e teclado compx-kysona-m600 em `us`.
 - Conferir no waybar: módulo de brilho some (desktop não tem backlight) e rede mostra a interface ativa (cabo).
-- Conferir se o tema de ícones Papirus está instalado (`ls /usr/share/icons | grep Papirus`), agora usado pelo launcher.
-- Instalar a JetBrainsMono Nerd Font em `~/.local/share/fonts/JetBrainsMonoNerd` (nerd-fonts do GitHub), como no notebook.
+- Instalar o tema de ícones Papirus, usado pelo launcher (em 2026-10-08 ainda não estava): `sudo dnf install papirus-icon-theme`.
 - Pastas do usuário em inglês, como no notebook (feito na FERN em 2026-10-01). Com os apps fechados:
   - `mv` de `Área de trabalho`→`Desktop`, `Documentos`→`Documents`, `Imagens`→`Pictures`, `Modelos`→`Templates`, `Músicas`→`Music`, `Público`→`Public`, `Vídeos`→`Videos` (se já existir `~/Pictures`, juntar o conteúdo antes);
   - trocar os caminhos em `~/.config/user-dirs.dirs` e conferir com `xdg-user-dir PICTURES`;
@@ -123,7 +121,7 @@ Como trabalhar neste roteiro:
 17. [x] **Teste_Colorido** (hoje `Tema_Teste`): entrou no git como tema de teste dos scripts.
 
 Fora do roteiro por enquanto:
-- Resíduos locais fora do repositório: `~/.config/hypr/{colors.conf,battery-notify.sh,*.bak}`.
+- Resíduos locais fora do repositório: só faltam na Frieren as pastas `~/.config/hypr.bak`, `~/.config/rofi.bak` e `~/rofi` (clone antigo do adi1090x/rofi), de abril; podem ser apagadas.
 - Planejado (ainda não fazer): passar o sistema todo para nomes em inglês (pastas, arquivos, funções, variáveis e cores).
 
 ## Roteiro da revisão de 2026-10-01
