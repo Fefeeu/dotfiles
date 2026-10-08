@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Instalação completa: chama cada passo em scripts/, um por vez.
+# Instalação completa: chama cada passo em scripts/install/, um por vez.
 # Cada passo roda num bash próprio, então o set -e e o exit dos scripts não
 # fecham o terminal, seja qual for o jeito de rodar (./, bash ou source).
 # Sem set -e aqui de propósito: este arquivo pode rodar dentro do terminal.
 
-# Pasta dos passos (scripts/ ao lado deste arquivo)
-PASSOS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/scripts"
+# Pasta dos passos (scripts/install/ ao lado deste arquivo)
+PASSOS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/scripts/install"
 
 # máquina, links fixos e tema inicial
-bash "$PASSOS_DIR/provisionar.sh" "$@"
+bash "$PASSOS_DIR/instalador-inicial.sh" "$@"

@@ -9,7 +9,7 @@ if [[ "${BASH_SOURCE[0]}" != "$0" ]]; then
     return
 fi
 
-source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
+source "$(dirname "${BASH_SOURCE[0]}")/../lib.sh"
 
 info "--- Hyprland Setup (Provisionamento) ---"
 

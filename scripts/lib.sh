@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Funções e listas compartilhadas pelo provisionar.sh e pelo switch-theme.sh
+# Funções e listas compartilhadas pelo instalador-inicial.sh e pelo switch-theme.sh
 
 # Para no primeiro erro, em variável não definida ou em falha no meio de um pipe
 set -euo pipefail

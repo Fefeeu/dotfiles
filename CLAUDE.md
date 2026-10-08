@@ -25,8 +25,8 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
   - kitty: `include ~/.config/theme/palette/kitty.conf`.
 - Scripts:
   - `scripts/lib.sh`: `STATIC_MAP`, `OVERRIDABLE`, `THEME_ONLY`, `link_com_backup`, `listar_temas` e `aplicar_maquina` (detecta ou pergunta a máquina);
-  - `install.sh`: orquestrador, só chama os passos de `scripts/` com `bash` (nunca `source`), para que nada feche o terminal; sem `set -e`;
-  - `scripts/provisionar.sh`: confere a máquina, pergunta o tema, cria os links fixos e chama o switch;
+  - `install.sh`: orquestrador, só chama os passos de `scripts/install/` com `bash` (nunca `source`), para que nada feche o terminal; sem `set -e`;
+  - `scripts/install/instalador-inicial.sh`: confere a máquina, pergunta o tema, cria os links fixos e chama o switch;
   - `scripts/switch-theme.sh <tema>`: confere o link da máquina, refaz os links do tema e recarrega a sessão;
   - máquina sem pasta com o nome do hostname: pergunta qual usar e oferece trocar o hostname para o nome da pasta (terminal com `select`/`read`; fora dele, rofi). O Hyprland repassa o TTY do login aos programas, por isso o teste de terminal é `-t 0 && -t 2` e o seletor chama o switch com `< /dev/null`;
   - `scripts/check.sh`: confere scripts, temas, máquinas, links, rofi e Hyprland;

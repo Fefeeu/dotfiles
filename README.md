@@ -19,10 +19,10 @@ scripts/switch-theme.sh <tema>       # troca só o tema depois (ou SUPER+T)
 scripts/check.sh                     # confere scripts, temas, links e config do Hyprland
 ```
 
-O `install.sh` só chama os passos de `scripts/`, cada um num bash próprio (por isso funciona com `./`, `bash` ou `source`). Hoje o único passo é o `scripts/provisionar.sh`, que é **idempotente**: pode ser rodado várias vezes sem quebrar nada. Ele pergunta o **tema visual** (uma das pastas dentro de `themes/`), cria os **links fixos** (hypr, hyprlock, swappy) e chama o `scripts/switch-theme.sh`. O `switch-theme.sh`:
+O `install.sh` só chama os passos de `scripts/`, cada um num bash próprio (por isso funciona com `./`, `bash` ou `source`). Os passos ficam em `scripts/install/`; hoje o único é o `instalador-inicial.sh`, que é **idempotente**: pode ser rodado várias vezes sem quebrar nada. Ele pergunta o **tema visual** (uma das pastas dentro de `themes/`), cria os **links fixos** (hypr, hyprlock, swappy) e chama o `scripts/switch-theme.sh`. O `switch-theme.sh`:
 - valida se o tema tem os arquivos obrigatórios;
 - liga `~/.config/theme` ao tema;
-- liga `~/.config/hypr/maquina` à pasta de `hypr/maquinas/` com o nome do hostname (sem diferenciar maiúsculas); se não houver, pergunta qual usar (no terminal ou pelo rofi, no SUPER+T) e oferece trocar o hostname para o nome da pasta, para não perguntar de novo. O `provisionar.sh` faz essa mesma conferência antes de pedir o tema;
+- liga `~/.config/hypr/maquina` à pasta de `hypr/maquinas/` com o nome do hostname (sem diferenciar maiúsculas); se não houver, pergunta qual usar (no terminal ou pelo rofi, no SUPER+T) e oferece trocar o hostname para o nome da pasta, para não perguntar de novo. O `instalador-inicial.sh` faz essa mesma conferência antes de pedir o tema;
 - para cada componente (waybar, rofi, kitty, swaync), usa a versão do tema, se existir, ou a da `base/`;
 - aplica o **esquema de cores do KDE** (Dolphin e apps Qt) com `plasma-apply-colorscheme`, além do qt6ct, quando o tema tem esses arquivos;
 - recarrega Hyprland, Waybar e kitty e aplica o **wallpaper** com `swww`.
@@ -32,9 +32,10 @@ Se já existir uma configuração real no destino, ela é movida para `.bak` ant
 ## 📁 Estrutura
 ```
 dotfiles/
-├── install.sh              # orquestrador: chama os passos de scripts/
+├── install.sh              # orquestrador: chama os passos de scripts/install/
 ├── scripts/
-│   ├── provisionar.sh      # provisionamento: máquina, links fixos + tema
+│   ├── install/
+│   │   └── instalador-inicial.sh  # máquina, links fixos + tema
 │   ├── lib.sh              # funções e listas de links compartilhadas
 │   ├── switch-theme.sh     # troca o tema ativo
 │   └── check.sh            # conferência geral, sem alterar nada
