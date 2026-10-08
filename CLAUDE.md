@@ -121,7 +121,6 @@ Como trabalhar neste roteiro:
 17. [x] **Teste_Colorido** (hoje `Tema_Teste`): entrou no git como tema de teste dos scripts.
 
 Fora do roteiro por enquanto:
-- Resíduos locais fora do repositório: só faltam na Frieren as pastas `~/.config/hypr.bak`, `~/.config/rofi.bak` e `~/rofi` (clone antigo do adi1090x/rofi), de abril; podem ser apagadas.
 - Planejado (ainda não fazer): passar o sistema todo para nomes em inglês (pastas, arquivos, funções, variáveis e cores).
 
 ## Roteiro da revisão de 2026-10-01
