@@ -19,7 +19,7 @@ scripts/switch-theme.sh <tema>       # troca só o tema depois (ou SUPER+T)
 scripts/check.sh                     # confere scripts, temas, links e config do Hyprland
 ```
 
-O `install.sh` só chama os passos de `scripts/`, cada um num bash próprio (por isso funciona com `./`, `bash` ou `source`). Os passos ficam em `scripts/install/`; hoje o único é o `instalador-inicial.sh`, que é **idempotente**: pode ser rodado várias vezes sem quebrar nada. Ele pergunta o **tema visual** (uma das pastas dentro de `themes/`), cria os **links fixos** (hypr, hyprlock, swappy) e chama o `scripts/switch-theme.sh`. O `switch-theme.sh`:
+O `install.sh` só chama os passos de `scripts/`, cada um num bash próprio (por isso funciona com `./`, `bash` ou `source`). Os passos ficam em `scripts/install/`: `install-fonts.sh` e `install-icons.sh` baixam do GitHub as Nerd Fonts e os temas de ícones para a pasta do usuário (sem sudo, pulando o que já existe); depois o `instalador-inicial.sh`, que é **idempotente**: pode ser rodado várias vezes sem quebrar nada. Ele pergunta o **tema visual** (uma das pastas dentro de `themes/`), cria os **links fixos** (hypr, hyprlock, swappy) e chama o `scripts/switch-theme.sh`. O `switch-theme.sh`:
 - valida se o tema tem os arquivos obrigatórios;
 - liga `~/.config/theme` ao tema;
 - liga `~/.config/hypr/maquina` à pasta de `hypr/maquinas/` com o nome do hostname (sem diferenciar maiúsculas); se não houver, pergunta qual usar (no terminal ou pelo rofi, no SUPER+T) e oferece trocar o hostname para o nome da pasta, para não perguntar de novo. O `instalador-inicial.sh` faz essa mesma conferência antes de pedir o tema;
@@ -35,6 +35,8 @@ dotfiles/
 ├── install.sh              # orquestrador: chama os passos de scripts/install/
 ├── scripts/
 │   ├── install/
+│   │   ├── install-fonts.sh       # Nerd Fonts em ~/.local/share/fonts
+│   │   ├── install-icons.sh       # temas de ícones em ~/.local/share/icons
 │   │   └── instalador-inicial.sh  # máquina, links fixos + tema
 │   ├── lib.sh              # funções e listas de links compartilhadas
 │   ├── switch-theme.sh     # troca o tema ativo

@@ -7,5 +7,9 @@
 # Pasta dos passos (scripts/install/ ao lado deste arquivo)
 PASSOS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/scripts/install"
 
+# Nerd Fonts e temas de ícones (pasta do usuário, sem sudo)
+bash "$PASSOS_DIR/install-fonts.sh"
+bash "$PASSOS_DIR/install-icons.sh"
+
 # máquina, links fixos e tema inicial
 bash "$PASSOS_DIR/instalador-inicial.sh" "$@"

@@ -13,10 +13,12 @@
 #                      opcional
 #   repo: <repo>       repositório a ativar antes dos pacotes da seção:
 #                      copr <usuário/projeto> ou rpmfusion
-#   nerdfont: <nome>   fonte do GitHub (ryanoasis/nerd-fonts), instalada em
-#                      ~/.local/share/fonts/<nome>Nerd
 #   <pacote>  # motivo um pacote do dnf por linha
 #   # ...              comentário (ignorado)
+#
+# Nerd Fonts e temas de ícones não ficam aqui: vêm do GitHub para a pasta
+# do usuário, sem sudo, pelos scripts/install/install-fonts.sh e
+# install-icons.sh (a lista fica dentro de cada script).
 # =====================================================================
 
 [todas]
@@ -66,12 +68,9 @@ polkit-kde                    # agente de senha (execs.conf: hostnamectl, apps d
 dolphin                       # gerenciador de arquivos (SUPER+E)
 plasma-workspace              # plasma-apply-colorscheme (kde.colors dos temas)
 qt6ct                         # aparência dos apps Qt no Hyprland (QT_QPA_PLATFORMTHEME)
-papirus-icon-theme            # ícones Papirus (rofi) e Papirus-Light (qt6ct)
-papirus-icon-theme-light      # variante Papirus-Light usada no qt6ct
 
 # ----- FONTES --------------------------------------------------------
 adwaita-sans-fonts            # fonte do waybar e do qt6ct
-nerdfont: JetBrainsMono       # JetBrainsMono Nerd Font: kitty, rofi, waybar, hyprlock
 
 # ----- DOTFILES ------------------------------------------------------
 git-core                      # clonar e atualizar este repositório
