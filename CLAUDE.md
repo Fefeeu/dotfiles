@@ -25,7 +25,8 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
   - kitty: `include ~/.config/theme/palette/kitty.conf`.
 - Scripts:
   - `scripts/lib.sh`: `STATIC_MAP`, `OVERRIDABLE`, `THEME_ONLY`, `link_com_backup`, `listar_temas` e `aplicar_maquina` (detecta ou pergunta a máquina);
-  - `install.sh`: confere a máquina, pergunta o tema, cria os links fixos e chama o switch;
+  - `install.sh`: orquestrador, só chama os passos de `scripts/` com `bash` (nunca `source`), para que nada feche o terminal; sem `set -e`;
+  - `scripts/provisionar.sh`: confere a máquina, pergunta o tema, cria os links fixos e chama o switch;
   - `scripts/switch-theme.sh <tema>`: confere o link da máquina, refaz os links do tema e recarrega a sessão;
   - máquina sem pasta com o nome do hostname: pergunta qual usar e oferece trocar o hostname para o nome da pasta (terminal com `select`/`read`; fora dele, rofi). O Hyprland repassa o TTY do login aos programas, por isso o teste de terminal é `-t 0 && -t 2` e o seletor chama o switch com `< /dev/null`;
   - `scripts/check.sh`: confere scripts, temas, máquinas, links, rofi e Hyprland;
@@ -158,6 +159,6 @@ Em aberto (explicados, sem decisão ainda):
 Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões novas do Hyprland usam configuração em Lua). Mesmo jeito de trabalhar: um item por vez, com aprovação antes.
 - [ ] Atualizar Hyprland
 - [ ] Atualizar `docs/pacotes-dotfiles.md` para a versão nova do Hyprland (nomes de pacotes, repositórios e dependências que mudarem)
-- [ ] Criar o script de instalação de todos os pacotes de `docs/pacotes-dotfiles.md` (seções, `repo:`, `nerdfont:` e pacotes)
+- [ ] Criar o script de instalação de todos os pacotes de `docs/pacotes-dotfiles.md` (seções, `repo:`, `nerdfont:` e pacotes), como um passo novo chamado pelo `install.sh`
 - [ ] Criação do script do `docs/apps.md`: definir o formato, preencher a lista de apps pessoais (Steam, Discord, VS Code...) e criar o script que instala tudo
 - [ ] Estudar e personalizar mais o hyprlock: cores do tema (hoje são fixas), `me.png` opcional e cartão de bateria que funcione no desktop
