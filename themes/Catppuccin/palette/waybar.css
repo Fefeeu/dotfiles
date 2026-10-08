@@ -13,7 +13,7 @@
 @define-color text                  #cdd6f4;  /* texto padrão */
 
 /* ----- DESTAQUES ------------------------------------ */
-@define-color mauve                 #cba6f7;  /* destaque principal */
+@define-color rosa_mauve               #e0b4ef;  /* destaque principal: meio-termo entre mauve e pink */
 @define-color pink                  #f5c2e7;
 @define-color blue                  #89b4fa;
 @define-color red                   #f38ba8;  /* alerta */
@@ -22,9 +22,9 @@
 @define-color fundo                 @crust;
 @define-color fundo_modulo          @mantle;
 @define-color fundo_hover           @surface0;
-@define-color borda                 @mauve;
+@define-color borda                 @rosa_mauve;
 @define-color texto                 @text;
 @define-color texto_ativo           @crust;
 @define-color texto_mudo            @overlay0;
-@define-color destaque              @mauve;
+@define-color destaque              @rosa_mauve;
 @define-color alerta                @red;

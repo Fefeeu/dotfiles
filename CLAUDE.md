@@ -32,7 +32,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
   - `hypr/scripts/seletor-tema.sh` (SUPER+T): lista de temas no rofi com miniatura e nome, layout em `base/rofi/temas/seletor.rasi`.
 - Rofi: `base/rofi/config.rasi` (geral), `shared/` (cores e fonte, importados por todo layout), `launchers/type-3/`, `clipboard/`, `temas/` (seletor e pergunta).
 - `hypr/hyprland.conf` só faz `source`, nesta ordem: env → máquina (hardware, monitors) → settings → animations → execs → `~/.config/theme/hypr.conf` → windowrules → binds. Bordas, gaps e cores ficam só no tema.
-- Tema ativo: `Black_and_White`. `Tema_Teste` é um tema neon só para testar os scripts. `Catppuccin` (Mocha, destaque mauve) e `Catppuccin_Rosa` (destaque `#e0b4ef`, entre mauve e pink) estão em teste; um deles fica como tema temporário para a Frieren, até sair o tema de jogos/anime dela.
+- Tema ativo: `Black_and_White`. `Tema_Teste` é um tema neon só para testar os scripts. `Catppuccin` (Mocha, destaque rosa-mauve `#e0b4ef`, entre mauve e pink) é o tema temporário para a Frieren, até sair o tema de jogos/anime dela.
   - A paleta usa nomes em português (`preto_absoluto`, `branco_puro`, `cinza_*`) mapeados para nomes semânticos (`fundo`, `texto`, `borda`...).
   - Os temas de rofi vêm do adi1090x/rofi (launcher `type-3/style-1`).
   - `themes/_modelo` é o esqueleto de tema novo (pastas com `_` não aparecem no install).
@@ -54,7 +54,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 ## Pendências na Frieren
 Coisas para rodar no desktop quando voltar a ele (apagar cada uma depois de feita):
 - `git pull` e logo em seguida `./install.sh` (ou `scripts/switch-theme.sh <tema>`): o `hyprland.conf` agora lê `~/.config/hypr/maquina/`, que só existe depois disso. Na pergunta, escolher `Frieren` e aceitar trocar o hostname.
-- Testar `Catppuccin` e `Catppuccin_Rosa` (SUPER+T), escolher a cor de destaque e apagar o outro tema (mantendo o nome `Catppuccin`).
+- Aplicar o tema temporário: `scripts/switch-theme.sh Catppuccin` (ou SUPER+T).
 - `hypr/maquinas/Frieren/monitors.conf` está com a resolução de teste `980x720@72` (usada para testar a troca de máquina no notebook): trocar pela resolução real do monitor (era `1920x1080@72`).
 - Conferir depois: `scripts/check.sh` (tudo ✓), monitor a 72 Hz e teclado compx-kysona-m600 em `us`.
 - Conferir no waybar: módulo de brilho some (desktop não tem backlight) e rede mostra a interface ativa (cabo).

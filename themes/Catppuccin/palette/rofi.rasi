@@ -12,8 +12,8 @@
     background-window:  #1e1e2ee6;  /* base 90% opaco (e6 = 230/255) */
     background-alt:     #313244;    /* surface0 */
     foreground:         #cdd6f4;    /* text */
-    selected:           #cba6f7;    /* mauve */
-    border-color:       #cba6f7;    /* mauve */
+    selected:           #e0b4ef;    /* rosa-mauve */
+    border-color:       #e0b4ef;    /* rosa-mauve */
 
     background-color:   @background;
     separatorcolor:     @border-color;
