@@ -2,6 +2,13 @@
 # Troca o tema ativo: ./scripts/switch-theme.sh <tema>
 # Para cada componente usa themes/<tema>/<comp> se existir, senão base/<comp>.
 
+# Chamado com "source": roda num bash próprio, senão o set -e e o exit do
+# lib.sh ficam valendo no shell do terminal e o fecham no primeiro erro
+if [[ "${BASH_SOURCE[0]}" != "$0" ]]; then
+    bash "${BASH_SOURCE[0]}" "$@"
+    return
+fi
+
 # Carrega os mapas de links e as funções compartilhadas
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 

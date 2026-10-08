@@ -2,6 +2,13 @@
 # Provisionamento: máquina, links fixos e tema inicial.
 # Para só trocar de tema depois, use scripts/switch-theme.sh <tema>.
 
+# Chamado com "source": roda num bash próprio, senão o set -e e o exit do
+# lib.sh ficam valendo no shell do terminal e o fecham no primeiro erro
+if [[ "${BASH_SOURCE[0]}" != "$0" ]]; then
+    bash "${BASH_SOURCE[0]}" "$@"
+    return
+fi
+
 source "$(dirname "${BASH_SOURCE[0]}")/scripts/lib.sh"
 
 info "--- Hyprland Setup (Provisionamento) ---"
