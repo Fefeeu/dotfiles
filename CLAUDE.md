@@ -54,6 +54,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 ## Pendências na Frieren
 Coisas para rodar no desktop quando voltar a ele (apagar cada uma depois de feita):
 - `git pull` e logo em seguida `./install.sh` (ou `scripts/switch-theme.sh <tema>`): o `hyprland.conf` agora lê `~/.config/hypr/maquina/`, que só existe depois disso. Na pergunta, escolher `Frieren` e aceitar trocar o hostname.
+- **Problema aberto (2026-10-08):** ao rodar o `install.sh` na Frieren o terminal fecha logo depois. Na FERN não dá para reproduzir; os scripts não fecham o terminal sozinhos. Suspeitas: script aberto com `source`/Dolphin/`kitty -e` (o `set -e` do `lib.sh` fecha o shell), Hyprland caindo no `hyprctl reload`, ou `~/.config/hypr` sendo um link inteiro para `~/dotfiles/hypr` (estrutura antiga). Diagnóstico: `bash -x ./install.sh 2>&1 | tee ~/install.log`, depois `tail -40 ~/install.log` e `ls -la ~/.config/hypr ~/.config | grep -- "->"`; ver também se fecha só o terminal ou a sessão toda.
 - Aplicar o tema temporário: `scripts/switch-theme.sh Catppuccin` (ou SUPER+T).
 - Conferir depois: `scripts/check.sh` (tudo ✓), monitor a 72 Hz e teclado compx-kysona-m600 em `us`.
 - Conferir no waybar: módulo de brilho some (desktop não tem backlight) e rede mostra a interface ativa (cabo).
