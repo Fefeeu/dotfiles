@@ -3,4 +3,5 @@
 
 pkill -x waybar
 while pgrep -x waybar > /dev/null; do sleep 0.1; done
-waybar &
+# setsid: sessão própria, para não morrer junto com o terminal que chamou
+setsid -f waybar > /dev/null 2>&1
