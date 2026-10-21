@@ -161,9 +161,11 @@ Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões nov
 ## Tema Persona com shell próprio (depois da migração para Lua)
 Análise de 2026-10-21, ainda sem nada feito. Mesmo jeito de trabalhar: um item por vez, com aprovação antes.
 
+Objetivo: uma tela inicial que funciona como menu de jogo (um workspace só para ela, de onde os apps abrem em outro workspace), com wallpaper animado. O Persona é o exemplo e o ponto de partida, não o fim. É o mesmo "tema com layout próprio inspirado no menu de Persona 3 Reload" citado em Ambiente.
+
 Referências:
-- Base: [Persona-Quickshell](https://github.com/Yujonpradhananga/Persona-Quickshell-) (QML/Quickshell, MIT segundo o README, sem arquivo LICENSE; já usa o bind em Lua `hl.bind(...)`). Post: [Hyprland PersonaShell v2](https://www.reddit.com/r/unixporn/comments/1u86dr2/hyprland_personashell_v2/).
-- Inspiração visual (KDE, plasmoides em QML): [KDE with all the bells and whistles](https://www.reddit.com/r/unixporn/comments/1vkil9o/kde_with_all_the_bells_and_whistles/), com cartões inclinados em escada, relógio, dock lateral e wallpaper animado.
+- Base: [Persona-Quickshell](https://github.com/Yujonpradhananga/Persona-Quickshell-) (QML/Quickshell, MIT segundo o README, sem arquivo LICENSE; já usa o bind em Lua `hl.bind(...)`). Post: [Hyprland PersonaShell v2](https://www.reddit.com/r/unixporn/comments/1u86dr2/hyprland_personashell_v2/) (o Reddit bloqueia acesso automático; o que importa está no GitHub).
+- Inspiração visual (KDE, plasmoides em QML): [KDE with all the bells and whistles](https://www.reddit.com/r/unixporn/comments/1vkil9o/kde_with_all_the_bells_and_whistles/), com cartões inclinados em escada (título, subtítulo e ícone: FILES, TERMINAL, SETTINGS, STEAM, KRITA, ZEN), relógio com data, logo, dock lateral e wallpaper animado. É o visual do menu de apps que queremos.
 - O que o projeto traz: wallpaper com vídeo e shaders (`Widgets/WallpaperEngine.qml`), busca de apps por IPC (`Layers/Searchapp.qml`, `qs ipc call searchapp toggle`), menu (`Layers/AppDrawer.qml`), relógio, calendário, cápsula, OSD de volume e brilho, informações de rede, Bluetooth, bateria e mídia.
 
 Decidido:
@@ -192,6 +194,7 @@ Passos:
 - [ ] `menu.sh` e o bind do SUPER+D
 - [ ] `themes/Persona/` com o QML dele (sem `.git`, com créditos), paleta e `Colors.qml` ligado à paleta
 - [ ] Passo de instalação dos assets (chamado pelo `install.sh`) + `.gitignore`
+- [ ] Menu de apps em cartões inclinados em escada, como na inspiração do KDE (o `AppDrawer.qml` dele só tem Calendar, Stats, Shaders e Power), com a lista de apps num arquivo de config
 - [ ] Workspace inicial: bind, começar nele, vigia no QML e lançamento com `[workspace empty]`
 - [ ] Docs (`docs/temas.md`, `docs/pacotes-dotfiles.md`: quickshell por COPR, qt6-qtmultimedia...) e `check.sh` (`qs` instalado e assets baixados quando algum tema tem `quickshell/`)
 
@@ -204,4 +207,5 @@ Decisões em aberto:
 - Plugin do cava: compilar o [Qt6-Cava-plugin](https://github.com/Yujonpradhananga/Qt6-Cava-plugin) ou deixar de fora (começar sem ele).
 - Shaders de profundidade e parallax: dependem de máscaras feitas para a arte (`makotodepth.png`, `cloudmask.png`); ao trocar a arte, fazer máscaras próprias ou tirar os shaders. Mudar `.qsb` exige o `qsb` (qt6-shadertools).
 - Conferir na versão nova do Hyprland os nomes de eventos e dispatchers, e se a API em Lua tem ganchos de evento (parte do vigia poderia ir para o `hypr.lua` do tema).
+- Quais apps entram no menu inicial e onde fica essa lista (arquivo no tema ou na config da máquina).
 - O que fica nos workspaces normais nesse tema: só wallpaper, a cápsula dele ou algo como barra.
