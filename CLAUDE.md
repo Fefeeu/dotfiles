@@ -171,6 +171,7 @@ Decidido:
 - O rofi não faz esse visual (só retângulos, sem escada); a ferramenta é o Quickshell.
 - Assets: usar os do Persona por padrão (mais fácil que fazer arte do zero). Ficam fora do git (65 MB, arte da Atlus): baixados do repositório original na instalação para `themes/Persona/quickshell/Assets/`, que entra no `.gitignore`, para o QML continuar achando por `../Assets/`. Mais tarde podem virar vídeos, GIFs e imagens próprios.
 - Tela inicial em uma tela só (sem uma por monitor).
+- Temas com menu inicial são para o desktop Frieren, não para o notebook FERN; consumo de bateria não é problema.
 
 Como encaixar:
 - Tema com pasta `quickshell/` assume a área de trabalho: `quickshell` no `THEME_ONLY`, link `~/.config/quickshell`. O contrato normal continua (`hypr`, `palette`, `wall.png` para o hyprlock, `thumb.png` para o seletor).
@@ -185,7 +186,7 @@ Como encaixar:
   - o menu fica na camada de fundo e só aparece no `inicio`; pega o teclado só quando está visível (setas + Enter).
 
 Passos:
-- [ ] Testar o Persona-Quickshell como veio, fora do dotfiles, na FERN (sem o plugin do cava): funciona? quanto pesa na bateria e na GPU?
+- [ ] Testar o Persona-Quickshell como veio, fora do dotfiles, na Frieren (sem o plugin do cava): funciona no AMD? quanto pesa na GPU? (na FERN serve só para ver funcionando)
 - [ ] `sessao.sh` + `execs` + `switch-theme.sh`, ainda sem tema novo (os temas atuais têm de continuar iguais)
 - [ ] `menu.sh` e o bind do SUPER+D
 - [ ] `themes/Persona/` com o QML dele (sem `.git`, com créditos), paleta e `Colors.qml` ligado à paleta
@@ -201,6 +202,6 @@ Decisões em aberto:
 - Na Frieren, em qual monitor fica o início.
 - Plugin do cava: compilar o [Qt6-Cava-plugin](https://github.com/Yujonpradhananga/Qt6-Cava-plugin) ou deixar de fora (começar sem ele).
 - Shaders de profundidade e parallax: dependem de máscaras feitas para a arte (`makotodepth.png`, `cloudmask.png`); ao trocar a arte, fazer máscaras próprias ou tirar os shaders. Mudar `.qsb` exige o `qsb` (qt6-shadertools).
-- Modo leve na bateria do notebook (vídeo e shaders o tempo todo).
+- O tema aparece também no seletor da FERN ou só na Frieren?
 - Conferir na versão nova do Hyprland os nomes de eventos e dispatchers, e se a API em Lua tem ganchos de evento (parte do vigia poderia ir para o `hypr.lua` do tema).
 - O que fica nos workspaces normais nesse tema: só wallpaper, a cápsula dele ou algo como barra.
