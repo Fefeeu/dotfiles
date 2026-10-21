@@ -157,3 +157,50 @@ Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões nov
 - [ ] Criar o script de instalação de todos os pacotes de `docs/pacotes-dotfiles.md` (seções, `repo:` e pacotes), como um passo novo chamado pelo `install.sh`
 - [ ] Criação do script do `docs/apps.md`: definir o formato, preencher a lista de apps pessoais (Steam, Discord, VS Code...) e criar o script que instala tudo
 - [ ] Estudar e personalizar mais o hyprlock: cores do tema (hoje são fixas), `me.png` opcional e cartão de bateria que funcione no desktop
+
+## Tema Persona com shell próprio (depois da migração para Lua)
+Análise de 2026-10-21, ainda sem nada feito. Mesmo jeito de trabalhar: um item por vez, com aprovação antes.
+
+Referências:
+- Base: [Persona-Quickshell](https://github.com/Yujonpradhananga/Persona-Quickshell-) (QML/Quickshell, MIT segundo o README, sem arquivo LICENSE; já usa o bind em Lua `hl.bind(...)`). Post: [Hyprland PersonaShell v2](https://www.reddit.com/r/unixporn/comments/1u86dr2/hyprland_personashell_v2/).
+- Inspiração visual (KDE, plasmoides em QML): [KDE with all the bells and whistles](https://www.reddit.com/r/unixporn/comments/1vkil9o/kde_with_all_the_bells_and_whistles/), com cartões inclinados em escada, relógio, dock lateral e wallpaper animado.
+- O que o projeto traz: wallpaper com vídeo e shaders (`Widgets/WallpaperEngine.qml`), busca de apps por IPC (`Layers/Searchapp.qml`, `qs ipc call searchapp toggle`), menu (`Layers/AppDrawer.qml`), relógio, calendário, cápsula, OSD de volume e brilho, informações de rede, Bluetooth, bateria e mídia.
+
+Decidido:
+- Os temas atuais não mudam; o Persona entra só trocando no SUPER+T.
+- O rofi não faz esse visual (só retângulos, sem escada); a ferramenta é o Quickshell.
+- Assets: usar os do Persona por padrão (mais fácil que fazer arte do zero). Ficam fora do git (65 MB, arte da Atlus): baixados do repositório original na instalação para `themes/Persona/quickshell/Assets/`, que entra no `.gitignore`, para o QML continuar achando por `../Assets/`. Mais tarde podem virar vídeos, GIFs e imagens próprios.
+- Tela inicial em uma tela só (sem uma por monitor).
+
+Como encaixar:
+- Tema com pasta `quickshell/` assume a área de trabalho: `quickshell` no `THEME_ONLY`, link `~/.config/quickshell`. O contrato normal continua (`hypr`, `palette`, `wall.png` para o hyprlock, `thumb.png` para o seletor).
+- `hypr/scripts/sessao.sh` (fixo): com `~/.config/theme/quickshell`, fecha waybar e swww e abre `qs -p ~/.config/theme/quickshell`; sem ela, fecha o `qs`, garante `swww-daemon` + wallpaper e abre o waybar. Chamado no `exec-once` do login e no fim do `switch-theme.sh`, no lugar do que hoje recarrega waybar e swww.
+- `hypr/scripts/menu.sh` no SUPER+D: `qs ipc call searchapp toggle` se o tema tiver `quickshell/`, senão o rofi de hoje.
+- SUPER+T, SUPER+V, kitty, swaync, hyprlock, qt6ct e KDE seguem iguais, também no Persona.
+- Cores: o `Data/Colors.qml` dele (hex fixos do pywal) passa a usar os nomes semânticos da paleta do tema.
+- Workspace inicial ("workspace 0", menu de jogo):
+  - workspace com nome (`name:inicio`), com bind para ir até ele e a sessão começando nele;
+  - nada fica nele: o QML escuta `openwindow` e `movewindowv2` (`Hyprland.rawEvent`) e manda a janela para `movetoworkspace empty`, sem `silent`, para acompanhar a janela; só existe com o tema ativo;
+  - o menu abre os apps com `hyprctl dispatch exec "[workspace empty] <app>"`, para a janela não piscar no início;
+  - o menu fica na camada de fundo e só aparece no `inicio`; pega o teclado só quando está visível (setas + Enter).
+
+Passos:
+- [ ] Testar o Persona-Quickshell como veio, fora do dotfiles, na FERN (sem o plugin do cava): funciona? quanto pesa na bateria e na GPU?
+- [ ] `sessao.sh` + `execs` + `switch-theme.sh`, ainda sem tema novo (os temas atuais têm de continuar iguais)
+- [ ] `menu.sh` e o bind do SUPER+D
+- [ ] `themes/Persona/` com o QML dele (sem `.git`, com créditos), paleta e `Colors.qml` ligado à paleta
+- [ ] Passo de instalação dos assets (chamado pelo `install.sh`) + `.gitignore`
+- [ ] Workspace inicial: bind, começar nele, vigia no QML e lançamento com `[workspace empty]`
+- [ ] Docs (`docs/temas.md`, `docs/pacotes-dotfiles.md`: quickshell por COPR, qt6-qtmultimedia...) e `check.sh` (`qs` instalado e assets baixados quando algum tema tem `quickshell/`)
+
+Decisões em aberto:
+- Detectar o tema com shell próprio pela pasta `quickshell/` (recomendado, segue o padrão do override) ou por um arquivo declarado no tema.
+- O repositório é público? (reforça manter os assets fora do git)
+- `movetoworkspace empty` (primeiro vazio) ou `emptyn` (próximo depois do atual): decidir testando.
+- Bind para voltar ao início (ex.: SUPER+Esc).
+- Na Frieren, em qual monitor fica o início.
+- Plugin do cava: compilar o [Qt6-Cava-plugin](https://github.com/Yujonpradhananga/Qt6-Cava-plugin) ou deixar de fora (começar sem ele).
+- Shaders de profundidade e parallax: dependem de máscaras feitas para a arte (`makotodepth.png`, `cloudmask.png`); ao trocar a arte, fazer máscaras próprias ou tirar os shaders. Mudar `.qsb` exige o `qsb` (qt6-shadertools).
+- Modo leve na bateria do notebook (vídeo e shaders o tempo todo).
+- Conferir na versão nova do Hyprland os nomes de eventos e dispatchers, e se a API em Lua tem ganchos de evento (parte do vigia poderia ir para o `hypr.lua` do tema).
+- O que fica nos workspaces normais nesse tema: só wallpaper, a cápsula dele ou algo como barra.
