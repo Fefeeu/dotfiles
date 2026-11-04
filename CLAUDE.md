@@ -169,15 +169,24 @@ Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões nov
   - sem `hyprland.lua`, a versão nova continua lendo o `hyprland.conf`;
   - erros corrigidos no `.conf`: `windowrule` com `match:<campo>` e efeito com valor (`no_blur on`, `border_size 0`...), `togglesplit` virou `layoutmsg, togglesplit`, `dwindle:pseudotile` saiu;
   - voltar atrás: Plasma na tela de login, reativar o COPR antigo e `sudo dnf downgrade` dos pacotes.
+- [x] Criar o script de instalação de todos os pacotes de `docs/pacotes-dotfiles.md` (seções, `repo:` e pacotes), como um passo novo chamado pelo `install.sh`: `scripts/install/install-pacotes.sh`
+- [ ] Reescrever a config em Lua (os `.lua` ficam ao lado dos `.conf`, com os mesmos nomes e pastas; cada parte testada com `Hyprland --verify-config -c <arquivo>.lua`, sem mexer na sessão até a virada):
+  - [ ] esqueleto: `hypr/hyprland.lua` com `require` na mesma ordem do `hyprland.conf` (env → máquina → settings → animations → execs → tema → windowrules → binds);
+  - [ ] configs: `hypr/configs/{env,settings,animations,execs}.lua`;
+  - [ ] regras e binds: `hypr/rules/{windowrules,binds}.lua`;
+  - [ ] máquinas: `hypr/maquinas/*/{hardware,monitors}.lua`;
+  - [ ] temas: `hypr.lua` nos temas e no `_modelo`, e o contrato no `switch-theme.sh`, `check.sh` e `docs/temas.md`;
+  - [ ] virada: link `~/.config/hypr/hyprland.lua` no `STATIC_MAP`, testado na sessão real (se existir `hyprland.lua`, o Hyprland usa só ele: a troca é de uma vez; para voltar, apagar o link).
+- [ ] Destravar e atualizar para a 0.57+ (último passo, com a config inteira em Lua): apagar as versões fixas do `docs/pacotes-dotfiles.md`, `sudo dnf versionlock delete hyprland xdg-desktop-portal-hyprland hyprlock hyprgraphics aquamarine hyprtoolkit hyprutils hyprlang hyprwire`, `sudo dnf upgrade` e conferir se o hyprlock novo ainda lê o `hyprlock.conf`
+
+Depois da migração para Lua (ficam para quando a config inteira estiver em Lua):
 - [ ] Atualizar `docs/pacotes-dotfiles.md` para a versão nova do Hyprland (nomes de pacotes, repositórios e dependências que mudarem):
   - [x] `repo:` trocado para `copr nett00n/hyprland`;
   - [ ] `swww` e `grimblast` não existem no COPR novo nem no Fedora (na FERN sobraram do COPR antigo): procurar outro COPR ou trocar de programa;
   - [ ] `uwsm` veio com o upgrade: conferir se é dependência do `hyprland` ou se pode sair.
-- [x] Criar o script de instalação de todos os pacotes de `docs/pacotes-dotfiles.md` (seções, `repo:` e pacotes), como um passo novo chamado pelo `install.sh`: `scripts/install/install-pacotes.sh`
 - [ ] Criação do script do `docs/apps.md`: definir o formato, preencher a lista de apps pessoais (Steam, Discord, VS Code...) e criar o script que instala tudo
 - [ ] Aplicativos padrão: `mimeapps.list` no dotfiles, igual em todos os computadores (detalhes em `docs/ideias.md`; decidir entre link no `STATIC_MAP` ou cópia, porque o KDE reescreve o arquivo)
 - [ ] Estudar e personalizar mais o hyprlock: cores do tema (hoje são fixas), `me.png` opcional e cartão de bateria que funcione no desktop
-- [ ] Destravar e atualizar para a 0.57+ (último passo, com a config inteira em Lua): apagar as versões fixas do `docs/pacotes-dotfiles.md`, `sudo dnf versionlock delete hyprland xdg-desktop-portal-hyprland hyprlock hyprgraphics aquamarine hyprtoolkit hyprutils hyprlang hyprwire`, `sudo dnf upgrade` e conferir se o hyprlock novo ainda lê o `hyprlock.conf`
 
 ## Migração de distro (depois da migração para Lua)
 Trocar o Fedora por uma distro que acompanhe melhor o Hyprland novo. Até começar esta etapa, o resto do roteiro segue feito para o Fedora, como se a troca não existisse. Mesmo jeito de trabalhar: um item por vez, com aprovação antes.
