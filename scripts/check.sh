@@ -81,7 +81,7 @@ for dir in themes/*/; do
     ok=1
 
     # arquivos obrigatórios; o _modelo não tem imagens de propósito
-    obrigatorios=(hypr.conf palette/waybar.css palette/rofi.rasi palette/kitty.conf)
+    obrigatorios=(hypr.conf hypr.lua palette/waybar.css palette/rofi.rasi palette/kitty.conf)
     [[ "$tema" == _* ]] || obrigatorios+=(imagens/wallpapers/wall.png imagens/thumb.png)
     for arq in "${obrigatorios[@]}"; do
         [[ -e "$dir$arq" ]] || { falhou "$tema: falta $arq"; ok=0; }
@@ -99,6 +99,14 @@ for dir in themes/*/; do
     if [[ -f "${dir}palette/kitty.conf" ]]; then
         faltando="$(nomes_faltando "${dir}palette/kitty.conf" '^[[:space:]]*NOME[[:space:]]' "${CORES_KITTY[@]}")"
         [[ -z "$faltando" ]] || { falhou "$tema: kitty.conf sem" $faltando; ok=0; }
+    fi
+
+    # hypr.lua do tema conferido sozinho pelo Hyprland (cores, degradê, gaps);
+    # a saída termina em "config ok" ou nos erros, depois de "Config parsing result"
+    if [[ -f "${dir}hypr.lua" ]] && command -v Hyprland &> /dev/null; then
+        saida="$(Hyprland --verify-config -c "$DOTFILES_DIR/${dir}hypr.lua" 2>&1 \
+            | sed -n '/Config parsing result/,$p' | sed '1d;/^[[:space:]]*$/d')"
+        [[ "$saida" == "config ok" ]] || { falhou "$tema: hypr.lua (--verify-config):\n$saida"; ok=0; }
     fi
 
     (( ok )) && passou "$tema"

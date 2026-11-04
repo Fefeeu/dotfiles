@@ -35,7 +35,7 @@ require("configs.animations")                      -- passo 2
 require("configs.execs")                           -- passo 2
 
 -- Tema ativo: bordas, gaps e cores
--- carregar("~/.config/theme/hypr.lua")            -- passo 5
+carregar("~/.config/theme/hypr.lua")               -- passo 5
 
 -- Regras e binds
 require("rules.windowrules")                       -- passo 3

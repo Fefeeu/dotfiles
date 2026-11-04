@@ -14,7 +14,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 - `~/dotfiles` é a fonte da verdade. Os links são criados com `ln -sfn` e caminhos absolutos. Se já existe uma config real no destino, ela vira `.bak`.
 - Modelo **base + override**:
   - `base/` tem o layout padrão (`waybar`, `rofi`, `kitty/kitty.conf`);
-  - `themes/<tema>/` tem `hypr.conf`, `palette/`, `imagens/wallpapers/wall.png` e `imagens/thumb.png` (miniatura do seletor); outras imagens, como `me.png`, ficam soltas em `imagens/`;
+  - `themes/<tema>/` tem `hypr.conf` e `hypr.lua` (o mesmo em Lua, durante a migração), `palette/`, `imagens/wallpapers/wall.png` e `imagens/thumb.png` (miniatura do seletor); outras imagens, como `me.png`, ficam soltas em `imagens/`;
   - o tema pode trazer a própria pasta de um componente, que substitui a da base inteira.
   - Contrato completo em `docs/temas.md`.
 - Estado da máquina (fora do git):
@@ -176,7 +176,7 @@ Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões nov
   - [x] configs: `hypr/configs/{env,settings,animations,execs}.lua`; o `settings.lua` devolve os programas (`terminal`, `fileManager`, `menu`, antes `$terminal`...) para o `binds.lua` pegar com `require`; os `exec-once` viraram `hl.exec_cmd` dentro de `hl.on("hyprland.start", ...)`; o `--verify-config` pega opção inventada, tipo errado e curva inexistente, com arquivo e linha;
   - [x] regras e binds: `hypr/rules/{windowrules,binds}.lua`; o `--verify-config` confere campos e `match` das regras, mas **não** os argumentos dos dispatchers (`hl.dsp.window.fullscreen({ inventado = 0 })` passa): os nomes vieram das mensagens de erro do próprio Hyprland, e na virada é preciso testar na mão F11, SUPER+F, SUPER(+SHIFT)+setas, SUPER(+SHIFT)+números, SUPER+J e o mouse;
   - [x] máquinas: `hypr/maquinas/*/{hardware,monitors}.lua` (carregados pelo link `~/.config/hypr/maquina`; a Frieren foi conferida com uma cópia do `hyprland.lua` apontando para a pasta dela); o `check.sh` exige os `.conf` e os `.lua` em cada máquina;
-  - [ ] temas: `hypr.lua` nos temas e no `_modelo`, e o contrato no `switch-theme.sh`, `check.sh` e `docs/temas.md`;
+  - [x] temas: `hypr.lua` nos temas e no `_modelo` (degradê: `{ colors = {...}, angle = 45 }`), e o contrato no `switch-theme.sh`, `check.sh` (também roda o `--verify-config` no `hypr.lua` de cada tema) e `docs/temas.md`;
   - [ ] virada: link `~/.config/hypr/hyprland.lua` no `STATIC_MAP`, testado na sessão real (se existir `hyprland.lua`, o Hyprland usa só ele: a troca é de uma vez; para voltar, apagar o link).
 - [ ] Destravar e atualizar para a 0.57+ (último passo, com a config inteira em Lua): apagar as versões fixas do `docs/pacotes-dotfiles.md`, `sudo dnf versionlock delete hyprland xdg-desktop-portal-hyprland hyprlock hyprgraphics aquamarine hyprtoolkit hyprutils hyprlang hyprwire`, `sudo dnf upgrade` e conferir se o hyprlock novo ainda lê o `hyprlock.conf`
 

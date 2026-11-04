@@ -21,7 +21,7 @@ TEMA_DIR="$DOTFILES_DIR/themes/$TEMA"
 
 # --- VALIDAÇÃO (contrato em docs/temas.md) ---
 # Sem estes arquivos o tema não é aplicado
-for obrigatorio in hypr.conf palette imagens/wallpapers/wall.png imagens/thumb.png; do
+for obrigatorio in hypr.conf hypr.lua palette imagens/wallpapers/wall.png imagens/thumb.png; do
     [[ -e "$TEMA_DIR/$obrigatorio" ]] || erro "$TEMA/$obrigatorio não encontrado. O tema está incompleto."
 done
 
@@ -104,7 +104,7 @@ fi
 # --- RECARREGAR (só dentro de uma sessão Hyprland) ---
 if [[ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]]; then
     titulo "Recarregando:"
-    # bordas, gaps e cores do hypr.conf do tema
+    # bordas, gaps e cores do hypr.conf (ou hypr.lua) do tema
     hyprctl reload > /dev/null && info "hyprland"
     # reinicia a barra com o layout e a paleta novos
     "$CONFIG_DIR/waybar/scripts/launch.sh" > /dev/null 2>&1 && info "waybar"
