@@ -81,7 +81,7 @@ for dir in themes/*/; do
     ok=1
 
     # arquivos obrigatórios; o _modelo não tem imagens de propósito
-    obrigatorios=(hypr.conf hypr.lua palette/waybar.css palette/rofi.rasi palette/kitty.conf)
+    obrigatorios=(hypr.lua palette/waybar.css palette/rofi.rasi palette/kitty.conf)
     [[ "$tema" == _* ]] || obrigatorios+=(imagens/wallpapers/wall.png imagens/thumb.png)
     for arq in "${obrigatorios[@]}"; do
         [[ -e "$dir$arq" ]] || { falhou "$tema: falta $arq"; ok=0; }
@@ -117,7 +117,7 @@ titulo "Máquinas"
 for dir in hypr/maquinas/*/; do
     maq="$(basename "$dir")"
     ok=1
-    for arq in hardware.conf monitors.conf hardware.lua monitors.lua; do
+    for arq in hardware.lua monitors.lua; do
         [[ -f "$dir$arq" ]] || { falhou "$maq: falta $arq"; ok=0; }
     done
     (( ok )) && passou "$maq"

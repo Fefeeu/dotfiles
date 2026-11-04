@@ -42,12 +42,13 @@ dotfiles/
 │   ├── switch-theme.sh     # troca o tema ativo
 │   └── check.sh            # conferência geral, sem alterar nada
 ├── hypr/                   # núcleo do Hyprland (igual para todos os temas)
-│   ├── hyprland.conf       # só faz source dos demais
-│   ├── configs/            # settings, animations, execs
+│   ├── hyprland.lua        # só carrega os demais
+│   ├── configs/            # env, settings, animations, execs
 │   ├── rules/              # binds e windowrules
-│   ├── maquinas/           # Frieren/, FERN/: hardware.conf e monitors.conf
+│   ├── maquinas/           # Frieren/, FERN/: hardware.lua e monitors.lua
 │   ├── scripts/            # battery-notify.sh, seletor-tema.sh
-│   └── hyprlock.conf
+│   ├── hyprlock.conf
+│   └── legado/             # .conf antigos (até a 0.56), só para consulta
 ├── swappy/config           # editor de anotações pós-screenshot
 ├── base/                   # layout padrão: waybar, rofi, kitty
 ├── themes/
@@ -66,7 +67,7 @@ dotfiles/
 ## 🎨 O que cada peça configura
 | Pasta ou arquivo | Programa | O que é |
 |---|---|---|
-| `hypr/`, `themes/<tema>/hypr.conf` | **Hyprland** | compositor de janelas (window manager) que roda todo o ambiente gráfico |
+| `hypr/`, `themes/<tema>/hypr.lua` | **Hyprland** | compositor de janelas (window manager) que roda todo o ambiente gráfico |
 | `hypr/hyprlock.conf` | **Hyprlock** | tela de bloqueio |
 | `base/waybar/` | **Waybar** | barra de status no topo (relógio, bateria, workspaces, ícones de sistema) |
 | `base/rofi/` | **Rofi** | launcher de programas, clipboard e seletor de temas |

@@ -1,5 +1,5 @@
--- Config do Hyprland em Lua (versão nova do hyprland.conf, que ainda vale)
--- Só carrega as partes, nesta ordem (a mesma do hyprland.conf):
+-- Config do Hyprland em Lua (a 0.57 só lê Lua; o hyprland.conf antigo ficou
+-- em hypr/legado/, só para consulta). Só carrega as partes, nesta ordem:
 -- env → máquina (hardware, monitors) → settings → animations → execs →
 -- tema → windowrules → binds
 --
