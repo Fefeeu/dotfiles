@@ -65,7 +65,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 ## Pendências na Frieren
 Coisas para rodar no desktop quando voltar a ele (apagar cada uma depois de feita):
 - Hyprland 0.57.1: `sudo dnf copr disable solopasha/hyprland`, `git pull` e `./install.sh` (o `install-pacotes.sh` ativa o `nett00n/hyprland` e trava a 0.57.1; os links criam o `~/.config/hypr/hyprland.lua`); como o script não atualiza o que já está instalado, depois `sudo dnf upgrade 'hypr*' aquamarine xdg-desktop-portal-hyprland`; sair e entrar na sessão e conferir com `hyprctl version`, `scripts/check.sh`, `dnf versionlock list` (só o hyprland), SUPER+L e os atalhos. Apagar o link quebrado `rm ~/.config/hypr/hyprland.conf` (o `.conf` foi para `hypr/legado/`).
-- awww no lugar do swww: o `./install.sh` acima já ativa o `alebastr/sway-extras` e instala o `awww`; depois `sudo dnf remove swww grimblast` (se estiverem instalados) e conferir o wallpaper no login, na troca de tema (SUPER+T) e o Print.
+- awww no lugar do swww: o `./install.sh` acima já ativa o `alebastr/sway-extras` e instala o `awww`; depois `sudo dnf mark user grim slurp` e só então `sudo dnf remove swww grimblast` (se estiverem instalados; sem o `mark`, o dnf apaga junto o `grim` e o `slurp`, que vieram como dependência do grimblast, e o Print para — aconteceu na FERN) e conferir o wallpaper no login, na troca de tema (SUPER+T) e o Print.
 - Modo estudo: `sudo ~/dotfiles/scripts/instalar-modo-estudo.sh` (depois do `./install.sh`, que cria o link do `~/.bashrc.d/`).
 - Conferir no waybar: módulo de brilho some (desktop não tem backlight) e rede mostra a interface ativa (cabo).
 - Pastas do usuário em inglês, como no notebook (feito na FERN em 2026-10-01). Com os apps fechados:
