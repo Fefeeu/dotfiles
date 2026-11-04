@@ -38,5 +38,5 @@ require("configs.execs")                           -- passo 2
 -- carregar("~/.config/theme/hypr.lua")            -- passo 5
 
 -- Regras e binds
--- require("rules.windowrules")                    -- passo 3
--- require("rules.binds")                          -- passo 3
+require("rules.windowrules")                       -- passo 3
+require("rules.binds")                             -- passo 3
