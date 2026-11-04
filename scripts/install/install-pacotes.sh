@@ -158,11 +158,22 @@ done
 mapfile -t EXISTEM < <(dnf repoquery -q --qf '%{name}\n' "${PACOTES[@]}" 2> /dev/null | sort -u)
 # sem resposta nenhuma, o problema é o dnf (rede, repositório), não a lista
 (( ${#EXISTEM[@]} )) || erro "o dnf não respondeu (sem internet?): nada foi instalado"
-DISPONIVEIS=()
+
+# --- O QUE FALTA ---
+# Já instalado fica como está: o "dnf install" tentaria atualizar, e
+# atualizar só uma parte dos pacotes do Hyprland mistura versões que não
+# funcionam juntas (atualizar é com o "dnf upgrade", que leva tudo junto).
+# Do que falta, separa o que os repositórios têm do que não têm
+INSTALADOS=()
+INSTALAR=()
 FALTAM=()
 for pacote in "${PACOTES[@]}"; do
     if printf '%s\n' "${EXISTEM[@]}" | grep -Fx -- "$pacote" > /dev/null; then
-        DISPONIVEIS+=("$pacote")
+        if rpm -q "$pacote" &> /dev/null; then
+            INSTALADOS+=("$pacote")
+        else
+            INSTALAR+=("$pacote")
+        fi
     else
         FALTAM+=("$pacote")
     fi
@@ -171,8 +182,11 @@ done
 # --- INSTALAÇÃO ---
 # Tudo numa transação só; o dnf mostra o que vai mudar e pede confirmação
 titulo "Instalação:"
-if (( ${#DISPONIVEIS[@]} )); then
-    sudo dnf install "${DISPONIVEIS[@]}" || aviso "o dnf não terminou a instalação"
+info "${#INSTALADOS[@]} pacote(s) já instalado(s), ${#INSTALAR[@]} para instalar"
+if (( ${#INSTALAR[@]} )); then
+    sudo dnf install "${INSTALAR[@]}" || aviso "o dnf não terminou a instalação"
+else
+    info "Nada para instalar"
 fi
 
 # --- RESUMO ---
