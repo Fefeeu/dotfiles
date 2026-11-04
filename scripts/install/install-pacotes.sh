@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # Instala os pacotes do dnf que o dotfiles usa, lidos do
 # docs/pacotes-dotfiles.md: seção [todas], a seção da máquina e, se o
-# usuário quiser, [extras]. Ativa antes os repositórios das linhas "repo:".
-# O dnf pula o que já está instalado, então pode rodar várias vezes.
+# usuário quiser, [extras]. Ativa antes os repositórios das linhas "repo:"
+# e trava com o versionlock os pacotes com versão fixa ("pacote = versão").
+# O que já está instalado fica como está, então pode rodar várias vezes.
 #
 # Uso: install-pacotes.sh           instala (pede o sudo uma vez)
 #      install-pacotes.sh --lista   só mostra o que seria instalado
@@ -75,9 +76,14 @@ secao_ativa() {
 
 # --- LEITURA DA LISTA ---
 # Linha a linha: tira o comentário e os espaços; "[nome]" troca de seção,
-# "repo: ..." é um repositório e o resto é o nome de um pacote
+# "repo: ..." é um repositório, "pacote = versão" é um pacote com versão
+# fixa e o resto é o nome de um pacote.
+# NOMES tem só o nome; PACOTES tem o que vai para o dnf e o rpm
+# (nome ou nome-versão); TRAVAR tem os nome-versão a travar
 REPOS=()
+NOMES=()
 PACOTES=()
+TRAVAR=()
 secao=""
 while IFS= read -r linha || [[ -n "$linha" ]]; do
     linha="${linha%%#*}"
@@ -90,17 +96,22 @@ while IFS= read -r linha || [[ -n "$linha" ]]; do
     secao_ativa "$secao" || continue
     if [[ "$linha" == repo:* ]]; then
         REPOS+=("$(echo "${linha#repo:}" | xargs)")
+    elif [[ "$linha" =~ ^([^[:space:]=]+)[[:space:]]*=[[:space:]]*([^[:space:]]+)$ ]]; then
+        NOMES+=("${BASH_REMATCH[1]}")
+        PACOTES+=("${BASH_REMATCH[1]}-${BASH_REMATCH[2]}")
+        TRAVAR+=("${BASH_REMATCH[1]}-${BASH_REMATCH[2]}")
     else
+        NOMES+=("${linha%% *}")
         PACOTES+=("${linha%% *}")
     fi
 done < "$LISTA_PACOTES"
 
 titulo "Pacotes (${SECOES[*]}):"
-info "${#REPOS[@]} repositório(s) e ${#PACOTES[@]} pacote(s) em ${LISTA_PACOTES/#"$HOME"/\~}"
+info "${#REPOS[@]} repositório(s) e ${#PACOTES[@]} pacote(s) (${#TRAVAR[@]} com versão fixa) em ${LISTA_PACOTES/#"$HOME"/\~}"
 
 # --- SÓ LISTAR ---
-# Mostra os repositórios e os pacotes, marcando os já instalados, e sai
-# sem sudo e sem mudar nada
+# Mostra os repositórios e os pacotes, marcando os já instalados (na
+# versão fixa, quando há uma), e sai sem sudo e sem mudar nada
 if (( SO_LISTAR )); then
     for repo in "${REPOS[@]}"; do
         echo "  repo: $repo"
@@ -152,6 +163,30 @@ for repo in "${REPOS[@]}"; do
     esac
 done
 
+# --- VERSÕES FIXAS ---
+# Trava antes de instalar, para o dnf respeitar a versão também quando
+# escolhe as dependências. Trava de outra versão (lista mudou) é trocada;
+# a que já está certa fica como está.
+# "dnf versionlock list" mostra "Package name: <nome>" e "evr = <versão>"
+if (( ${#TRAVAR[@]} )); then
+    titulo "Versões fixas:"
+    TRAVAS="$(dnf versionlock list 2> /dev/null \
+        | awk '/^Package name:/ {n=$3} /^evr = / {print n "-" $3}')"
+    for spec in "${TRAVAR[@]}"; do
+        nome="${spec%-*-*}"
+        if grep -Fx -- "$spec" <<< "$TRAVAS" > /dev/null; then
+            info "$spec já travado"
+            continue
+        fi
+        if grep "^$nome-[0-9]" <<< "$TRAVAS" > /dev/null; then
+            sudo dnf versionlock delete "$nome" > /dev/null || true
+        fi
+        sudo dnf versionlock add "$spec" > /dev/null \
+            && echo -e "${VERDE}Travado:${NC} $spec" \
+            || aviso "não deu para travar $spec"
+    done
+fi
+
 # --- PACOTES DISPONÍVEIS ---
 # Com os repositórios ativos, separa o que existe neles do que não existe
 # (o repoquery só olha os repositórios, não o que já está instalado)
@@ -167,8 +202,9 @@ mapfile -t EXISTEM < <(dnf repoquery -q --qf '%{name}\n' "${PACOTES[@]}" 2> /dev
 INSTALADOS=()
 INSTALAR=()
 FALTAM=()
-for pacote in "${PACOTES[@]}"; do
-    if printf '%s\n' "${EXISTEM[@]}" | grep -Fx -- "$pacote" > /dev/null; then
+for i in "${!PACOTES[@]}"; do
+    pacote="${PACOTES[$i]}"
+    if printf '%s\n' "${EXISTEM[@]}" | grep -Fx -- "${NOMES[$i]}" > /dev/null; then
         if rpm -q "$pacote" &> /dev/null; then
             INSTALADOS+=("$pacote")
         else

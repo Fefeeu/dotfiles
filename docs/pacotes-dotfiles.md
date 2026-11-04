@@ -14,6 +14,11 @@
 #   repo: <repo>       repositório a ativar antes dos pacotes da seção:
 #                      copr <usuário/projeto> ou rpmfusion
 #   <pacote>  # motivo um pacote do dnf por linha
+#   <pacote> = <versão-release>  # motivo
+#                      instala essa versão exata e trava com o dnf
+#                      versionlock (o "dnf upgrade" não passa dela);
+#                      apagar a versão e rodar "sudo dnf versionlock
+#                      delete <pacote>" para destravar
 #   # ...              comentário (ignorado)
 #
 # Nerd Fonts e temas de ícones não ficam aqui: vêm do GitHub para a pasta
@@ -27,9 +32,19 @@
 repo: copr nett00n/hyprland      # hyprland, hyprlock, xdg-desktop-portal-hyprland, cliphist
 
 # ----- COMPOSITOR ----------------------------------------------------
-hyprland                      # compositor (sessão "Hyprland" no SDDM); traz hyprutils, aquamarine etc.
-xdg-desktop-portal-hyprland   # portal: compartilhar tela e screenshots pelos apps
-hyprlock                      # tela de bloqueio (SUPER+L, hypr/hyprlock.conf)
+# Travado na 0.56, a última versão que lê o .conf (a 0.57 só lê Lua), até
+# a config inteira estar em Lua. As bibliotecas vão travadas junto: as da
+# 0.57 trocaram de versão (libhyprgraphics.so.5, libaquamarine.so.15) e
+# não funcionam com a 0.56
+hyprland = 0.56.2-20.fc43                     # compositor (sessão "Hyprland" no SDDM)
+xdg-desktop-portal-hyprland = 1.5.0-2.fc43    # portal: compartilhar tela e screenshots pelos apps
+hyprlock = 0.9.6-12.fc43                      # tela de bloqueio (SUPER+L, hypr/hyprlock.conf); a 0.9.7 pede a hyprgraphics da 0.57
+hyprgraphics = 0.5.1-17.fc43                  # biblioteca da 0.56 (a 0.6 é da 0.57)
+aquamarine = 0.15.1-3.fc43                    # biblioteca da 0.56 (a 0.16 é da 0.57)
+hyprtoolkit = 0.6.0-7.fc43                    # biblioteca da 0.56 (a 0.6.0-8 pede a hyprgraphics da 0.57)
+hyprutils = 0.14.3-1.fc43                     # biblioteca da 0.56
+hyprlang = 0.6.8-17.fc43                      # biblioteca da 0.56 (lê o .conf)
+hyprwire = 0.3.1-17.fc43                      # biblioteca da 0.56
 
 # ----- BARRA, NOTIFICAÇÕES E BANDEJA ---------------------------------
 waybar                        # barra (base/waybar)
