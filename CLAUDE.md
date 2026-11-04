@@ -3,7 +3,7 @@
 Contexto para o Claude Code trabalhar neste repositório. Responda em português.
 
 ## Ambiente
-- Fedora 43 com Hyprland 0.51 (minimalista) sobre KDE Plasma 6. Rofi 2.0, Waybar, swaync, swww, kitty, Dolphin.
+- Fedora 43 com Hyprland 0.56 (minimalista) sobre KDE Plasma 6. Rofi 2.0, Waybar, swaync, swww, kitty, Dolphin.
 - Duas máquinas com o mesmo repositório:
   - **Frieren**: desktop AMD, perfil `amd`
   - **FERN**: notebook NVIDIA, perfil `nvidia`, usuário `FERN`, com `intel_backlight` e `wlp2s0`
@@ -60,6 +60,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 
 ## Pendências na Frieren
 Coisas para rodar no desktop quando voltar a ele (apagar cada uma depois de feita):
+- Hyprland 0.56: `sudo dnf copr disable solopasha/hyprland && sudo dnf copr enable nett00n/hyprland`, `sudo dnf upgrade --refresh 'hypr*' aquamarine xdg-desktop-portal-hyprland`, sair e entrar na sessão e conferir com `scripts/check.sh`.
 - Modo estudo: `sudo ~/dotfiles/scripts/instalar-modo-estudo.sh` (depois do `./install.sh`, que cria o link do `~/.bashrc.d/`).
 - Conferir no waybar: módulo de brilho some (desktop não tem backlight) e rede mostra a interface ativa (cabo).
 - Pastas do usuário em inglês, como no notebook (feito na FERN em 2026-10-01). Com os apps fechados:
@@ -162,16 +163,10 @@ Em aberto (explicados, sem decisão ainda):
 
 ## Migração para LUA
 Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões novas do Hyprland usam configuração em Lua). Mesmo jeito de trabalhar: um item por vez, com aprovação antes.
-- [ ] Atualizar Hyprland (plano anotado em 2026-10-03, ainda não aplicado):
-  - o COPR `solopasha/hyprland` foi abandonado e parou na 0.51.1; o fork `sdegler/hyprland` tem a 0.56.2 para Fedora 43 (Lua desde a 0.55);
-  - sem `hyprland.lua`, a versão nova continua lendo o `hyprland.conf` (não precisa de dois Hyprland lado a lado);
-  - passos (sudo, o usuário roda com `!`):
-    - `sudo dnf copr disable solopasha/hyprland && sudo dnf copr enable sdegler/hyprland`;
-    - `sudo dnf upgrade --refresh 'hypr*' aquamarine xdg-desktop-portal-hyprland uwsm`;
-    - sair e entrar de novo na sessão;
-    - `scripts/check.sh`: corrigir o que o `configerrors` apontar no `.conf` (commit separado);
-  - voltar atrás: Plasma na tela de login, reativar o COPR antigo e `sudo dnf downgrade` dos pacotes;
-  - depois: mesma troca de COPR nas pendências da Frieren.
+- [x] Atualizar Hyprland (2026-11-04, FERN): 0.56.2 pelo COPR `nett00n/hyprland` (o `solopasha/hyprland` foi abandonado na 0.51.1):
+  - sem `hyprland.lua`, a versão nova continua lendo o `hyprland.conf`;
+  - erros corrigidos no `.conf`: `windowrule` com `match:<campo>` e efeito com valor (`no_blur on`, `border_size 0`...), `togglesplit` virou `layoutmsg, togglesplit`, `dwindle:pseudotile` saiu;
+  - voltar atrás: Plasma na tela de login, reativar o COPR antigo e `sudo dnf downgrade` dos pacotes.
 - [ ] Atualizar `docs/pacotes-dotfiles.md` para a versão nova do Hyprland (nomes de pacotes, repositórios e dependências que mudarem)
 - [ ] Criar o script de instalação de todos os pacotes de `docs/pacotes-dotfiles.md` (seções, `repo:` e pacotes), como um passo novo chamado pelo `install.sh`
 - [ ] Criação do script do `docs/apps.md`: definir o formato, preencher a lista de apps pessoais (Steam, Discord, VS Code...) e criar o script que instala tudo
