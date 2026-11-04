@@ -27,7 +27,7 @@ repositórios do Fedora; o resto se instala pelo script do próprio GitHub, em
 
 | Tema | De onde vem | Por que combina |
 |---|---|---|
-| **Papirus-Dark** | dnf (`papirus-icon-theme-dark`, já instalado) | troca mais simples: mesmo estilo do Papirus que o rofi já usa. Com o script `papirus-folders` dá para deixar as pastas `black` ou `grey` |
+| **Papirus-Dark** | `scripts/install/install-icons.sh` (já instalado) | troca mais simples: mesmo estilo do Papirus que o rofi já usa. Com o script `papirus-folders` dá para deixar as pastas `black` ou `grey` |
 | **Breeze Dark** | já vem com o KDE | igual ao Plasma; traço fino e discreto |
 | **Colloid** (variante `grey`, escura) | GitHub vinceliuice/Colloid-icon-theme | ícones arredondados com pastas cinza; bem monocromático |
 | **Tela** (variantes `black` ou `grey`, escura) | GitHub vinceliuice/Tela-icon-theme | pastas pretas ou cinza, ícones de app coloridos e limpos |

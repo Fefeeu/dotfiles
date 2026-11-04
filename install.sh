@@ -1,30 +1,15 @@
 #!/usr/bin/env bash
-# Provisionamento: máquina, links fixos e tema inicial.
-# Para só trocar de tema depois, use scripts/switch-theme.sh <tema>.
+# Instalação completa: chama cada passo em scripts/install/, um por vez.
+# Cada passo roda num bash próprio, então o set -e e o exit dos scripts não
+# fecham o terminal, seja qual for o jeito de rodar (./, bash ou source).
+# Sem set -e aqui de propósito: este arquivo pode rodar dentro do terminal.
 
-source "$(dirname "${BASH_SOURCE[0]}")/scripts/lib.sh"
+# Pasta dos passos (scripts/install/ ao lado deste arquivo)
+PASSOS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/scripts/install"
 
-info "--- Hyprland Setup (Provisionamento) ---"
+# Nerd Fonts e temas de ícones (pasta do usuário, sem sudo)
+bash "$PASSOS_DIR/install-fonts.sh"
+bash "$PASSOS_DIR/install-icons.sh"
 
-# --- MÁQUINA ---
-# Pasta de hypr/maquinas/ pelo hostname; sem pasta com esse nome, pergunta
-titulo "Máquina:"
-aplicar_maquina
-
-# --- TEMA ---
-titulo "Tema Inicial:"
-mapfile -t TEMAS < <(listar_temas)
-select TEMA in "${TEMAS[@]}"; do
-    [[ -n "$TEMA" ]] && break || echo "Opção inválida"
-done
-
-# --- LINKS FIXOS (independentes de tema) ---
-titulo "Links fixos:"
-for src in "${!STATIC_MAP[@]}"; do
-    link_com_backup "$DOTFILES_DIR/$src" "${STATIC_MAP[$src]}"
-done
-
-# --- TEMA ---
-"$DOTFILES_DIR/scripts/switch-theme.sh" "$TEMA"
-
-echo -e "\n${VERDE}### Sistema pronto! Edite os arquivos em ~/dotfiles e use 'hyprctl reload' ###${NC}"
+# máquina, links fixos e tema inicial
+bash "$PASSOS_DIR/instalador-inicial.sh" "$@"

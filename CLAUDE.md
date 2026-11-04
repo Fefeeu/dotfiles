@@ -25,7 +25,9 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
   - kitty: `include ~/.config/theme/palette/kitty.conf`.
 - Scripts:
   - `scripts/lib.sh`: `STATIC_MAP`, `OVERRIDABLE`, `THEME_ONLY`, `link_com_backup`, `listar_temas` e `aplicar_maquina` (detecta ou pergunta a máquina);
-  - `install.sh`: confere a máquina, pergunta o tema, cria os links fixos e chama o switch;
+  - `install.sh`: orquestrador, só chama os passos de `scripts/install/` com `bash` (nunca `source`), para que nada feche o terminal; sem `set -e`;
+  - `scripts/install/install-fonts.sh` e `install-icons.sh`: Nerd Fonts e temas de ícones do GitHub para `~/.local/share/{fonts,icons}`, sem sudo; a lista fica dentro de cada script e o que já existe é pulado;
+  - `scripts/install/instalador-inicial.sh`: confere a máquina, pergunta o tema, cria os links fixos e chama o switch;
   - `scripts/switch-theme.sh <tema>`: confere o link da máquina, refaz os links do tema e recarrega a sessão;
   - máquina sem pasta com o nome do hostname: pergunta qual usar e oferece trocar o hostname para o nome da pasta (terminal com `select`/`read`; fora dele, rofi). O Hyprland repassa o TTY do login aos programas, por isso o teste de terminal é `-t 0 && -t 2` e o seletor chama o switch com `< /dev/null`;
   - `scripts/check.sh`: confere scripts, temas, máquinas, links, rofi e Hyprland;
@@ -37,7 +39,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
   - parte do usuário: `hypr/scripts/modo-estudo.sh` (menu, pergunta do login, módulo `custom/estudo` do waybar) e `bashrc.d/modo-estudo.sh` (link em `~/.bashrc.d/`).
 - Rofi: `base/rofi/config.rasi` (geral), `shared/` (cores e fonte, importados por todo layout), `launchers/type-3/`, `clipboard/`, `temas/` (seletor e pergunta).
 - `hypr/hyprland.conf` só faz `source`, nesta ordem: env → máquina (hardware, monitors) → settings → animations → execs → `~/.config/theme/hypr.conf` → windowrules → binds. Bordas, gaps e cores ficam só no tema.
-- Tema ativo: `Black_and_White`. `Tema_Teste` é um tema neon só para testar os scripts.
+- Tema ativo: `Black_and_White`. `Tema_Teste` é um tema neon só para testar os scripts. `Catppuccin` (Mocha, destaque rosa-mauve `#e0b4ef`, entre mauve e pink) é o tema temporário para a Frieren, até sair o tema de jogos/anime dela.
   - A paleta usa nomes em português (`preto_absoluto`, `branco_puro`, `cinza_*`) mapeados para nomes semânticos (`fundo`, `texto`, `borda`...).
   - Os temas de rofi vêm do adi1090x/rofi (launcher `type-3/style-1`).
   - `themes/_modelo` é o esqueleto de tema novo (pastas com `_` não aparecem no install).
@@ -53,18 +55,13 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 - Scripts referenciam `~/.config/<comp>/...` ou `~/.config/theme/...`, nunca `~/dotfiles/themes/...`.
 - Valores específicos de uma máquina (monitor, variáveis de GPU, teclados, mouse) ficam em `hypr/maquinas/<Nome>/`, não em `settings.conf` nem nos temas. Variáveis de ambiente comuns ficam em `hypr/configs/env.conf`.
 - Temas baixados de terceiros: remova a pasta `.git` interna antes do commit, porque ela vira submodule ("modified content").
-- Pacotes necessários ficam em `docs/pacotes-dotfiles.md` (seções `[todas]`/`[FERN]`/`[Frieren]`/`[extras]`, `repo:`, `nerdfont:` e `pacote # motivo`; feito para um instalador ler). Programa novo usado pelo dotfiles entra lá. Apps de uso pessoal (Steam, Discord...) ficam em `docs/apps.md`, ainda só com a explicação. Ideias futuras ficam em `docs/ideias.md`; decisões de visual em aberto, em `docs/design.md`.
+- Pacotes necessários ficam em `docs/pacotes-dotfiles.md` (seções `[todas]`/`[FERN]`/`[Frieren]`/`[extras]`, `repo:` e `pacote # motivo`; feito para um instalador ler). Programa novo usado pelo dotfiles entra lá; Nerd Font ou tema de ícones novo entra na lista do `install-fonts.sh`/`install-icons.sh`. Apps de uso pessoal (Steam, Discord...) ficam em `docs/apps.md`, ainda só com a explicação. Ideias futuras ficam em `docs/ideias.md`; decisões de visual em aberto, em `docs/design.md`.
 - Depois de editar: `scripts/check.sh` (inclui `hyprctl reload` + `configerrors`) e `~/.config/waybar/scripts/launch.sh`.
 
 ## Pendências na Frieren
 Coisas para rodar no desktop quando voltar a ele (apagar cada uma depois de feita):
 - Modo estudo: `sudo ~/dotfiles/scripts/instalar-modo-estudo.sh` (depois do `./install.sh`, que cria o link do `~/.bashrc.d/`).
-- `git pull` e logo em seguida `./install.sh` (ou `scripts/switch-theme.sh <tema>`): o `hyprland.conf` agora lê `~/.config/hypr/maquina/`, que só existe depois disso. Na pergunta, escolher `Frieren` e aceitar trocar o hostname.
-- `hypr/maquinas/Frieren/monitors.conf` está com a resolução de teste `980x720@72` (usada para testar a troca de máquina no notebook): trocar pela resolução real do monitor (era `1920x1080@72`).
-- Conferir depois: `scripts/check.sh` (tudo ✓), monitor a 72 Hz e teclado compx-kysona-m600 em `us`.
 - Conferir no waybar: módulo de brilho some (desktop não tem backlight) e rede mostra a interface ativa (cabo).
-- Conferir se o tema de ícones Papirus está instalado (`ls /usr/share/icons | grep Papirus`), agora usado pelo launcher.
-- Instalar a JetBrainsMono Nerd Font em `~/.local/share/fonts/JetBrainsMonoNerd` (nerd-fonts do GitHub), como no notebook.
 - Pastas do usuário em inglês, como no notebook (feito na FERN em 2026-10-01). Com os apps fechados:
   - `mv` de `Área de trabalho`→`Desktop`, `Documentos`→`Documents`, `Imagens`→`Pictures`, `Modelos`→`Templates`, `Músicas`→`Music`, `Público`→`Public`, `Vídeos`→`Videos` (se já existir `~/Pictures`, juntar o conteúdo antes);
   - trocar os caminhos em `~/.config/user-dirs.dirs` e conferir com `xdg-user-dir PICTURES`;
@@ -73,6 +70,7 @@ Coisas para rodar no desktop quando voltar a ele (apagar cada uma depois de feit
 ## Problemas já resolvidos
 - "Too many levels of symbolic links" no kitty: eram links apontando para si mesmos. Foram recriados com caminho absoluto.
 - "Modified content" em submodule: era uma pasta `.git` que sobrou de um tema do rofi. Foi removida.
+- Terminal fechando no fim do install (2026-10-08): era o `source install.sh`, que deixava o `set -euo pipefail` do `lib.sh` valendo no shell do terminal. O `install.sh` virou orquestrador (chama os passos de `scripts/install/` com `bash`) e os scripts com `lib.sh` se executam de novo com `bash` quando chamados com `source`.
 - Reorganização de 2026-09-30:
   - temas incompletos, `nitch/`, `.github/`, `.gitingnore`, `.beckup_rofi` e `current_theme` foram removidos do repositório;
   - `hyprlock.conf` e `battery-notify.sh` foram trazidos para o repositório;
@@ -129,7 +127,6 @@ Como trabalhar neste roteiro:
 17. [x] **Teste_Colorido** (hoje `Tema_Teste`): entrou no git como tema de teste dos scripts.
 
 Fora do roteiro por enquanto:
-- Resíduos locais fora do repositório: `~/.config/hypr/{colors.conf,battery-notify.sh,*.bak}`.
 - Planejado (ainda não fazer): passar o sistema todo para nomes em inglês (pastas, arquivos, funções, variáveis e cores).
 
 ## Roteiro da revisão de 2026-10-01
@@ -176,6 +173,59 @@ Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões nov
   - voltar atrás: Plasma na tela de login, reativar o COPR antigo e `sudo dnf downgrade` dos pacotes;
   - depois: mesma troca de COPR nas pendências da Frieren.
 - [ ] Atualizar `docs/pacotes-dotfiles.md` para a versão nova do Hyprland (nomes de pacotes, repositórios e dependências que mudarem)
-- [ ] Criar o script de instalação de todos os pacotes de `docs/pacotes-dotfiles.md` (seções, `repo:`, `nerdfont:` e pacotes)
+- [ ] Criar o script de instalação de todos os pacotes de `docs/pacotes-dotfiles.md` (seções, `repo:` e pacotes), como um passo novo chamado pelo `install.sh`
 - [ ] Criação do script do `docs/apps.md`: definir o formato, preencher a lista de apps pessoais (Steam, Discord, VS Code...) e criar o script que instala tudo
+- [ ] Aplicativos padrão: `mimeapps.list` no dotfiles, igual em todos os computadores (detalhes em `docs/ideias.md`; decidir entre link no `STATIC_MAP` ou cópia, porque o KDE reescreve o arquivo)
 - [ ] Estudar e personalizar mais o hyprlock: cores do tema (hoje são fixas), `me.png` opcional e cartão de bateria que funcione no desktop
+
+## Tema Persona com shell próprio (depois da migração para Lua)
+Análise de 2026-10-21, ainda sem nada feito. Mesmo jeito de trabalhar: um item por vez, com aprovação antes.
+
+Objetivo: uma tela inicial que funciona como menu de jogo (um workspace só para ela, de onde os apps abrem em outro workspace), com wallpaper animado. O Persona é o exemplo e o ponto de partida, não o fim. É o mesmo "tema com layout próprio inspirado no menu de Persona 3 Reload" citado em Ambiente.
+
+Referências:
+- Base: [Persona-Quickshell](https://github.com/Yujonpradhananga/Persona-Quickshell-) (QML/Quickshell, MIT segundo o README, sem arquivo LICENSE; já usa o bind em Lua `hl.bind(...)`). Post: [Hyprland PersonaShell v2](https://www.reddit.com/r/unixporn/comments/1u86dr2/hyprland_personashell_v2/) (o Reddit bloqueia acesso automático; o que importa está no GitHub).
+- Inspiração visual (KDE, plasmoides em QML): [KDE with all the bells and whistles](https://www.reddit.com/r/unixporn/comments/1vkil9o/kde_with_all_the_bells_and_whistles/), com cartões inclinados em escada (título, subtítulo e ícone: FILES, TERMINAL, SETTINGS, STEAM, KRITA, ZEN), relógio com data, logo, dock lateral e wallpaper animado. É o visual do menu de apps que queremos.
+- O que o projeto traz: wallpaper com vídeo e shaders (`Widgets/WallpaperEngine.qml`), busca de apps por IPC (`Layers/Searchapp.qml`, `qs ipc call searchapp toggle`), menu (`Layers/AppDrawer.qml`), relógio, calendário, cápsula, OSD de volume e brilho, informações de rede, Bluetooth, bateria e mídia.
+
+Decidido:
+- Os temas atuais não mudam; o Persona entra só trocando no SUPER+T.
+- O rofi não faz esse visual (só retângulos, sem escada); a ferramenta é o Quickshell.
+- Assets: usar os do Persona por padrão (mais fácil que fazer arte do zero). Ficam fora do git (65 MB, arte da Atlus): baixados do repositório original na instalação para `themes/Persona/quickshell/Assets/`, que entra no `.gitignore`, para o QML continuar achando por `../Assets/`. Mais tarde podem virar vídeos, GIFs e imagens próprios.
+- Tela inicial em uma tela só (sem uma por monitor).
+- Temas com menu inicial são para o desktop Frieren, não para o notebook FERN; consumo de bateria não é problema.
+- O seletor mostra todos os temas nas duas máquinas; nenhum tema fica limitado por máquina (até o usuário pedir o contrário).
+
+Como encaixar:
+- Tema com pasta `quickshell/` assume a área de trabalho: `quickshell` no `THEME_ONLY`, link `~/.config/quickshell`. O contrato normal continua (`hypr`, `palette`, `wall.png` para o hyprlock, `thumb.png` para o seletor).
+- `hypr/scripts/sessao.sh` (fixo): com `~/.config/theme/quickshell`, fecha waybar e swww e abre `qs -p ~/.config/theme/quickshell`; sem ela, fecha o `qs`, garante `swww-daemon` + wallpaper e abre o waybar. Chamado no `exec-once` do login e no fim do `switch-theme.sh`, no lugar do que hoje recarrega waybar e swww.
+- `hypr/scripts/menu.sh` no SUPER+D: `qs ipc call searchapp toggle` se o tema tiver `quickshell/`, senão o rofi de hoje.
+- SUPER+T, SUPER+V, kitty, swaync, hyprlock, qt6ct e KDE seguem iguais, também no Persona.
+- Cores: o `Data/Colors.qml` dele (hex fixos do pywal) passa a usar os nomes semânticos da paleta do tema.
+- Workspace inicial ("workspace 0", menu de jogo):
+  - workspace com nome (`name:inicio`), com bind para ir até ele e a sessão começando nele;
+  - nada fica nele: o QML escuta `openwindow` e `movewindowv2` (`Hyprland.rawEvent`) e manda a janela para `movetoworkspace empty`, sem `silent`, para acompanhar a janela; só existe com o tema ativo;
+  - o menu abre os apps com `hyprctl dispatch exec "[workspace empty] <app>"`, para a janela não piscar no início;
+  - o menu fica na camada de fundo e só aparece no `inicio`; pega o teclado só quando está visível (setas + Enter).
+
+Passos:
+- [ ] Testar o Persona-Quickshell como veio, fora do dotfiles, na Frieren (sem o plugin do cava): funciona no AMD? quanto pesa na GPU? (na FERN serve só para ver funcionando)
+- [ ] `sessao.sh` + `execs` + `switch-theme.sh`, ainda sem tema novo (os temas atuais têm de continuar iguais)
+- [ ] `menu.sh` e o bind do SUPER+D
+- [ ] `themes/Persona/` com o QML dele (sem `.git`, com créditos), paleta e `Colors.qml` ligado à paleta
+- [ ] Passo de instalação dos assets (chamado pelo `install.sh`) + `.gitignore`
+- [ ] Menu de apps em cartões inclinados em escada, como na inspiração do KDE (o `AppDrawer.qml` dele só tem Calendar, Stats, Shaders e Power), com a lista de apps num arquivo de config
+- [ ] Workspace inicial: bind, começar nele, vigia no QML e lançamento com `[workspace empty]`
+- [ ] Docs (`docs/temas.md`, `docs/pacotes-dotfiles.md`: quickshell por COPR, qt6-qtmultimedia...) e `check.sh` (`qs` instalado e assets baixados quando algum tema tem `quickshell/`)
+
+Decisões em aberto:
+- Detectar o tema com shell próprio pela pasta `quickshell/` (recomendado, segue o padrão do override) ou por um arquivo declarado no tema.
+- O repositório é público? (reforça manter os assets fora do git)
+- `movetoworkspace empty` (primeiro vazio) ou `emptyn` (próximo depois do atual): decidir testando.
+- Bind para voltar ao início (ex.: SUPER+Esc).
+- Na Frieren, em qual monitor fica o início.
+- Plugin do cava: compilar o [Qt6-Cava-plugin](https://github.com/Yujonpradhananga/Qt6-Cava-plugin) ou deixar de fora (começar sem ele).
+- Shaders de profundidade e parallax: dependem de máscaras feitas para a arte (`makotodepth.png`, `cloudmask.png`); ao trocar a arte, fazer máscaras próprias ou tirar os shaders. Mudar `.qsb` exige o `qsb` (qt6-shadertools).
+- Conferir na versão nova do Hyprland os nomes de eventos e dispatchers, e se a API em Lua tem ganchos de evento (parte do vigia poderia ir para o `hypr.lua` do tema).
+- Quais apps entram no menu inicial e onde fica essa lista (arquivo no tema ou na config da máquina).
+- O que fica nos workspaces normais nesse tema: só wallpaper, a cápsula dele ou algo como barra.

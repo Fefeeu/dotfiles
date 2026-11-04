@@ -19,3 +19,10 @@ Hoje o bloqueio é só manual (SUPER+L).
 
 ### Tema de Cursor
 Escolher um tema de cursor que combine com os temas (ex.: Bibata, Phinger) e definir no `hypr/configs/env.conf` (`XCURSOR_THEME`/`XCURSOR_SIZE`, ou `HYPRCURSOR_THEME` se for um tema hyprcursor), para o cursor ser o mesmo no Hyprland e nos apps.
+
+### Aplicativos Padrão (mimeapps.list)
+Levar o `~/.config/mimeapps.list` para o dotfiles, para os mesmos apps abrirem os mesmos tipos de arquivo em todos os computadores (Dolphin, `xdg-open`, KDE e Hyprland usam esse arquivo).
+- montar uma lista limpa só com o que é comum (navegador, pastas, imagens, vídeo, PDF, texto...), sem entradas de uma máquina só (ex.: `userapp-Thunderbird-...`, Packet Tracer);
+- entrar no `STATIC_MAP` (igual para todos os temas);
+- cuidado: o KDE reescreve o arquivo ao mudar uma associação pela interface, e a mudança vai direto para o repositório; decidir se aceita isso ou se o install copia/junta o arquivo em vez de linkar;
+- os apps da lista precisam estar no `docs/pacotes-dotfiles.md` ou no `docs/apps.md`.
