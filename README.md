@@ -4,7 +4,7 @@ Configuração do meu ambiente **[Hyprland](https://hyprland.org/)** (compositor
 
 ## 🖥️ O ambiente
 - **Hyprland**: layout `dwindle`, blur e animações em `hypr/configs/`.
-- **Waybar** como barra, **Rofi** como launcher e clipboard, **swaync** para notificações e **swww** para o wallpaper.
+- **Waybar** como barra, **Rofi** como launcher e clipboard, **swaync** para notificações e **awww** (antigo swww) para o wallpaper.
 - **Kitty** como terminal e **Dolphin** como gerenciador de arquivos.
 - **Hyprlock** como tela de bloqueio, com aviso de bateria baixa em `hypr/scripts/`.
 - **Uma pasta por máquina** em `hypr/maquinas/` (GPU, teclados e monitores): `Frieren` (desktop AMD) e `FERN` (notebook NVIDIA), escolhida pelo hostname.
@@ -25,7 +25,7 @@ O `install.sh` só chama os passos de `scripts/`, cada um num bash próprio (por
 - liga `~/.config/hypr/maquina` à pasta de `hypr/maquinas/` com o nome do hostname (sem diferenciar maiúsculas); se não houver, pergunta qual usar (no terminal ou pelo rofi, no SUPER+T) e oferece trocar o hostname para o nome da pasta, para não perguntar de novo. O `instalador-inicial.sh` faz essa mesma conferência antes de pedir o tema;
 - para cada componente (waybar, rofi, kitty, swaync), usa a versão do tema, se existir, ou a da `base/`;
 - aplica o **esquema de cores do KDE** (Dolphin e apps Qt) com `plasma-apply-colorscheme`, além do qt6ct, quando o tema tem esses arquivos;
-- recarrega Hyprland, Waybar e kitty e aplica o **wallpaper** com `swww`.
+- recarrega Hyprland, Waybar e kitty e aplica o **wallpaper** com `awww`.
 
 Se já existir uma configuração real no destino, ela é movida para `.bak` antes de criar o link.
 
@@ -75,7 +75,7 @@ dotfiles/
 | `swaync/` (no tema) | **SwayNotificationCenter** | notificações e painel lateral de notificações |
 | `themes/<tema>/kde.colors` | **KDE Plasma** | esquema de cores do Dolphin e dos outros apps Qt |
 | `themes/<tema>/qt6ct.conf` | **qt6ct** | define qual tema e quais ícones os apps Qt6 usam |
-| `themes/<tema>/imagens/` | **swww** | wallpapers com transições, miniatura do seletor e imagens do hyprlock |
+| `themes/<tema>/imagens/` | **awww** | wallpapers com transições, miniatura do seletor e imagens do hyprlock |
 | `swappy/config` | **Swappy** | editor de anotações depois do screenshot |
 
 ## ⚠️ Aviso

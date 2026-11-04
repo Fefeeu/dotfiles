@@ -30,6 +30,7 @@
 
 # ----- REPOSITÓRIOS --------------------------------------------------
 repo: copr nett00n/hyprland      # hyprland, hyprlock, xdg-desktop-portal-hyprland, cliphist
+repo: copr alebastr/sway-extras  # awww (o swww mudou de nome e não está no Fedora)
 
 # ----- COMPOSITOR ----------------------------------------------------
 # Só o Hyprland fica travado (na 0.57.1, correção da 0.57, a primeira
@@ -54,20 +55,18 @@ pavucontrol                   # controle de volume, aberto ao clicar no áudio d
 
 # ----- LAUNCHER, CLIPBOARD E TERMINAL --------------------------------
 rofi                          # launcher (SUPER+D), clipboard (SUPER+V) e seletor de temas (SUPER+T)
-cliphist                      # histórico do clipboard (execs.conf, clipboard.sh)
+cliphist                      # histórico do clipboard (execs.lua, clipboard.sh)
 wl-clipboard                  # wl-copy/wl-paste (cliphist e clipboard.sh)
 kitty                         # terminal (SUPER+Return)
 
 # ----- WALLPAPER E SCREENSHOTS ---------------------------------------
-swww                          # wallpaper com transição (switch-theme.sh)
-grimblast                     # screenshot de área (tecla Print)
-grim                          # captura usada pelo grimblast
-slurp                         # seleção de área usada pelo grimblast
-jq                            # usado pelo grimblast
+awww                          # wallpaper com transição (execs.lua, switch-theme.sh); antigo swww
+grim                          # captura da screenshot (tecla Print)
+slurp                         # seleção de área da screenshot (tecla Print)
 swappy                        # editor da screenshot (swappy/config)
 
 # ----- HARDWARE E SISTEMA --------------------------------------------
-wireplumber                   # wpctl: teclas de volume (binds.conf)
+wireplumber                   # wpctl: teclas de volume (binds.lua)
 brightnessctl                 # teclas de brilho (binds.conf)
 playerctl                     # música atual no hyprlock
 iw                            # nome do wi-fi no hyprlock

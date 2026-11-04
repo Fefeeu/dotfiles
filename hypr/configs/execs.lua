@@ -2,8 +2,10 @@
 -- O evento "hyprland.start" só acontece ao abrir a sessão, não no reload
 
 hl.on("hyprland.start", function()
-    -- Wallpapers
-    hl.exec_cmd("swww-daemon")
+    -- Wallpaper: abre o daemon do awww e, quando ele responder, põe o
+    -- wallpaper do tema ativo (sem depender do cache do último wallpaper)
+    hl.exec_cmd("awww-daemon")
+    hl.exec_cmd("bash -c 'until awww query > /dev/null 2>&1; do sleep 0.2; done; awww img ~/.config/theme/imagens/wallpapers/wall.png'")
 
     -- Agente do polkit (janela de senha para hostnamectl e apps de admin)
     hl.exec_cmd("/usr/libexec/kf6/polkit-kde-authentication-agent-1")

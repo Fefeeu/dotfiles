@@ -29,8 +29,9 @@ hl.bind(teclaMain("B"),      hl.dsp.exec_cmd("~/.config/hypr/scripts/modo-estudo
 hl.bind(teclaMain("L"),      hl.dsp.exec_cmd("hyprlock"))
 
 -- --- PRINT ---
--- seleciona uma área e abre no swappy para editar
-hl.bind("Print", hl.dsp.exec_cmd("bash -c 'grimblast save area - | swappy -f -'"))
+-- seleciona uma área (slurp), captura (grim) e abre no swappy para editar;
+-- Esc no slurp cancela sem tirar foto
+hl.bind("Print", hl.dsp.exec_cmd("bash -c 'area=$(slurp) && grim -g \"$area\" - | swappy -f -'"))
 
 -- --- TECLADO ---
 -- troca o layout do teclado (br/us)

@@ -110,9 +110,9 @@ if [[ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]]; then
     "$CONFIG_DIR/waybar/scripts/launch.sh" > /dev/null 2>&1 && info "waybar"
     # SIGUSR1 faz o kitty reler a config sem fechar as janelas
     pkill -USR1 -x kitty && info "kitty" || true
-    # troca o wallpaper só se o daemon do swww estiver rodando
-    if pgrep -x swww-daemon > /dev/null; then
-        swww img "$TEMA_DIR/imagens/wallpapers/wall.png" --transition-type grow && info "wallpaper"
+    # troca o wallpaper só se o daemon do awww estiver rodando
+    if pgrep -x awww-daemon > /dev/null; then
+        awww img "$TEMA_DIR/imagens/wallpapers/wall.png" --transition-type grow && info "wallpaper"
     fi
 fi
 

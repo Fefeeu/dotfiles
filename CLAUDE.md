@@ -3,7 +3,7 @@
 Contexto para o Claude Code trabalhar neste repositório. Responda em português.
 
 ## Ambiente
-- Fedora 43 com Hyprland 0.57 (minimalista) sobre KDE Plasma 6. Rofi 2.0, Waybar, swaync, swww, kitty, Dolphin.
+- Fedora 43 com Hyprland 0.57 (minimalista) sobre KDE Plasma 6. Rofi 2.0, Waybar, swaync, awww (antigo swww, pelo COPR `alebastr/sway-extras`), kitty, Dolphin.
   - **Só o Hyprland travado, na 0.57.1** (`dnf versionlock`), para um `dnf upgrade` (ou o Discover) não trocar de versão sem querer; hyprlock, portal e bibliotecas atualizam normalmente. A 0.57 só lê Lua (`hypr/hyprland.lua`): os `.conf` do Hyprland não são mais lidos. Para subir de versão: trocar a versão no `docs/pacotes-dotfiles.md` e rodar o `install-pacotes.sh`.
 - Duas máquinas com o mesmo repositório:
   - **Frieren**: desktop AMD, perfil `amd`
@@ -65,6 +65,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 ## Pendências na Frieren
 Coisas para rodar no desktop quando voltar a ele (apagar cada uma depois de feita):
 - Hyprland 0.57.1: `sudo dnf copr disable solopasha/hyprland`, `git pull` e `./install.sh` (o `install-pacotes.sh` ativa o `nett00n/hyprland` e trava a 0.57.1; os links criam o `~/.config/hypr/hyprland.lua`); como o script não atualiza o que já está instalado, depois `sudo dnf upgrade 'hypr*' aquamarine xdg-desktop-portal-hyprland`; sair e entrar na sessão e conferir com `hyprctl version`, `scripts/check.sh`, `dnf versionlock list` (só o hyprland), SUPER+L e os atalhos. Apagar o link quebrado `rm ~/.config/hypr/hyprland.conf` (o `.conf` foi para `hypr/legado/`).
+- awww no lugar do swww: o `./install.sh` acima já ativa o `alebastr/sway-extras` e instala o `awww`; depois `sudo dnf remove swww grimblast` (se estiverem instalados) e conferir o wallpaper no login, na troca de tema (SUPER+T) e o Print.
 - Modo estudo: `sudo ~/dotfiles/scripts/instalar-modo-estudo.sh` (depois do `./install.sh`, que cria o link do `~/.bashrc.d/`).
 - Conferir no waybar: módulo de brilho some (desktop não tem backlight) e rede mostra a interface ativa (cabo).
 - Pastas do usuário em inglês, como no notebook (feito na FERN em 2026-10-01). Com os apps fechados:
@@ -156,7 +157,7 @@ Em aberto (explicados, sem decisão ainda):
 - `link_com_backup` sobrescreve um `.bak` antigo (numerar os backups);
 - `swaync` está no `OVERRIDABLE`, mas nenhum tema nem a base tem a pasta;
 - contrato do waybar exige `fundo_modulo`, `fundo_hover` e `texto_mudo`, que o `style.css` não usa; `#tray` sem estilo; resto de `format-icons` e `background-size`;
-- binds de mídia (`playerctl`), mute com `bindl`, logo/wallpaper padrão do Hyprland antes do swww;
+- binds de mídia (`playerctl`), mute com `bindl`, logo/wallpaper padrão do Hyprland antes do awww;
 - `check.sh` não confere o link do qt6ct;
 - qt6ct usa `Papirus-Light` (ícones escuros) num tema escuro: escolher pelo `docs/design.md`;
 - calendário do waybar com cores fixas: mantido assim por enquanto.
@@ -185,7 +186,7 @@ Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões nov
 Depois da migração para Lua (ficam para quando a config inteira estiver em Lua):
 - [ ] Atualizar `docs/pacotes-dotfiles.md` para a versão nova do Hyprland (nomes de pacotes, repositórios e dependências que mudarem):
   - [x] `repo:` trocado para `copr nett00n/hyprland`;
-  - [ ] `swww` e `grimblast` não existem no COPR novo nem no Fedora (na FERN sobraram do COPR antigo): procurar outro COPR ou trocar de programa;
+  - [x] `swww` virou `awww` (mudou de nome; COPR `alebastr/sway-extras`, o wallpaper do tema é posto no login pelo `execs.lua`) e o `grimblast` (com o `jq`) saiu: o Print usa `slurp` + `grim` direto;
   - [ ] `uwsm` veio com o upgrade: conferir se é dependência do `hyprland` ou se pode sair.
 - [ ] Criação do script do `docs/apps.md`: definir o formato, preencher a lista de apps pessoais (Steam, Discord, VS Code...) e criar o script que instala tudo
 - [ ] Aplicativos padrão: `mimeapps.list` no dotfiles, igual em todos os computadores (detalhes em `docs/ideias.md`; decidir entre link no `STATIC_MAP` ou cópia, porque o KDE reescreve o arquivo)
@@ -215,7 +216,7 @@ Decidido:
 
 Como encaixar:
 - Tema com pasta `quickshell/` assume a área de trabalho: `quickshell` no `THEME_ONLY`, link `~/.config/quickshell`. O contrato normal continua (`hypr`, `palette`, `wall.png` para o hyprlock, `thumb.png` para o seletor).
-- `hypr/scripts/sessao.sh` (fixo): com `~/.config/theme/quickshell`, fecha waybar e swww e abre `qs -p ~/.config/theme/quickshell`; sem ela, fecha o `qs`, garante `swww-daemon` + wallpaper e abre o waybar. Chamado no `exec-once` do login e no fim do `switch-theme.sh`, no lugar do que hoje recarrega waybar e swww.
+- `hypr/scripts/sessao.sh` (fixo): com `~/.config/theme/quickshell`, fecha waybar e awww e abre `qs -p ~/.config/theme/quickshell`; sem ela, fecha o `qs`, garante `awww-daemon` + wallpaper e abre o waybar. Chamado no `exec-once` do login e no fim do `switch-theme.sh`, no lugar do que hoje recarrega waybar e awww.
 - `hypr/scripts/menu.sh` no SUPER+D: `qs ipc call searchapp toggle` se o tema tiver `quickshell/`, senão o rofi de hoje.
 - SUPER+T, SUPER+V, kitty, swaync, hyprlock, qt6ct e KDE seguem iguais, também no Persona.
 - Cores: o `Data/Colors.qml` dele (hex fixos do pywal) passa a usar os nomes semânticos da paleta do tema.
