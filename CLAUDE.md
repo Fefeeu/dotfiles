@@ -66,6 +66,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 Coisas para rodar no desktop quando voltar a ele (apagar cada uma depois de feita):
 - Hyprland 0.57.1: `sudo dnf copr disable solopasha/hyprland`, `git pull` e `./install.sh` (o `install-pacotes.sh` ativa o `nett00n/hyprland` e trava a 0.57.1; os links criam o `~/.config/hypr/hyprland.lua`); como o script não atualiza o que já está instalado, depois `sudo dnf upgrade 'hypr*' aquamarine xdg-desktop-portal-hyprland`; sair e entrar na sessão e conferir com `hyprctl version`, `scripts/check.sh`, `dnf versionlock list` (só o hyprland), SUPER+L e os atalhos. Apagar o link quebrado `rm ~/.config/hypr/hyprland.conf` (o `.conf` foi para `hypr/legado/`).
 - awww no lugar do swww: o `./install.sh` acima já ativa o `alebastr/sway-extras` e instala o `awww`; depois `sudo dnf mark user grim slurp` e só então `sudo dnf remove swww grimblast` (se estiverem instalados; sem o `mark`, o dnf apaga junto o `grim` e o `slurp`, que vieram como dependência do grimblast, e o Print para — aconteceu na FERN) e conferir o wallpaper no login, na troca de tema (SUPER+T) e o Print.
+- uwsm: se veio com o upgrade do Hyprland (`rpm -q uwsm`), `sudo dnf remove uwsm` (é só recomendação, a sessão não usa).
 - Modo estudo: `sudo ~/dotfiles/scripts/instalar-modo-estudo.sh` (depois do `./install.sh`, que cria o link do `~/.bashrc.d/`).
 - Conferir no waybar: módulo de brilho some (desktop não tem backlight) e rede mostra a interface ativa (cabo).
 - Pastas do usuário em inglês, como no notebook (feito na FERN em 2026-10-01). Com os apps fechados:
@@ -184,10 +185,10 @@ Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões nov
 - [x] `.conf` do Hyprland movidos para `hypr/legado/` (temas em `hypr/legado/temas/<tema>/hypr.conf`); `STATIC_MAP`, `switch-theme.sh` e `check.sh` só exigem os `.lua`.
 
 Depois da migração para Lua (ficam para quando a config inteira estiver em Lua):
-- [ ] Atualizar `docs/pacotes-dotfiles.md` para a versão nova do Hyprland (nomes de pacotes, repositórios e dependências que mudarem):
+- [x] Atualizar `docs/pacotes-dotfiles.md` para a versão nova do Hyprland (nomes de pacotes, repositórios e dependências que mudarem):
   - [x] `repo:` trocado para `copr nett00n/hyprland`;
   - [x] `swww` virou `awww` (mudou de nome; COPR `alebastr/sway-extras`, o wallpaper do tema é posto no login pelo `execs.lua`) e o `grimblast` (com o `jq`) saiu: o Print usa `slurp` + `grim` direto;
-  - [ ] `uwsm` veio com o upgrade: conferir se é dependência do `hyprland` ou se pode sair.
+  - [x] `uwsm` veio com o upgrade só como recomendação do `hyprland` (`dnf repoquery --installed --whatrecommends uwsm`), sem uso: a sessão é a "Hyprland" normal, não a "Hyprland (uwsm)"; removido na FERN (a entrada `hyprland-uwsm.desktop` do login vem no pacote do hyprland e fica, sem funcionar).
 - [ ] Criação do script do `docs/apps.md`: definir o formato, preencher a lista de apps pessoais (Steam, Discord, VS Code...) e criar o script que instala tudo
 - [ ] Aplicativos padrão: `mimeapps.list` no dotfiles, igual em todos os computadores (detalhes em `docs/ideias.md`; decidir entre link no `STATIC_MAP` ou cópia, porque o KDE reescreve o arquivo)
 - [ ] Estudar e personalizar mais o hyprlock: cores do tema (hoje são fixas), `me.png` opcional e cartão de bateria que funcione no desktop
