@@ -3,8 +3,8 @@
 Contexto para o Claude Code trabalhar neste repositório. Responda em português.
 
 ## Ambiente
-- Fedora 43 com Hyprland 0.56 (minimalista) sobre KDE Plasma 6. Rofi 2.0, Waybar, swaync, swww, kitty, Dolphin.
-  - **Hyprland travado na 0.56** (`dnf versionlock`, junto com hyprlock e as bibliotecas): a 0.57 não lê mais o `.conf`, só Lua, e a 0.56 lê os dois. Não atualizar até a config inteira estar em Lua; sem o `versionlock`, um `dnf upgrade` comum (ou o Discover) já leva para a 0.57.
+- Fedora 43 com Hyprland 0.57 (minimalista) sobre KDE Plasma 6. Rofi 2.0, Waybar, swaync, swww, kitty, Dolphin.
+  - **Só o Hyprland travado, na 0.57.1** (`dnf versionlock`), para um `dnf upgrade` (ou o Discover) não trocar de versão sem querer; hyprlock, portal e bibliotecas atualizam normalmente. A 0.57 só lê Lua (`hypr/hyprland.lua`): os `.conf` do Hyprland não são mais lidos. Para subir de versão: trocar a versão no `docs/pacotes-dotfiles.md` e rodar o `install-pacotes.sh`.
 - Duas máquinas com o mesmo repositório:
   - **Frieren**: desktop AMD, perfil `amd`
   - **FERN**: notebook NVIDIA, perfil `nvidia`, usuário `FERN`, com `intel_backlight` e `wlp2s0`
@@ -63,7 +63,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 
 ## Pendências na Frieren
 Coisas para rodar no desktop quando voltar a ele (apagar cada uma depois de feita):
-- Hyprland 0.56 (antes de qualquer `dnf upgrade`, que levaria para a 0.57, sem `.conf`): `sudo dnf copr disable solopasha/hyprland`, `git pull` e `scripts/install/install-pacotes.sh` (ativa o `nett00n/hyprland`, trava e instala as versões fixas da lista); sair e entrar na sessão e conferir com `scripts/check.sh` e `dnf versionlock list`.
+- Hyprland 0.57.1: `sudo dnf copr disable solopasha/hyprland`, `git pull` e `./install.sh` (o `install-pacotes.sh` ativa o `nett00n/hyprland` e trava a 0.57.1; os links criam o `~/.config/hypr/hyprland.lua`); como o script não atualiza o que já está instalado, depois `sudo dnf upgrade 'hypr*' aquamarine xdg-desktop-portal-hyprland`; sair e entrar na sessão e conferir com `hyprctl version`, `scripts/check.sh`, `dnf versionlock list` (só o hyprland), SUPER+L e os atalhos.
 - Modo estudo: `sudo ~/dotfiles/scripts/instalar-modo-estudo.sh` (depois do `./install.sh`, que cria o link do `~/.bashrc.d/`).
 - Conferir no waybar: módulo de brilho some (desktop não tem backlight) e rede mostra a interface ativa (cabo).
 - Pastas do usuário em inglês, como no notebook (feito na FERN em 2026-10-01). Com os apps fechados:
@@ -178,7 +178,7 @@ Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões nov
   - [x] máquinas: `hypr/maquinas/*/{hardware,monitors}.lua` (carregados pelo link `~/.config/hypr/maquina`; a Frieren foi conferida com uma cópia do `hyprland.lua` apontando para a pasta dela); o `check.sh` exige os `.conf` e os `.lua` em cada máquina;
   - [x] temas: `hypr.lua` nos temas e no `_modelo` (degradê: `{ colors = {...}, angle = 45 }`), e o contrato no `switch-theme.sh`, `check.sh` (também roda o `--verify-config` no `hypr.lua` de cada tema) e `docs/temas.md`;
   - [x] virada: link `~/.config/hypr/hyprland.lua` no `STATIC_MAP`, testado na sessão real (se existir `hyprland.lua`, o Hyprland usa só ele: a troca é de uma vez; para voltar, apagar o link); atalhos e programas do login conferidos na FERN em 2026-11-04.
-- [ ] Destravar e atualizar para a 0.57+ (último passo, com a config inteira em Lua): apagar as versões fixas do `docs/pacotes-dotfiles.md`, `sudo dnf versionlock delete hyprland xdg-desktop-portal-hyprland hyprlock hyprgraphics aquamarine hyprtoolkit hyprutils hyprlang hyprwire`, `sudo dnf upgrade` e conferir se o hyprlock novo ainda lê o `hyprlock.conf`
+- [x] Destravar e atualizar para a 0.57+ (2026-11-04, FERN): 0.57.1, só o `hyprland` travado no `docs/pacotes-dotfiles.md` (as bibliotecas vêm como dependência, pedidas pela versão do soname); `versionlock delete` das 9 travas da 0.56, `versionlock add hyprland-0.57.1-1.fc43` e `dnf upgrade 'hypr*' aquamarine xdg-desktop-portal-hyprland`; hyprlock 0.9.7 ainda lê o `hyprlock.conf`, atalhos conferidos. Voltar atrás: Plasma no login e `sudo dnf history undo`.
 
 Depois da migração para Lua (ficam para quando a config inteira estiver em Lua):
 - [ ] Atualizar `docs/pacotes-dotfiles.md` para a versão nova do Hyprland (nomes de pacotes, repositórios e dependências que mudarem):

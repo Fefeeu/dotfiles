@@ -32,19 +32,15 @@
 repo: copr nett00n/hyprland      # hyprland, hyprlock, xdg-desktop-portal-hyprland, cliphist
 
 # ----- COMPOSITOR ----------------------------------------------------
-# Travado na 0.56, a última versão que lê o .conf (a 0.57 só lê Lua), até
-# a config inteira estar em Lua. As bibliotecas vão travadas junto: as da
-# 0.57 trocaram de versão (libhyprgraphics.so.5, libaquamarine.so.15) e
-# não funcionam com a 0.56
-hyprland = 0.56.2-20.fc43                     # compositor (sessão "Hyprland" no SDDM)
-xdg-desktop-portal-hyprland = 1.5.0-2.fc43    # portal: compartilhar tela e screenshots pelos apps
-hyprlock = 0.9.6-12.fc43                      # tela de bloqueio (SUPER+L, hypr/hyprlock.conf); a 0.9.7 pede a hyprgraphics da 0.57
-hyprgraphics = 0.5.1-17.fc43                  # biblioteca da 0.56 (a 0.6 é da 0.57)
-aquamarine = 0.15.1-3.fc43                    # biblioteca da 0.56 (a 0.16 é da 0.57)
-hyprtoolkit = 0.6.0-7.fc43                    # biblioteca da 0.56 (a 0.6.0-8 pede a hyprgraphics da 0.57)
-hyprutils = 0.14.3-1.fc43                     # biblioteca da 0.56
-hyprlang = 0.6.8-17.fc43                      # biblioteca da 0.56 (lê o .conf)
-hyprwire = 0.3.1-17.fc43                      # biblioteca da 0.56
+# Só o Hyprland fica travado (na 0.57.1, correção da 0.57, a primeira
+# que só lê Lua), para um "dnf upgrade" não trocar de versão sem querer.
+# O resto atualiza normalmente: o pacote do Hyprland pede as bibliotecas
+# pela versão (libaquamarine.so.15, libhyprgraphics.so.5...), então o dnf
+# não atualiza uma biblioteca que o quebraria. Para subir de versão:
+# trocar a versão aqui e rodar o scripts/install/install-pacotes.sh
+hyprland = 0.57.1-1.fc43      # compositor (sessão "Hyprland" no SDDM)
+xdg-desktop-portal-hyprland   # portal: compartilhar tela e screenshots pelos apps
+hyprlock                      # tela de bloqueio (SUPER+L, hypr/hyprlock.conf)
 
 # ----- BARRA, NOTIFICAÇÕES E BANDEJA ---------------------------------
 waybar                        # barra (base/waybar)
