@@ -183,6 +183,19 @@ else
     aviso "fora de uma sessão Hyprland, pulando"
 fi
 
+# Config em Lua (migração): o Hyprland confere o arquivo sem aplicar nada,
+# então vale mesmo antes de ele ser linkado e fora de uma sessão.
+# A saída termina em "config ok" ou nos erros, depois de "Config parsing result"
+if [[ -f "$DOTFILES_DIR/hypr/hyprland.lua" ]] && command -v Hyprland &> /dev/null; then
+    saida="$(Hyprland --verify-config -c "$DOTFILES_DIR/hypr/hyprland.lua" 2>&1 \
+        | sed -n '/Config parsing result/,$p' | sed '1d;/^[[:space:]]*$/d')"
+    if [[ "$saida" == "config ok" ]]; then
+        passou "hypr/hyprland.lua (--verify-config)"
+    else
+        falhou "hypr/hyprland.lua (--verify-config):\n$saida"
+    fi
+fi
+
 # --- RESUMO ---
 if (( PROBLEMAS == 0 )); then
     echo -e "\n${VERDE}### Tudo certo ###${NC}"

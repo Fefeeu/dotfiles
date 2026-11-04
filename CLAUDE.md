@@ -172,7 +172,7 @@ Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões nov
   - voltar atrás: Plasma na tela de login, reativar o COPR antigo e `sudo dnf downgrade` dos pacotes.
 - [x] Criar o script de instalação de todos os pacotes de `docs/pacotes-dotfiles.md` (seções, `repo:` e pacotes), como um passo novo chamado pelo `install.sh`: `scripts/install/install-pacotes.sh`
 - [ ] Reescrever a config em Lua (os `.lua` ficam ao lado dos `.conf`, com os mesmos nomes e pastas; cada parte testada com `Hyprland --verify-config -c <arquivo>.lua`, sem mexer na sessão até a virada):
-  - [ ] esqueleto: `hypr/hyprland.lua` com `require` na mesma ordem do `hyprland.conf` (env → máquina → settings → animations → execs → tema → windowrules → binds);
+  - [x] esqueleto: `hypr/hyprland.lua` com `require` na mesma ordem do `hyprland.conf` (env → máquina → settings → animations → execs → tema → windowrules → binds), cada linha comentada até o passo dela; o Hyprland procura os `require` na pasta real do arquivo (`~/dotfiles/hypr`, mesmo pelo link), então máquina e tema (em `~/.config`) entram pelo `carregar()` (`dofile` com `$HOME`); o `check.sh` roda `Hyprland --verify-config -c hypr/hyprland.lua`;
   - [ ] configs: `hypr/configs/{env,settings,animations,execs}.lua`;
   - [ ] regras e binds: `hypr/rules/{windowrules,binds}.lua`;
   - [ ] máquinas: `hypr/maquinas/*/{hardware,monitors}.lua`;
