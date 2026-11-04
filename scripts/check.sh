@@ -109,7 +109,7 @@ titulo "Máquinas"
 for dir in hypr/maquinas/*/; do
     maq="$(basename "$dir")"
     ok=1
-    for arq in hardware.conf monitors.conf; do
+    for arq in hardware.conf monitors.conf hardware.lua monitors.lua; do
         [[ -f "$dir$arq" ]] || { falhou "$maq: falta $arq"; ok=0; }
     done
     (( ok )) && passou "$maq"
