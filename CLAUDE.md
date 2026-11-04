@@ -4,6 +4,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 
 ## Ambiente
 - Fedora 43 com Hyprland 0.56 (minimalista) sobre KDE Plasma 6. Rofi 2.0, Waybar, swaync, swww, kitty, Dolphin.
+  - **Hyprland travado na 0.56** (`dnf versionlock`, junto com hyprlock e as bibliotecas): a 0.57 não lê mais o `.conf`, só Lua, e a 0.56 lê os dois. Não atualizar até a config inteira estar em Lua; sem o `versionlock`, um `dnf upgrade` comum (ou o Discover) já leva para a 0.57.
 - Duas máquinas com o mesmo repositório:
   - **Frieren**: desktop AMD, perfil `amd`
   - **FERN**: notebook NVIDIA, perfil `nvidia`, usuário `FERN`, com `intel_backlight` e `wlp2s0`
@@ -26,7 +27,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 - Scripts:
   - `scripts/lib.sh`: `STATIC_MAP`, `OVERRIDABLE`, `THEME_ONLY`, `link_com_backup`, `listar_temas` e `aplicar_maquina` (detecta ou pergunta a máquina);
   - `install.sh`: orquestrador, só chama os passos de `scripts/install/` com `bash` (nunca `source`), para que nada feche o terminal; sem `set -e`;
-  - `scripts/install/install-pacotes.sh` (primeiro passo): lê o `docs/pacotes-dotfiles.md` (`[todas]`, a seção da máquina e, se o usuário quiser, `[extras]`), ativa os `repo:` (COPR, RPM Fusion) e instala tudo numa transação do dnf; no fim, lista o que nenhum repositório tem; `--lista` só mostra, sem sudo;
+  - `scripts/install/install-pacotes.sh` (primeiro passo): lê o `docs/pacotes-dotfiles.md` (`[todas]`, a seção da máquina e, se o usuário quiser, `[extras]`), ativa os `repo:` (COPR, RPM Fusion), trava com o `versionlock` os `pacote = versão` e instala numa transação do dnf só o que ainda não está instalado (nunca atualiza: misturar versões do Hyprland quebra); no fim, lista o que nenhum repositório tem; `--lista` só mostra, sem sudo;
   - `scripts/install/install-fonts.sh` e `install-icons.sh`: Nerd Fonts e temas de ícones do GitHub para `~/.local/share/{fonts,icons}`, sem sudo; a lista fica dentro de cada script e o que já existe é pulado;
   - `scripts/install/instalador-inicial.sh`: confere a máquina, pergunta o tema, cria os links fixos e chama o switch;
   - `scripts/switch-theme.sh <tema>`: confere o link da máquina, refaz os links do tema e recarrega a sessão;
@@ -61,7 +62,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 
 ## Pendências na Frieren
 Coisas para rodar no desktop quando voltar a ele (apagar cada uma depois de feita):
-- Hyprland 0.56: `sudo dnf copr disable solopasha/hyprland && sudo dnf copr enable nett00n/hyprland`, `sudo dnf upgrade --refresh 'hypr*' aquamarine xdg-desktop-portal-hyprland`, sair e entrar na sessão e conferir com `scripts/check.sh`.
+- Hyprland 0.56 (antes de qualquer `dnf upgrade`, que levaria para a 0.57, sem `.conf`): `sudo dnf copr disable solopasha/hyprland`, `git pull` e `scripts/install/install-pacotes.sh` (ativa o `nett00n/hyprland`, trava e instala as versões fixas da lista); sair e entrar na sessão e conferir com `scripts/check.sh` e `dnf versionlock list`.
 - Modo estudo: `sudo ~/dotfiles/scripts/instalar-modo-estudo.sh` (depois do `./install.sh`, que cria o link do `~/.bashrc.d/`).
 - Conferir no waybar: módulo de brilho some (desktop não tem backlight) e rede mostra a interface ativa (cabo).
 - Pastas do usuário em inglês, como no notebook (feito na FERN em 2026-10-01). Com os apps fechados:
@@ -176,6 +177,7 @@ Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões nov
 - [ ] Criação do script do `docs/apps.md`: definir o formato, preencher a lista de apps pessoais (Steam, Discord, VS Code...) e criar o script que instala tudo
 - [ ] Aplicativos padrão: `mimeapps.list` no dotfiles, igual em todos os computadores (detalhes em `docs/ideias.md`; decidir entre link no `STATIC_MAP` ou cópia, porque o KDE reescreve o arquivo)
 - [ ] Estudar e personalizar mais o hyprlock: cores do tema (hoje são fixas), `me.png` opcional e cartão de bateria que funcione no desktop
+- [ ] Destravar e atualizar para a 0.57+ (último passo, com a config inteira em Lua): apagar as versões fixas do `docs/pacotes-dotfiles.md`, `sudo dnf versionlock delete hyprland xdg-desktop-portal-hyprland hyprlock hyprgraphics aquamarine hyprtoolkit hyprutils hyprlang hyprwire`, `sudo dnf upgrade` e conferir se o hyprlock novo ainda lê o `hyprlock.conf`
 
 ## Migração de distro (depois da migração para Lua)
 Trocar o Fedora por uma distro que acompanhe melhor o Hyprland novo. Até começar esta etapa, o resto do roteiro segue feito para o Fedora, como se a troca não existisse. Mesmo jeito de trabalhar: um item por vez, com aprovação antes.
