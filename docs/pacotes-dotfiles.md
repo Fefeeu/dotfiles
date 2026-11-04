@@ -24,7 +24,7 @@
 [todas]
 
 # ----- REPOSITÓRIOS --------------------------------------------------
-repo: copr solopasha/hyprland   # hyprland, hyprlock, swww, grimblast, cliphist
+repo: copr nett00n/hyprland      # hyprland, hyprlock, xdg-desktop-portal-hyprland, cliphist
 
 # ----- COMPOSITOR ----------------------------------------------------
 hyprland                      # compositor (sessão "Hyprland" no SDDM); traz hyprutils, aquamarine etc.

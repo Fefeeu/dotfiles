@@ -26,6 +26,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 - Scripts:
   - `scripts/lib.sh`: `STATIC_MAP`, `OVERRIDABLE`, `THEME_ONLY`, `link_com_backup`, `listar_temas` e `aplicar_maquina` (detecta ou pergunta a máquina);
   - `install.sh`: orquestrador, só chama os passos de `scripts/install/` com `bash` (nunca `source`), para que nada feche o terminal; sem `set -e`;
+  - `scripts/install/install-pacotes.sh` (primeiro passo): lê o `docs/pacotes-dotfiles.md` (`[todas]`, a seção da máquina e, se o usuário quiser, `[extras]`), ativa os `repo:` (COPR, RPM Fusion) e instala tudo numa transação do dnf; no fim, lista o que nenhum repositório tem; `--lista` só mostra, sem sudo;
   - `scripts/install/install-fonts.sh` e `install-icons.sh`: Nerd Fonts e temas de ícones do GitHub para `~/.local/share/{fonts,icons}`, sem sudo; a lista fica dentro de cada script e o que já existe é pulado;
   - `scripts/install/instalador-inicial.sh`: confere a máquina, pergunta o tema, cria os links fixos e chama o switch;
   - `scripts/switch-theme.sh <tema>`: confere o link da máquina, refaz os links do tema e recarrega a sessão;
@@ -55,7 +56,7 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 - Scripts referenciam `~/.config/<comp>/...` ou `~/.config/theme/...`, nunca `~/dotfiles/themes/...`.
 - Valores específicos de uma máquina (monitor, variáveis de GPU, teclados, mouse) ficam em `hypr/maquinas/<Nome>/`, não em `settings.conf` nem nos temas. Variáveis de ambiente comuns ficam em `hypr/configs/env.conf`.
 - Temas baixados de terceiros: remova a pasta `.git` interna antes do commit, porque ela vira submodule ("modified content").
-- Pacotes necessários ficam em `docs/pacotes-dotfiles.md` (seções `[todas]`/`[FERN]`/`[Frieren]`/`[extras]`, `repo:` e `pacote # motivo`; feito para um instalador ler). Programa novo usado pelo dotfiles entra lá; Nerd Font ou tema de ícones novo entra na lista do `install-fonts.sh`/`install-icons.sh`. Apps de uso pessoal (Steam, Discord...) ficam em `docs/apps.md`, ainda só com a explicação. Ideias futuras ficam em `docs/ideias.md`; decisões de visual em aberto, em `docs/design.md`.
+- Pacotes necessários ficam em `docs/pacotes-dotfiles.md` (seções `[todas]`/`[FERN]`/`[Frieren]`/`[extras]`, `repo:` e `pacote # motivo`; lido pelo `install-pacotes.sh`). Programa novo usado pelo dotfiles entra lá; Nerd Font ou tema de ícones novo entra na lista do `install-fonts.sh`/`install-icons.sh`. Apps de uso pessoal (Steam, Discord...) ficam em `docs/apps.md`, ainda só com a explicação. Ideias futuras ficam em `docs/ideias.md`; decisões de visual em aberto, em `docs/design.md`.
 - Depois de editar: `scripts/check.sh` (inclui `hyprctl reload` + `configerrors`) e `~/.config/waybar/scripts/launch.sh`.
 
 ## Pendências na Frieren
@@ -167,8 +168,11 @@ Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões nov
   - sem `hyprland.lua`, a versão nova continua lendo o `hyprland.conf`;
   - erros corrigidos no `.conf`: `windowrule` com `match:<campo>` e efeito com valor (`no_blur on`, `border_size 0`...), `togglesplit` virou `layoutmsg, togglesplit`, `dwindle:pseudotile` saiu;
   - voltar atrás: Plasma na tela de login, reativar o COPR antigo e `sudo dnf downgrade` dos pacotes.
-- [ ] Atualizar `docs/pacotes-dotfiles.md` para a versão nova do Hyprland (nomes de pacotes, repositórios e dependências que mudarem)
-- [ ] Criar o script de instalação de todos os pacotes de `docs/pacotes-dotfiles.md` (seções, `repo:` e pacotes), como um passo novo chamado pelo `install.sh`
+- [ ] Atualizar `docs/pacotes-dotfiles.md` para a versão nova do Hyprland (nomes de pacotes, repositórios e dependências que mudarem):
+  - [x] `repo:` trocado para `copr nett00n/hyprland`;
+  - [ ] `swww` e `grimblast` não existem no COPR novo nem no Fedora (na FERN sobraram do COPR antigo): procurar outro COPR ou trocar de programa;
+  - [ ] `uwsm` veio com o upgrade: conferir se é dependência do `hyprland` ou se pode sair.
+- [x] Criar o script de instalação de todos os pacotes de `docs/pacotes-dotfiles.md` (seções, `repo:` e pacotes), como um passo novo chamado pelo `install.sh`: `scripts/install/install-pacotes.sh`
 - [ ] Criação do script do `docs/apps.md`: definir o formato, preencher a lista de apps pessoais (Steam, Discord, VS Code...) e criar o script que instala tudo
 - [ ] Aplicativos padrão: `mimeapps.list` no dotfiles, igual em todos os computadores (detalhes em `docs/ideias.md`; decidir entre link no `STATIC_MAP` ou cópia, porque o KDE reescreve o arquivo)
 - [ ] Estudar e personalizar mais o hyprlock: cores do tema (hoje são fixas), `me.png` opcional e cartão de bateria que funcione no desktop
