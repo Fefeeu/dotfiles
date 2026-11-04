@@ -173,6 +173,10 @@ Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões nov
 - [ ] Aplicativos padrão: `mimeapps.list` no dotfiles, igual em todos os computadores (detalhes em `docs/ideias.md`; decidir entre link no `STATIC_MAP` ou cópia, porque o KDE reescreve o arquivo)
 - [ ] Estudar e personalizar mais o hyprlock: cores do tema (hoje são fixas), `me.png` opcional e cartão de bateria que funcione no desktop
 
+## Migração de distro (depois da migração para Lua)
+Trocar o Fedora por uma distro que acompanhe melhor o Hyprland novo. Até começar esta etapa, o resto do roteiro segue feito para o Fedora, como se a troca não existisse. Mesmo jeito de trabalhar: um item por vez, com aprovação antes.
+- [ ] Estudar CachyOS e Arch: o que muda na instalação, NVIDIA no notebook (FERN), jogos no desktop (Frieren), KDE Plasma junto do Hyprland, de onde vêm os pacotes do dotfiles (repositório oficial ou AUR) e quanto trabalho dá manter
+
 ## Tema Persona com shell próprio (depois da migração para Lua)
 Análise de 2026-10-21, ainda sem nada feito. Mesmo jeito de trabalhar: um item por vez, com aprovação antes.
 
