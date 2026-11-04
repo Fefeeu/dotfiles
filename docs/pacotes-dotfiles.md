@@ -47,7 +47,7 @@ hyprlock                      # tela de bloqueio (SUPER+L, hypr/hyprlock.conf)
 waybar                        # barra (base/waybar)
 SwayNotificationCenter        # notificações e painel (swaync-client no waybar)
 libnotify                     # notify-send (bateria, seletor de temas, clipboard)
-network-manager-applet        # nm-applet na bandeja (execs.conf)
+network-manager-applet        # nm-applet na bandeja (execs.lua)
 NetworkManager-tui            # nmtui, aberto ao clicar na rede no waybar
 blueman                       # blueman-manager, aberto ao clicar no bluetooth do waybar
 bluez                         # bluetoothctl (módulo bluetooth do waybar e hyprlock)
@@ -67,12 +67,12 @@ swappy                        # editor da screenshot (swappy/config)
 
 # ----- HARDWARE E SISTEMA --------------------------------------------
 wireplumber                   # wpctl: teclas de volume (binds.lua)
-brightnessctl                 # teclas de brilho (binds.conf)
+brightnessctl                 # teclas de brilho (binds.lua)
 playerctl                     # música atual no hyprlock
 iw                            # nome do wi-fi no hyprlock
 hostname                      # nome da máquina no hyprlock
 procps-ng                     # pkill/pgrep (scripts)
-polkit-kde                    # agente de senha (execs.conf: hostnamectl, apps de admin)
+polkit-kde                    # agente de senha (execs.lua: hostnamectl, apps de admin)
 polkit                        # regra que deixa ligar o modo estudo sem senha (sistema/modo-estudo)
 util-linux                    # flock e runuser (serviço do modo estudo)
 
@@ -89,7 +89,7 @@ git-core                      # clonar e atualizar este repositório
 
 
 [FERN]
-# Notebook NVIDIA (hypr/maquinas/FERN/hardware.conf)
+# Notebook NVIDIA (hypr/maquinas/FERN/hardware.lua)
 repo: rpmfusion               # driver da NVIDIA
 akmod-nvidia                  # driver da NVIDIA (compila o módulo a cada kernel)
 xorg-x11-drv-nvidia-cuda-libs # bibliotecas da NVIDIA (CUDA/NVENC)
@@ -97,7 +97,7 @@ libva-nvidia-driver           # aceleração de vídeo (LIBVA_DRIVER_NAME=nvidia
 
 
 [Frieren]
-# Desktop AMD (hypr/maquinas/Frieren/hardware.conf): o driver radeonsi já
+# Desktop AMD (hypr/maquinas/Frieren/hardware.lua): o driver radeonsi já
 # vem no mesa do Fedora, nada a instalar
 
 

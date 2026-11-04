@@ -17,7 +17,7 @@ decisão for tomada, ela sai daqui e vira item no roteiro do CLAUDE.md.
 - **Hyprlock**: cores fixas, fora do tema (ver a migração para Lua no CLAUDE.md).
 - **Cursor**: escolher um tema de cursor que combine (ver `docs/ideias.md`).
 - **Abertura da sessão**: o logo e o wallpaper padrão do Hyprland aparecem antes do awww
-  carregar (`misc` em `hypr/configs/settings.conf`).
+  carregar (`misc` em `hypr/configs/settings.lua`).
 - **Tema com layout próprio**: o menu no estilo Persona 3 Reload (ver `docs/temas.md`).
 
 ## Temas de ícones escuros recomendados

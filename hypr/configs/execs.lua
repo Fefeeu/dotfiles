@@ -1,4 +1,4 @@
--- Programas abertos uma vez, no login (no .conf eram os exec-once).
+-- Programas abertos uma vez, no login.
 -- O evento "hyprland.start" só acontece ao abrir a sessão, não no reload
 
 hl.on("hyprland.start", function()

@@ -3,7 +3,6 @@
 
 -- Programas usados nos binds: devolvidos no fim do arquivo, para o
 -- rules/binds.lua pegar com require("configs.settings")
--- (no .conf eram as variáveis $terminal, $fileManager e $menu)
 local programas = {
     terminal    = "kitty",
     fileManager = "dolphin",

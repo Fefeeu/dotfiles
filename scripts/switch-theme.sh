@@ -30,11 +30,6 @@ done
 titulo "Tema: $TEMA"
 link_com_backup "$TEMA_DIR" "$THEME_LINK"
 
-# Links da estrutura antiga, que não são mais usados
-for antigo in theme_profile.conf hardware_profile.conf; do
-    [[ -L "$CONFIG_DIR/hypr/$antigo" ]] && rm "$CONFIG_DIR/hypr/$antigo"
-done
-
 # --- MÁQUINA ---
 # Confere se ~/.config/hypr/maquina aponta para a pasta do hostname
 titulo "Máquina:"

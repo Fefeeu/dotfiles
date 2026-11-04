@@ -18,7 +18,7 @@ Usar o hypridle para, depois de um tempo parado:
 Hoje o bloqueio é só manual (SUPER+L).
 
 ### Tema de Cursor
-Escolher um tema de cursor que combine com os temas (ex.: Bibata, Phinger) e definir no `hypr/configs/env.conf` (`XCURSOR_THEME`/`XCURSOR_SIZE`, ou `HYPRCURSOR_THEME` se for um tema hyprcursor), para o cursor ser o mesmo no Hyprland e nos apps.
+Escolher um tema de cursor que combine com os temas (ex.: Bibata, Phinger) e definir no `hypr/configs/env.lua` (`XCURSOR_THEME`/`XCURSOR_SIZE`, ou `HYPRCURSOR_THEME` se for um tema hyprcursor), para o cursor ser o mesmo no Hyprland e nos apps.
 
 ### Aplicativos Padrão (mimeapps.list)
 Levar o `~/.config/mimeapps.list` para o dotfiles, para os mesmos apps abrirem os mesmos tipos de arquivo em todos os computadores (Dolphin, `xdg-open`, KDE e Hyprland usam esse arquivo).

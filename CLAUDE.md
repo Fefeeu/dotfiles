@@ -168,7 +168,7 @@ Em aberto (explicados, sem decisão ainda):
 - [x] SUPER+B, `estudar`/`Estudar` no terminal (tempos 30m, 60m, 1h30, 2h ou digitado), pergunta no login e timer no waybar à direita das áreas de trabalho.
 
 ## Migração para LUA
-Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões novas do Hyprland usam configuração em Lua). Mesmo jeito de trabalhar: um item por vez, com aprovação antes.
+**Concluída em 2026-11-04 (FERN)**: Hyprland 0.57.1 só com a config em Lua; os `.conf` antigos ficam só em `hypr/legado/`, e fora dela não sobrou nenhuma dependência ou lembrança do `.conf` (só o histórico dos roteiros). Na Frieren, falta o que está em "Pendências na Frieren".
 - [x] Atualizar Hyprland (2026-11-04, FERN): 0.56.2 pelo COPR `nett00n/hyprland` (o `solopasha/hyprland` foi abandonado na 0.51.1):
   - sem `hyprland.lua`, a versão nova continua lendo o `hyprland.conf`;
   - erros corrigidos no `.conf`: `windowrule` com `match:<campo>` e efeito com valor (`no_blur on`, `border_size 0`...), `togglesplit` virou `layoutmsg, togglesplit`, `dwindle:pseudotile` saiu;
@@ -178,11 +178,12 @@ Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões nov
   - [x] esqueleto: `hypr/hyprland.lua` com `require` na mesma ordem do `hyprland.conf` (env → máquina → settings → animations → execs → tema → windowrules → binds), cada linha comentada até o passo dela; o Hyprland procura os `require` na pasta real do arquivo (`~/dotfiles/hypr`, mesmo pelo link), então máquina e tema (em `~/.config`) entram pelo `carregar()` (`dofile` com `$HOME`); o `check.sh` roda `Hyprland --verify-config -c hypr/hyprland.lua`;
   - [x] configs: `hypr/configs/{env,settings,animations,execs}.lua`; o `settings.lua` devolve os programas (`terminal`, `fileManager`, `menu`, antes `$terminal`...) para o `binds.lua` pegar com `require`; os `exec-once` viraram `hl.exec_cmd` dentro de `hl.on("hyprland.start", ...)`; o `--verify-config` pega opção inventada, tipo errado e curva inexistente, com arquivo e linha;
   - [x] regras e binds: `hypr/rules/{windowrules,binds}.lua`; o `--verify-config` confere campos e `match` das regras, mas **não** os argumentos dos dispatchers (`hl.dsp.window.fullscreen({ inventado = 0 })` passa): os nomes vieram das mensagens de erro do próprio Hyprland, e na virada é preciso testar na mão F11, SUPER+F, SUPER(+SHIFT)+setas, SUPER(+SHIFT)+números, SUPER+J e o mouse;
-  - [x] máquinas: `hypr/maquinas/*/{hardware,monitors}.lua` (carregados pelo link `~/.config/hypr/maquina`; a Frieren foi conferida com uma cópia do `hyprland.lua` apontando para a pasta dela); o `check.sh` exige os `.conf` e os `.lua` em cada máquina;
+  - [x] máquinas: `hypr/maquinas/*/{hardware,monitors}.lua` (carregados pelo link `~/.config/hypr/maquina`; a Frieren foi conferida com uma cópia do `hyprland.lua` apontando para a pasta dela); o `check.sh` exige os `.lua` em cada máquina (até a 0.56, também os `.conf`);
   - [x] temas: `hypr.lua` nos temas e no `_modelo` (degradê: `{ colors = {...}, angle = 45 }`), e o contrato no `switch-theme.sh`, `check.sh` (também roda o `--verify-config` no `hypr.lua` de cada tema) e `docs/temas.md`;
   - [x] virada: link `~/.config/hypr/hyprland.lua` no `STATIC_MAP`, testado na sessão real (se existir `hyprland.lua`, o Hyprland usa só ele: a troca é de uma vez; para voltar, apagar o link); atalhos e programas do login conferidos na FERN em 2026-11-04.
 - [x] Destravar e atualizar para a 0.57+ (2026-11-04, FERN): 0.57.1, só o `hyprland` travado no `docs/pacotes-dotfiles.md` (as bibliotecas vêm como dependência, pedidas pela versão do soname); `versionlock delete` das 9 travas da 0.56, `versionlock add hyprland-0.57.1-1.fc43` e `dnf upgrade 'hypr*' aquamarine xdg-desktop-portal-hyprland`; hyprlock 0.9.7 ainda lê o `hyprlock.conf`, atalhos conferidos. Voltar atrás: Plasma no login e `sudo dnf history undo`.
 - [x] `.conf` do Hyprland movidos para `hypr/legado/` (temas em `hypr/legado/temas/<tema>/hypr.conf`); `STATIC_MAP`, `switch-theme.sh` e `check.sh` só exigem os `.lua`.
+- [x] Lembranças do `.conf` tiradas: docs e comentários apontam para os `.lua`, o `switch-theme.sh` não limpa mais os links da estrutura antiga (`theme_profile.conf`, `hardware_profile.conf`) e os backups de antes do dotfiles em `~/.config/hypr` (`colors.conf`, `hyprland.conf.bak`, `hyprlock.conf.bak`) foram apagados na FERN.
 
 Depois da migração para Lua (ficam para quando a config inteira estiver em Lua):
 - [x] Atualizar `docs/pacotes-dotfiles.md` para a versão nova do Hyprland (nomes de pacotes, repositórios e dependências que mudarem):
@@ -217,7 +218,7 @@ Decidido:
 
 Como encaixar:
 - Tema com pasta `quickshell/` assume a área de trabalho: `quickshell` no `THEME_ONLY`, link `~/.config/quickshell`. O contrato normal continua (`hypr`, `palette`, `wall.png` para o hyprlock, `thumb.png` para o seletor).
-- `hypr/scripts/sessao.sh` (fixo): com `~/.config/theme/quickshell`, fecha waybar e awww e abre `qs -p ~/.config/theme/quickshell`; sem ela, fecha o `qs`, garante `awww-daemon` + wallpaper e abre o waybar. Chamado no `exec-once` do login e no fim do `switch-theme.sh`, no lugar do que hoje recarrega waybar e awww.
+- `hypr/scripts/sessao.sh` (fixo): com `~/.config/theme/quickshell`, fecha waybar e awww e abre `qs -p ~/.config/theme/quickshell`; sem ela, fecha o `qs`, garante `awww-daemon` + wallpaper e abre o waybar. Chamado no login (`hypr/configs/execs.lua`) e no fim do `switch-theme.sh`, no lugar do que hoje recarrega waybar e awww.
 - `hypr/scripts/menu.sh` no SUPER+D: `qs ipc call searchapp toggle` se o tema tiver `quickshell/`, senão o rofi de hoje.
 - SUPER+T, SUPER+V, kitty, swaync, hyprlock, qt6ct e KDE seguem iguais, também no Persona.
 - Cores: o `Data/Colors.qml` dele (hex fixos do pywal) passa a usar os nomes semânticos da paleta do tema.
