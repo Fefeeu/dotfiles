@@ -23,16 +23,16 @@ local function carregar(caminho)
 end
 
 -- Variáveis de ambiente comuns a todas as máquinas
--- require("configs.env")                          -- passo 2
+require("configs.env")                             -- passo 2
 
 -- Máquina: GPU, teclados e monitores (link criado pelo switch-theme.sh)
 -- carregar("~/.config/hypr/maquina/hardware.lua")  -- passo 4
 -- carregar("~/.config/hypr/maquina/monitors.lua")  -- passo 4
 
 -- Configurações modulares
--- require("configs.settings")                     -- passo 2
--- require("configs.animations")                   -- passo 2
--- require("configs.execs")                        -- passo 2
+require("configs.settings")                        -- passo 2
+require("configs.animations")                      -- passo 2
+require("configs.execs")                           -- passo 2
 
 -- Tema ativo: bordas, gaps e cores
 -- carregar("~/.config/theme/hypr.lua")            -- passo 5
