@@ -7,6 +7,9 @@
 # Pasta dos passos (scripts/install/ ao lado deste arquivo)
 PASSOS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/scripts/install"
 
+# pacotes do dnf (docs/pacotes-dotfiles.md), com sudo
+bash "$PASSOS_DIR/install-pacotes.sh"
+
 # Nerd Fonts e temas de ícones (pasta do usuário, sem sudo)
 bash "$PASSOS_DIR/install-fonts.sh"
 bash "$PASSOS_DIR/install-icons.sh"

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Avisa por notificação quando a bateria do notebook está baixa.
-# Iniciado pelo execs.conf; no desktop (sem bateria) sai na hora.
+# Iniciado pelo execs.lua; no desktop (sem bateria) sai na hora.
 
 # Acha a bateria do notebook (BAT0, BAT1, CMB0...): a primeira do tipo
 # Battery que não seja de periférico (mouse e fone têm scope=Device)

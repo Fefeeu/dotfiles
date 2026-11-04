@@ -5,7 +5,8 @@
     "margin-right": 0,
     "modules-left": [
         "clock",
-        "hyprland/workspaces"
+        "hyprland/workspaces",
+        "custom/estudo"
     ],
     "modules-center": [
         "tray"
@@ -56,6 +57,13 @@
         "persistent-workspaces": {
             "*": 0 // 5 workspaces by default on every monitor
         }
+    },
+    "custom/estudo": {
+        // tempo do modo estudo; some quando o modo está desligado
+        "return-type": "json",
+        "exec": "~/.config/hypr/scripts/modo-estudo.sh waybar",
+        "interval": 1,
+        "on-click": "~/.config/hypr/scripts/modo-estudo.sh iniciar < /dev/null"
     },
     // "tray": {
     //     "icon-size": 21,

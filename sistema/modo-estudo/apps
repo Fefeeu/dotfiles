@@ -1,0 +1,9 @@
+# Apps bloqueados no modo estudo: nome exato do processo, um por linha
+# (veja com: ps -eo comm | sort -u). Depois de mudar, rode de novo:
+#   sudo ~/dotfiles/scripts/instalar-modo-estudo.sh
+
+# Discord
+Discord
+# Steam (o Flatpak usa os mesmos nomes de processo)
+steam
+steamwebhelper

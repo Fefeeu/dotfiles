@@ -3,7 +3,8 @@
 Contexto para o Claude Code trabalhar neste repositório. Responda em português.
 
 ## Ambiente
-- Fedora 43 com Hyprland 0.51 (minimalista) sobre KDE Plasma 6. Rofi 2.0, Waybar, swaync, swww, kitty, Dolphin.
+- Fedora 43 com Hyprland 0.57 (minimalista) sobre KDE Plasma 6. Rofi 2.0, Waybar, swaync, awww (antigo swww, pelo COPR `alebastr/sway-extras`), kitty, Dolphin.
+  - **Só o Hyprland travado, na 0.57.1** (`dnf versionlock`), para um `dnf upgrade` (ou o Discover) não trocar de versão sem querer; hyprlock, portal e bibliotecas atualizam normalmente. A 0.57 só lê Lua (`hypr/hyprland.lua`): os `.conf` do Hyprland não são mais lidos. Para subir de versão: trocar a versão no `docs/pacotes-dotfiles.md` e rodar o `install-pacotes.sh`.
 - Duas máquinas com o mesmo repositório:
   - **Frieren**: desktop AMD, perfil `amd`
   - **FERN**: notebook NVIDIA, perfil `nvidia`, usuário `FERN`, com `intel_backlight` e `wlp2s0`
@@ -13,12 +14,12 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 - `~/dotfiles` é a fonte da verdade. Os links são criados com `ln -sfn` e caminhos absolutos. Se já existe uma config real no destino, ela vira `.bak`.
 - Modelo **base + override**:
   - `base/` tem o layout padrão (`waybar`, `rofi`, `kitty/kitty.conf`);
-  - `themes/<tema>/` tem `hypr.conf`, `palette/`, `imagens/wallpapers/wall.png` e `imagens/thumb.png` (miniatura do seletor); outras imagens, como `me.png`, ficam soltas em `imagens/`;
+  - `themes/<tema>/` tem `hypr.lua`, `palette/`, `imagens/wallpapers/wall.png` e `imagens/thumb.png` (miniatura do seletor); outras imagens, como `me.png`, ficam soltas em `imagens/`;
   - o tema pode trazer a própria pasta de um componente, que substitui a da base inteira.
   - Contrato completo em `docs/temas.md`.
 - Estado da máquina (fora do git):
   - `~/.config/theme` → tema ativo;
-  - `~/.config/hypr/maquina` → `hypr/maquinas/<Nome>/` (`hardware.conf` + `monitors.conf`), escolhida pelo hostname (Frieren, FERN).
+  - `~/.config/hypr/maquina` → `hypr/maquinas/<Nome>/` (`hardware.lua` + `monitors.lua`), escolhida pelo hostname (Frieren, FERN).
 - O layout acha as cores sempre por `~/.config/theme/palette/...`:
   - waybar: `@import url("../theme/palette/waybar.css")`, relativo a `~/.config/waybar`;
   - rofi: `@import "~/.config/theme/palette/rofi.rasi"`;
@@ -26,14 +27,22 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
 - Scripts:
   - `scripts/lib.sh`: `STATIC_MAP`, `OVERRIDABLE`, `THEME_ONLY`, `link_com_backup`, `listar_temas` e `aplicar_maquina` (detecta ou pergunta a máquina);
   - `install.sh`: orquestrador, só chama os passos de `scripts/install/` com `bash` (nunca `source`), para que nada feche o terminal; sem `set -e`;
+  - `scripts/install/install-pacotes.sh` (primeiro passo): lê o `docs/pacotes-dotfiles.md` (`[todas]`, a seção da máquina e, se o usuário quiser, `[extras]`), ativa os `repo:` (COPR, RPM Fusion), trava com o `versionlock` os `pacote = versão` e instala numa transação do dnf só o que ainda não está instalado (nunca atualiza: misturar versões do Hyprland quebra); no fim, lista o que nenhum repositório tem; `--lista` só mostra, sem sudo;
   - `scripts/install/install-fonts.sh` e `install-icons.sh`: Nerd Fonts e temas de ícones do GitHub para `~/.local/share/{fonts,icons}`, sem sudo; a lista fica dentro de cada script e o que já existe é pulado;
   - `scripts/install/instalador-inicial.sh`: confere a máquina, pergunta o tema, cria os links fixos e chama o switch;
   - `scripts/switch-theme.sh <tema>`: confere o link da máquina, refaz os links do tema e recarrega a sessão;
   - máquina sem pasta com o nome do hostname: pergunta qual usar e oferece trocar o hostname para o nome da pasta (terminal com `select`/`read`; fora dele, rofi). O Hyprland repassa o TTY do login aos programas, por isso o teste de terminal é `-t 0 && -t 2` e o seletor chama o switch com `< /dev/null`;
   - `scripts/check.sh`: confere scripts, temas, máquinas, links, rofi e Hyprland;
   - `hypr/scripts/seletor-tema.sh` (SUPER+T): lista de temas no rofi com miniatura e nome, layout em `base/rofi/temas/seletor.rasi`.
+- Modo estudo (SUPER+B, `estudar`/`Estudar` no terminal, `estudar 45m`):
+  - parte de sistema em `sistema/modo-estudo/` (serviço root `modo-estudo@<minutos|retomar|parar>.service`, listas `apps` e `sites`, regra do polkit que só libera o *start*); instalada como **cópia** por `sudo scripts/instalar-modo-estudo.sh` (rodar de novo depois de mudar algo; o `check.sh` avisa se a cópia está diferente);
+  - mata os processos da lista a cada segundo, bloqueia os sites no `/etc/hosts` e na `URLBlocklist` dos navegadores Chromium; parar no meio só com `sudo systemctl stop`;
+  - estado: `/var/lib/modo-estudo/restante` (sobrevive ao reinício) e `/run/modo-estudo/restante` (contagem ao vivo); desligar o PC pausa e o login pergunta se continua (desistir pede uma frase);
+  - parte do usuário: `hypr/scripts/modo-estudo.sh` (menu, pergunta do login, módulo `custom/estudo` do waybar) e `bashrc.d/modo-estudo.sh` (link em `~/.bashrc.d/`).
+- `.luarc.json` (raiz): autocompletar e checagem dos `.lua` do Hyprland no editor (extensão "Lua" do sumneko no VS Code). Lê a descrição da API em `/usr/share/hypr/stubs/hl.meta.lua` (no VS Code em flatpak o caminho é `/run/host/usr/share/hypr/stubs`, por isso os dois); `runtime.path` com `hypr/?.lua` para o `require("configs.env")` achar os arquivos; Lua 5.4, a mesma do Hyprland.
 - Rofi: `base/rofi/config.rasi` (geral), `shared/` (cores e fonte, importados por todo layout), `launchers/type-3/`, `clipboard/`, `temas/` (seletor e pergunta).
-- `hypr/hyprland.conf` só faz `source`, nesta ordem: env → máquina (hardware, monitors) → settings → animations → execs → `~/.config/theme/hypr.conf` → windowrules → binds. Bordas, gaps e cores ficam só no tema.
+- `hypr/hyprland.lua` só carrega as partes, nesta ordem: env → máquina (hardware, monitors) → settings → animations → execs → `~/.config/theme/hypr.lua` → windowrules → binds. Bordas, gaps e cores ficam só no tema.
+- `hypr/legado/`: os `.conf` antigos do Hyprland (até a 0.56), com as mesmas pastas (`configs/`, `rules/`, `maquinas/<Nome>/`, `temas/<tema>/hypr.conf`). Só para consulta: a 0.57 não lê, nada aponta para eles e não recebem mudanças.
 - Tema ativo: `Black_and_White`. `Tema_Teste` é um tema neon só para testar os scripts. `Catppuccin` (Mocha, destaque rosa-mauve `#e0b4ef`, entre mauve e pink) é o tema temporário para a Frieren, até sair o tema de jogos/anime dela.
   - A paleta usa nomes em português (`preto_absoluto`, `branco_puro`, `cinza_*`) mapeados para nomes semânticos (`fundo`, `texto`, `borda`...).
   - Os temas de rofi vêm do adi1090x/rofi (launcher `type-3/style-1`).
@@ -48,13 +57,17 @@ Contexto para o Claude Code trabalhar neste repositório. Responda em português
   - só de tema: entra no `THEME_ONLY`.
 - O layout base só usa nomes semânticos de cor, nunca cores cruas.
 - Scripts referenciam `~/.config/<comp>/...` ou `~/.config/theme/...`, nunca `~/dotfiles/themes/...`.
-- Valores específicos de uma máquina (monitor, variáveis de GPU, teclados, mouse) ficam em `hypr/maquinas/<Nome>/`, não em `settings.conf` nem nos temas. Variáveis de ambiente comuns ficam em `hypr/configs/env.conf`.
+- Valores específicos de uma máquina (monitor, variáveis de GPU, teclados, mouse) ficam em `hypr/maquinas/<Nome>/`, não em `settings.lua` nem nos temas. Variáveis de ambiente comuns ficam em `hypr/configs/env.lua`.
 - Temas baixados de terceiros: remova a pasta `.git` interna antes do commit, porque ela vira submodule ("modified content").
-- Pacotes necessários ficam em `docs/pacotes-dotfiles.md` (seções `[todas]`/`[FERN]`/`[Frieren]`/`[extras]`, `repo:` e `pacote # motivo`; feito para um instalador ler). Programa novo usado pelo dotfiles entra lá; Nerd Font ou tema de ícones novo entra na lista do `install-fonts.sh`/`install-icons.sh`. Apps de uso pessoal (Steam, Discord...) ficam em `docs/apps.md`, ainda só com a explicação. Ideias futuras ficam em `docs/ideias.md`; decisões de visual em aberto, em `docs/design.md`.
+- Pacotes necessários ficam em `docs/pacotes-dotfiles.md` (seções `[todas]`/`[FERN]`/`[Frieren]`/`[extras]`, `repo:` e `pacote # motivo`; lido pelo `install-pacotes.sh`). Programa novo usado pelo dotfiles entra lá; Nerd Font ou tema de ícones novo entra na lista do `install-fonts.sh`/`install-icons.sh`. Apps de uso pessoal (Steam, Discord...) ficam em `docs/apps.md`, ainda só com a explicação. Ideias futuras ficam em `docs/ideias.md`; decisões de visual em aberto, em `docs/design.md`.
 - Depois de editar: `scripts/check.sh` (inclui `hyprctl reload` + `configerrors`) e `~/.config/waybar/scripts/launch.sh`.
 
 ## Pendências na Frieren
 Coisas para rodar no desktop quando voltar a ele (apagar cada uma depois de feita):
+- Hyprland 0.57.1: `sudo dnf copr disable solopasha/hyprland`, `git pull` e `./install.sh` (o `install-pacotes.sh` ativa o `nett00n/hyprland` e trava a 0.57.1; os links criam o `~/.config/hypr/hyprland.lua`); como o script não atualiza o que já está instalado, depois `sudo dnf upgrade 'hypr*' aquamarine xdg-desktop-portal-hyprland`; sair e entrar na sessão e conferir com `hyprctl version`, `scripts/check.sh`, `dnf versionlock list` (só o hyprland), SUPER+L e os atalhos. Apagar o link quebrado `rm ~/.config/hypr/hyprland.conf` (o `.conf` foi para `hypr/legado/`).
+- awww no lugar do swww: o `./install.sh` acima já ativa o `alebastr/sway-extras` e instala o `awww`; depois `sudo dnf mark user grim slurp` e só então `sudo dnf remove swww grimblast` (se estiverem instalados; sem o `mark`, o dnf apaga junto o `grim` e o `slurp`, que vieram como dependência do grimblast, e o Print para — aconteceu na FERN) e conferir o wallpaper no login, na troca de tema (SUPER+T) e o Print.
+- uwsm: se veio com o upgrade do Hyprland (`rpm -q uwsm`), `sudo dnf remove uwsm` (é só recomendação, a sessão não usa).
+- Modo estudo: `sudo ~/dotfiles/scripts/instalar-modo-estudo.sh` (depois do `./install.sh`, que cria o link do `~/.bashrc.d/`).
 - Conferir no waybar: módulo de brilho some (desktop não tem backlight) e rede mostra a interface ativa (cabo).
 - Pastas do usuário em inglês, como no notebook (feito na FERN em 2026-10-01). Com os apps fechados:
   - `mv` de `Área de trabalho`→`Desktop`, `Documentos`→`Documents`, `Imagens`→`Pictures`, `Modelos`→`Templates`, `Músicas`→`Music`, `Público`→`Public`, `Vídeos`→`Videos` (se já existir `~/Pictures`, juntar o conteúdo antes);
@@ -145,18 +158,45 @@ Em aberto (explicados, sem decisão ainda):
 - `link_com_backup` sobrescreve um `.bak` antigo (numerar os backups);
 - `swaync` está no `OVERRIDABLE`, mas nenhum tema nem a base tem a pasta;
 - contrato do waybar exige `fundo_modulo`, `fundo_hover` e `texto_mudo`, que o `style.css` não usa; `#tray` sem estilo; resto de `format-icons` e `background-size`;
-- binds de mídia (`playerctl`), mute com `bindl`, logo/wallpaper padrão do Hyprland antes do swww;
+- binds de mídia (`playerctl`), mute com `bindl`, logo/wallpaper padrão do Hyprland antes do awww;
 - `check.sh` não confere o link do qt6ct;
 - qt6ct usa `Papirus-Light` (ícones escuros) num tema escuro: escolher pelo `docs/design.md`;
 - calendário do waybar com cores fixas: mantido assim por enquanto.
 
+## Modo estudo (2026-10-05)
+- [x] Serviço root com bloqueio de apps (Steam, Discord) e sites (YouTube, Instagram), instalador e regra do polkit.
+- [x] SUPER+B, `estudar`/`Estudar` no terminal (tempos 30m, 60m, 1h30, 2h ou digitado), pergunta no login e timer no waybar à direita das áreas de trabalho.
+
 ## Migração para LUA
-Próxima etapa, depois de terminar o roteiro de mudanças acima (as versões novas do Hyprland usam configuração em Lua). Mesmo jeito de trabalhar: um item por vez, com aprovação antes.
-- [ ] Atualizar Hyprland
-- [ ] Atualizar `docs/pacotes-dotfiles.md` para a versão nova do Hyprland (nomes de pacotes, repositórios e dependências que mudarem)
-- [ ] Criar o script de instalação de todos os pacotes de `docs/pacotes-dotfiles.md` (seções, `repo:` e pacotes), como um passo novo chamado pelo `install.sh`
+**Concluída em 2026-11-04 (FERN)**: Hyprland 0.57.1 só com a config em Lua; os `.conf` antigos ficam só em `hypr/legado/`, e fora dela não sobrou nenhuma dependência ou lembrança do `.conf` (só o histórico dos roteiros). Na Frieren, falta o que está em "Pendências na Frieren".
+- [x] Atualizar Hyprland (2026-11-04, FERN): 0.56.2 pelo COPR `nett00n/hyprland` (o `solopasha/hyprland` foi abandonado na 0.51.1):
+  - sem `hyprland.lua`, a versão nova continua lendo o `hyprland.conf`;
+  - erros corrigidos no `.conf`: `windowrule` com `match:<campo>` e efeito com valor (`no_blur on`, `border_size 0`...), `togglesplit` virou `layoutmsg, togglesplit`, `dwindle:pseudotile` saiu;
+  - voltar atrás: Plasma na tela de login, reativar o COPR antigo e `sudo dnf downgrade` dos pacotes.
+- [x] Criar o script de instalação de todos os pacotes de `docs/pacotes-dotfiles.md` (seções, `repo:` e pacotes), como um passo novo chamado pelo `install.sh`: `scripts/install/install-pacotes.sh`
+- [x] Reescrever a config em Lua (os `.lua` ficam ao lado dos `.conf`, com os mesmos nomes e pastas; cada parte testada com `Hyprland --verify-config -c <arquivo>.lua`, sem mexer na sessão até a virada):
+  - [x] esqueleto: `hypr/hyprland.lua` com `require` na mesma ordem do `hyprland.conf` (env → máquina → settings → animations → execs → tema → windowrules → binds), cada linha comentada até o passo dela; o Hyprland procura os `require` na pasta real do arquivo (`~/dotfiles/hypr`, mesmo pelo link), então máquina e tema (em `~/.config`) entram pelo `carregar()` (`dofile` com `$HOME`); o `check.sh` roda `Hyprland --verify-config -c hypr/hyprland.lua`;
+  - [x] configs: `hypr/configs/{env,settings,animations,execs}.lua`; o `settings.lua` devolve os programas (`terminal`, `fileManager`, `menu`, antes `$terminal`...) para o `binds.lua` pegar com `require`; os `exec-once` viraram `hl.exec_cmd` dentro de `hl.on("hyprland.start", ...)`; o `--verify-config` pega opção inventada, tipo errado e curva inexistente, com arquivo e linha;
+  - [x] regras e binds: `hypr/rules/{windowrules,binds}.lua`; o `--verify-config` confere campos e `match` das regras, mas **não** os argumentos dos dispatchers (`hl.dsp.window.fullscreen({ inventado = 0 })` passa): os nomes vieram das mensagens de erro do próprio Hyprland, e na virada é preciso testar na mão F11, SUPER+F, SUPER(+SHIFT)+setas, SUPER(+SHIFT)+números, SUPER+J e o mouse;
+  - [x] máquinas: `hypr/maquinas/*/{hardware,monitors}.lua` (carregados pelo link `~/.config/hypr/maquina`; a Frieren foi conferida com uma cópia do `hyprland.lua` apontando para a pasta dela); o `check.sh` exige os `.lua` em cada máquina (até a 0.56, também os `.conf`);
+  - [x] temas: `hypr.lua` nos temas e no `_modelo` (degradê: `{ colors = {...}, angle = 45 }`), e o contrato no `switch-theme.sh`, `check.sh` (também roda o `--verify-config` no `hypr.lua` de cada tema) e `docs/temas.md`;
+  - [x] virada: link `~/.config/hypr/hyprland.lua` no `STATIC_MAP`, testado na sessão real (se existir `hyprland.lua`, o Hyprland usa só ele: a troca é de uma vez; para voltar, apagar o link); atalhos e programas do login conferidos na FERN em 2026-11-04.
+- [x] Destravar e atualizar para a 0.57+ (2026-11-04, FERN): 0.57.1, só o `hyprland` travado no `docs/pacotes-dotfiles.md` (as bibliotecas vêm como dependência, pedidas pela versão do soname); `versionlock delete` das 9 travas da 0.56, `versionlock add hyprland-0.57.1-1.fc43` e `dnf upgrade 'hypr*' aquamarine xdg-desktop-portal-hyprland`; hyprlock 0.9.7 ainda lê o `hyprlock.conf`, atalhos conferidos. Voltar atrás: Plasma no login e `sudo dnf history undo`.
+- [x] `.conf` do Hyprland movidos para `hypr/legado/` (temas em `hypr/legado/temas/<tema>/hypr.conf`); `STATIC_MAP`, `switch-theme.sh` e `check.sh` só exigem os `.lua`.
+- [x] Lembranças do `.conf` tiradas: docs e comentários apontam para os `.lua`, o `switch-theme.sh` não limpa mais os links da estrutura antiga (`theme_profile.conf`, `hardware_profile.conf`) e os backups de antes do dotfiles em `~/.config/hypr` (`colors.conf`, `hyprland.conf.bak`, `hyprlock.conf.bak`) foram apagados na FERN.
+
+Depois da migração para Lua (ficam para quando a config inteira estiver em Lua):
+- [x] Atualizar `docs/pacotes-dotfiles.md` para a versão nova do Hyprland (nomes de pacotes, repositórios e dependências que mudarem):
+  - [x] `repo:` trocado para `copr nett00n/hyprland`;
+  - [x] `swww` virou `awww` (mudou de nome; COPR `alebastr/sway-extras`, o wallpaper do tema é posto no login pelo `execs.lua`) e o `grimblast` (com o `jq`) saiu: o Print usa `slurp` + `grim` direto;
+  - [x] `uwsm` veio com o upgrade só como recomendação do `hyprland` (`dnf repoquery --installed --whatrecommends uwsm`), sem uso: a sessão é a "Hyprland" normal, não a "Hyprland (uwsm)"; removido na FERN (a entrada `hyprland-uwsm.desktop` do login vem no pacote do hyprland e fica, sem funcionar).
 - [ ] Criação do script do `docs/apps.md`: definir o formato, preencher a lista de apps pessoais (Steam, Discord, VS Code...) e criar o script que instala tudo
+- [ ] Aplicativos padrão: `mimeapps.list` no dotfiles, igual em todos os computadores (detalhes em `docs/ideias.md`; decidir entre link no `STATIC_MAP` ou cópia, porque o KDE reescreve o arquivo)
 - [ ] Estudar e personalizar mais o hyprlock: cores do tema (hoje são fixas), `me.png` opcional e cartão de bateria que funcione no desktop
+
+## Migração de distro (depois da migração para Lua)
+Trocar o Fedora por uma distro que acompanhe melhor o Hyprland novo. Até começar esta etapa, o resto do roteiro segue feito para o Fedora, como se a troca não existisse. Mesmo jeito de trabalhar: um item por vez, com aprovação antes.
+- [ ] Estudar CachyOS e Arch: o que muda na instalação, NVIDIA no notebook (FERN), jogos no desktop (Frieren), KDE Plasma junto do Hyprland, de onde vêm os pacotes do dotfiles (repositório oficial ou AUR) e quanto trabalho dá manter
 
 ## Tema Persona com shell próprio (depois da migração para Lua)
 Análise de 2026-10-21, ainda sem nada feito. Mesmo jeito de trabalhar: um item por vez, com aprovação antes.
@@ -178,7 +218,7 @@ Decidido:
 
 Como encaixar:
 - Tema com pasta `quickshell/` assume a área de trabalho: `quickshell` no `THEME_ONLY`, link `~/.config/quickshell`. O contrato normal continua (`hypr`, `palette`, `wall.png` para o hyprlock, `thumb.png` para o seletor).
-- `hypr/scripts/sessao.sh` (fixo): com `~/.config/theme/quickshell`, fecha waybar e swww e abre `qs -p ~/.config/theme/quickshell`; sem ela, fecha o `qs`, garante `swww-daemon` + wallpaper e abre o waybar. Chamado no `exec-once` do login e no fim do `switch-theme.sh`, no lugar do que hoje recarrega waybar e swww.
+- `hypr/scripts/sessao.sh` (fixo): com `~/.config/theme/quickshell`, fecha waybar e awww e abre `qs -p ~/.config/theme/quickshell`; sem ela, fecha o `qs`, garante `awww-daemon` + wallpaper e abre o waybar. Chamado no login (`hypr/configs/execs.lua`) e no fim do `switch-theme.sh`, no lugar do que hoje recarrega waybar e awww.
 - `hypr/scripts/menu.sh` no SUPER+D: `qs ipc call searchapp toggle` se o tema tiver `quickshell/`, senão o rofi de hoje.
 - SUPER+T, SUPER+V, kitty, swaync, hyprlock, qt6ct e KDE seguem iguais, também no Persona.
 - Cores: o `Data/Colors.qml` dele (hex fixos do pywal) passa a usar os nomes semânticos da paleta do tema.

@@ -52,8 +52,8 @@ titulo "Scripts"
 while read -r script; do
     if ! saida="$(bash -n "$script" 2>&1)"; then
         falhou "$script: erro de sintaxe\n$saida"
-    elif [[ "$script" != "scripts/lib.sh" && ! -x "$script" ]]; then
-        # lib.sh é carregado com source, não precisa ser executável
+    elif [[ "$script" != "scripts/lib.sh" && "$script" != bashrc.d/* && ! -x "$script" ]]; then
+        # lib.sh e bashrc.d/ são carregados com source, não precisam ser executáveis
         falhou "$script: sem permissão de execução (chmod +x)"
     else
         passou "$script"
@@ -81,7 +81,7 @@ for dir in themes/*/; do
     ok=1
 
     # arquivos obrigatórios; o _modelo não tem imagens de propósito
-    obrigatorios=(hypr.conf palette/waybar.css palette/rofi.rasi palette/kitty.conf)
+    obrigatorios=(hypr.lua palette/waybar.css palette/rofi.rasi palette/kitty.conf)
     [[ "$tema" == _* ]] || obrigatorios+=(imagens/wallpapers/wall.png imagens/thumb.png)
     for arq in "${obrigatorios[@]}"; do
         [[ -e "$dir$arq" ]] || { falhou "$tema: falta $arq"; ok=0; }
@@ -101,6 +101,14 @@ for dir in themes/*/; do
         [[ -z "$faltando" ]] || { falhou "$tema: kitty.conf sem" $faltando; ok=0; }
     fi
 
+    # hypr.lua do tema conferido sozinho pelo Hyprland (cores, degradê, gaps);
+    # a saída termina em "config ok" ou nos erros, depois de "Config parsing result"
+    if [[ -f "${dir}hypr.lua" ]] && command -v Hyprland &> /dev/null; then
+        saida="$(Hyprland --verify-config -c "$DOTFILES_DIR/${dir}hypr.lua" 2>&1 \
+            | sed -n '/Config parsing result/,$p' | sed '1d;/^[[:space:]]*$/d')"
+        [[ "$saida" == "config ok" ]] || { falhou "$tema: hypr.lua (--verify-config):\n$saida"; ok=0; }
+    fi
+
     (( ok )) && passou "$tema"
 done
 
@@ -109,7 +117,7 @@ titulo "Máquinas"
 for dir in hypr/maquinas/*/; do
     maq="$(basename "$dir")"
     ok=1
-    for arq in hardware.conf monitors.conf; do
+    for arq in hardware.lua monitors.lua; do
         [[ -f "$dir$arq" ]] || { falhou "$maq: falta $arq"; ok=0; }
     done
     (( ok )) && passou "$maq"
@@ -147,7 +155,29 @@ else
     aviso "rofi não instalado, pulando"
 fi
 
-# --- 6. HYPRLAND (só dentro de uma sessão) ---
+# --- 6. MODO ESTUDO (cópias instaladas pelo instalar-modo-estudo.sh) ---
+titulo "Modo estudo"
+if [[ -e /usr/local/libexec/modo-estudo ]]; then
+    # instalado tem que bater com o repositório (a regra do polkit não dá
+    # para ler sem root, fica de fora)
+    declare -A INSTALADOS=(
+        [sistema/modo-estudo/modo-estudo.sh]=/usr/local/libexec/modo-estudo
+        [sistema/modo-estudo/modo-estudo@.service]=/etc/systemd/system/modo-estudo@.service
+        [sistema/modo-estudo/apps]=/etc/modo-estudo/apps
+        [sistema/modo-estudo/sites]=/etc/modo-estudo/sites
+    )
+    for src in "${!INSTALADOS[@]}"; do
+        if cmp -s "$src" "${INSTALADOS[$src]}"; then
+            passou "${INSTALADOS[$src]}"
+        else
+            falhou "${INSTALADOS[$src]} diferente de $src (rode sudo scripts/instalar-modo-estudo.sh)"
+        fi
+    done
+else
+    aviso "não instalado (sudo scripts/instalar-modo-estudo.sh), pulando"
+fi
+
+# --- 7. HYPRLAND (só dentro de uma sessão) ---
 titulo "Hyprland"
 if [[ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]]; then
     hyprctl reload > /dev/null
@@ -159,6 +189,19 @@ if [[ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]]; then
     fi
 else
     aviso "fora de uma sessão Hyprland, pulando"
+fi
+
+# Config em Lua (migração): o Hyprland confere o arquivo sem aplicar nada,
+# então vale mesmo antes de ele ser linkado e fora de uma sessão.
+# A saída termina em "config ok" ou nos erros, depois de "Config parsing result"
+if [[ -f "$DOTFILES_DIR/hypr/hyprland.lua" ]] && command -v Hyprland &> /dev/null; then
+    saida="$(Hyprland --verify-config -c "$DOTFILES_DIR/hypr/hyprland.lua" 2>&1 \
+        | sed -n '/Config parsing result/,$p' | sed '1d;/^[[:space:]]*$/d')"
+    if [[ "$saida" == "config ok" ]]; then
+        passou "hypr/hyprland.lua (--verify-config)"
+    else
+        falhou "hypr/hyprland.lua (--verify-config):\n$saida"
+    fi
 fi
 
 # --- RESUMO ---

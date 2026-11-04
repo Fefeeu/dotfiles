@@ -17,7 +17,7 @@ O layout, seja da base ou de um override, sempre encontra as cores pelo mesmo ca
 ## Estrutura
 ```
 themes/<nome>/
-├── hypr.conf            # obrigatório: bordas, gaps e cores (pode ter decoration/animations)
+├── hypr.lua             # obrigatório: bordas, gaps e cores (pode ter decoration/animations)
 ├── palette/             # obrigatório: só cores
 │   ├── waybar.css
 │   ├── rofi.rasi
@@ -45,7 +45,7 @@ Cada paleta pode ter as cores cruas com os nomes que quiser, mas precisa definir
 ## Criar um tema
 ```bash
 cp -r themes/_modelo themes/<nome>
-# edite hypr.conf e palette/*, e coloque imagens/wallpapers/wall.png e imagens/thumb.png
+# edite hypr.lua e palette/*, e coloque imagens/wallpapers/wall.png e imagens/thumb.png
 scripts/switch-theme.sh <nome>
 ```
 

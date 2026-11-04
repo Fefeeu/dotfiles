@@ -30,12 +30,13 @@ erro()   { echo -e "${VERMELHO}ERRO:${NC} $*" >&2; exit 1; }
 # --- MAPAS ---
 # Links fixos, iguais para todos os temas (origem no repo -> destino)
 declare -A STATIC_MAP=(
-    ["hypr/hyprland.conf"]="$CONFIG_DIR/hypr/hyprland.conf"
+    ["hypr/hyprland.lua"]="$CONFIG_DIR/hypr/hyprland.lua"
     ["hypr/configs"]="$CONFIG_DIR/hypr/configs"
     ["hypr/rules"]="$CONFIG_DIR/hypr/rules"
     ["hypr/scripts"]="$CONFIG_DIR/hypr/scripts"
     ["hypr/hyprlock.conf"]="$CONFIG_DIR/hypr/hyprlock.conf"
     ["swappy/config"]="$CONFIG_DIR/swappy/config"
+    ["bashrc.d/modo-estudo.sh"]="$HOME/.bashrc.d/modo-estudo.sh"
 )
 
 # Componentes com layout em base/ que o tema pode sobrescrever inteiro

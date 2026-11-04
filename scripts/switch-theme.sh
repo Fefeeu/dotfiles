@@ -21,7 +21,7 @@ TEMA_DIR="$DOTFILES_DIR/themes/$TEMA"
 
 # --- VALIDAÇÃO (contrato em docs/temas.md) ---
 # Sem estes arquivos o tema não é aplicado
-for obrigatorio in hypr.conf palette imagens/wallpapers/wall.png imagens/thumb.png; do
+for obrigatorio in hypr.lua palette imagens/wallpapers/wall.png imagens/thumb.png; do
     [[ -e "$TEMA_DIR/$obrigatorio" ]] || erro "$TEMA/$obrigatorio não encontrado. O tema está incompleto."
 done
 
@@ -29,11 +29,6 @@ done
 # ~/.config/theme passa a apontar para o tema; é por ele que os layouts acham a paleta
 titulo "Tema: $TEMA"
 link_com_backup "$TEMA_DIR" "$THEME_LINK"
-
-# Links da estrutura antiga, que não são mais usados
-for antigo in theme_profile.conf hardware_profile.conf; do
-    [[ -L "$CONFIG_DIR/hypr/$antigo" ]] && rm "$CONFIG_DIR/hypr/$antigo"
-done
 
 # --- MÁQUINA ---
 # Confere se ~/.config/hypr/maquina aponta para a pasta do hostname
@@ -104,15 +99,15 @@ fi
 # --- RECARREGAR (só dentro de uma sessão Hyprland) ---
 if [[ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]]; then
     titulo "Recarregando:"
-    # bordas, gaps e cores do hypr.conf do tema
+    # bordas, gaps e cores do hypr.lua do tema
     hyprctl reload > /dev/null && info "hyprland"
     # reinicia a barra com o layout e a paleta novos
     "$CONFIG_DIR/waybar/scripts/launch.sh" > /dev/null 2>&1 && info "waybar"
     # SIGUSR1 faz o kitty reler a config sem fechar as janelas
     pkill -USR1 -x kitty && info "kitty" || true
-    # troca o wallpaper só se o daemon do swww estiver rodando
-    if pgrep -x swww-daemon > /dev/null; then
-        swww img "$TEMA_DIR/imagens/wallpapers/wall.png" --transition-type grow && info "wallpaper"
+    # troca o wallpaper só se o daemon do awww estiver rodando
+    if pgrep -x awww-daemon > /dev/null; then
+        awww img "$TEMA_DIR/imagens/wallpapers/wall.png" --transition-type grow && info "wallpaper"
     fi
 fi
 
